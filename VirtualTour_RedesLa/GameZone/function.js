@@ -19,8 +19,8 @@ function loadGame(game) {
         case 'Memorama':
             gameContainer.innerHTML = '<iframe src="./Memoram" width="100%" height="100%"></iframe>';
             break;
-        case 'Pacman':
-            gameContainer.innerHTML = '<iframe src="./PanMan/index.html" width="100%" height="100%"></iframe>';
+        case 'HangMan':
+            gameContainer.innerHTML = '<iframe src="./HangmanGame/Index.html" width="100%" height="100%"></iframe>';
             break;
         case 'Snake':
             gameContainer.innerHTML = '<iframe src="./Snake/HTML/Index.html" width="100%" height="100%"></iframe>';
@@ -39,8 +39,8 @@ function setModalTitle(game) {
         case 'Memorama':
             titleElement.textContent = 'MEMORAMA';
             break;
-        case 'Pacman':
-            titleElement.textContent = 'PACMAN';
+        case 'HangMan':
+            titleElement.textContent = 'HangMan';
             break;
         case 'Snake':
             titleElement.textContent = 'SNAKE';
