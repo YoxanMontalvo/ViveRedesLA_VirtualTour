@@ -226,12 +226,71 @@ function createWalkHotspot(position, direction, text) {
 }
 // Fin
 
+// Funcion para crear un hotspot para desplegar el inicio de sesion mediante un modal
+function createLoginHotspot(position) {
+    const hotspot = new PANOLENS.Infospot(350, PANOLENS.DataImage.LoginIcon);
+    hotspot.position.set(position.x, position.y, position.z);
+
+    // Crear elemento de texto para el hotspot
+    const hotspotText = document.createElement('div');
+    hotspotText.classList.add('hotspot-text');
+    hotspotText.textContent = 'Entrar a Congresos';
+    hotspotText.style.display = 'none';
+
+    // Función para actualizar la posición del texto del hotspot
+    function updateHotspotTextPosition() {
+        const vector = new THREE.Vector3();
+        hotspot.getWorldPosition(vector);
+        vector.project(viewer.camera);
+        const widthHalf = container.clientWidth / 2;
+        const heightHalf = container.clientHeight / 2;
+        const screenX = (vector.x * widthHalf) + widthHalf;
+        const screenY = (-vector.y * heightHalf) + heightHalf;
+        const offsetTop = 75;
+        hotspotText.style.top = `${screenY - offsetTop}px`;
+        hotspotText.style.left = `${screenX}px`;
+    }
+
+    // Mostrar el texto al hacer hover sobre el hotspot
+    hotspot.addEventListener('hoverenter', () => {
+        updateHotspotTextPosition();
+        hotspotText.style.display = 'block';
+    });
+
+    // Ocultar el texto al salir del hover
+    hotspot.addEventListener('hoverleave', () => {
+        hotspotText.style.display = 'none';
+    });
+
+    // Evento de clic para abrir el modal de inicio de sesión
+    hotspot.addEventListener('click', () => {
+        $('#loginModal').modal('show');
+    });
+
+    document.getElementById('container').appendChild(hotspotText);
+    return hotspot;
+}
+// Fin
+
 // Función para limpiar hotspots actuales
 function clearCurrentHotspots() {
     if (panorama && panorama.children) {
         const hotspotsToRemove = panorama.children.filter(child => child instanceof PANOLENS.Infospot);
         hotspotsToRemove.forEach(hotspot => panorama.remove(hotspot));
     }
+}
+// Fin
+
+// Hotspot de inicio de sesion
+function createLoginHotspotsForScene(sceneURL) {
+    let loginHotspots = [];
+
+    if (sceneURL === '../Img/PanoramaInterior.png') {
+        loginHotspots = [
+            { position: { x: 3000, y: 100, z: -5000 }}
+        ];
+    }
+    return loginHotspots.map(hotspot => createLoginHotspot(hotspot.position));
 }
 // Fin
 
@@ -253,7 +312,7 @@ function createInfoHotspotsForScene(sceneURL) {
 function createPageHotspotsForScene(sceneURL) {
     let pageHotspots = [];
 
-    if (sceneURL === '../Img/cafeteriaPlanta.png') { // Ejemplo de una escena
+    if(sceneURL === '../Img/cafeteriaPlanta.png') { // Ejemplo de una escena
         pageHotspots = [
             { position: { x: 1000, y: 1000, z: -5000 }, pageURL: '../GameZone/index.html', text: 'Entrar al Arcade', title: 'Zona de videojuegos' },
         ];
@@ -680,6 +739,9 @@ function addInitialHotspots() {
 
     const initialPageHotspots = createPageHotspotsForScene(panorama.src);
     initialPageHotspots.forEach(hotspot => panorama.add(hotspot));
+
+    const initialLoginHotspots = createLoginHotspotsForScene(panorama.src);
+    initialLoginHotspots.forEach(hotspot => panorama.add(hotspot));
 }
 
 // Vista del menú principal
