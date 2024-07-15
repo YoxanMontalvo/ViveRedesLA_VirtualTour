@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f2f2f2;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+    height: 95%;
+    background-color: #4caf50;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px;
+    background-color: #4caf50;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 36px;
+}
+
+.score-container, .controls-container {
+    display: flex;
+    align-items: center;
+}
+
+.score-icon {
+    width: 48px;
+    height: 48px;
+    margin-right: 10px;
+}
+
+#gameCanvas {
+    background-color: #aed581;
+    image-rendering: pixelated;
+    width: 95%; /* Asegura que ocupe todo el ancho */
+    height: calc(95% - 80px); /* Calcula la altura disponible */
+    border: 5px solid red; /* Añade un borde rojo */
+    box-sizing: border-box; /* Asegura que el borde no aumente el tamaño del canvas */
+}
+
