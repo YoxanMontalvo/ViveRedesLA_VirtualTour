@@ -1,3 +1,99 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    }
+    
+    #container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    }
+    
+    #panorama-container {
+    width: 100%;
+    height: 100%;
+    }
+    
+    #scene-title {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border-radius: 10px;
+    z-index: 1000;
+    font-size: 1.5em;
+    }
+    
+    #panel {
+    width: 320px;
+    height: 240px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    display: none; /* Para que solo se muestre en hover */
+    }
+    
+    #panel::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 48%;
+        margin-left: -5px;
+        border-width: 10px;
+        border-style: solid;
+        border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
+    }
+    
+    #panel.show {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+    }
+    
+    #panel h1 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    }
+    
+    #panel p {
+    font-size: 14px;
+    color: #333;
+    }
+    
+    .hotspot-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.95);
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    display: none; /* Inicialmente oculto */
+    z-index: 1000;
+    }
+    .hotspot-text::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 48%;
+    margin-left: -5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
+    }
+
+
+
 /* El Modal (oculto por defecto) */
 .modal {
     display: none; /* Oculto por defecto */

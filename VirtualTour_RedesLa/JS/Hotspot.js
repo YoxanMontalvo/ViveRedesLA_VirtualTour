@@ -48,6 +48,11 @@ function musicElevator(sceneURL) {
     const scenesWithElevatorMusic = [
         '../Img/elevadorRelayn.jpeg',
         '../Img/elevadorRelep.jpeg',
+        '../Img/elevadorRelen.jpeg',
+        '../Img/elevadorReleem.jpeg',
+        '../Img/elevadorReleg.jpeg',
+        '../Img/elevadorREDESLA.jpeg',
+        '../Img/elevadorOrgulloRDLA.jpeg'
     ];
 
     if (scenesWithElevatorMusic.includes(sceneURL)) {

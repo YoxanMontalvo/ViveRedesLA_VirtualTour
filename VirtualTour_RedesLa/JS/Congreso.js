@@ -1,3 +1,10 @@
+// Reproducir el sonido al abrir el modal
+const InfoHotSound = new Audio('../Music/SoundInfoView.mp3');
+function playSoundInfo() {
+    InfoHotSound.play();
+}
+// Fin
+
 // Función para crear hotspot de información y la apertura del modal
 function createInfoHotspot(position, text, title, image, description) {
     let infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.WatchInfos);
@@ -17,6 +24,7 @@ function createInfoHotspot(position, text, title, image, description) {
 
     // Evento de clic para abrir el panel de información y reproducir sonido
     infospot.addEventListener('click', () => {
+        playSoundInfo();
 
         // Funcion para mover la camara al hotspot seleccionado
         const targetPosition = new THREE.Vector3(position.x, position.y, position.z);
@@ -24,6 +32,29 @@ function createInfoHotspot(position, text, title, image, description) {
     });
   
     return infospot;
+}
+// Fin
+
+// Reproducir el sonido al cambiar de escena
+const SceneHotSound = new Audio('../Music/SoundChangeScene.mp3');
+function playSoundSceneChange() {
+    SceneHotSound.play();
+}
+// Fin
+
+// Musica del elevador
+const elevatorMusic = new Audio('../Music/RelaxSong.mp3');
+function musicElevator(sceneURL) {
+    const scenesWithElevatorMusic = [
+        '../Img/elevadorRelayn.jpeg',
+        '../Img/elevadorRelep.jpeg',
+    ];
+
+    if (scenesWithElevatorMusic.includes(sceneURL)) {
+        elevatorMusic.play();
+    } else {
+        elevatorMusic.pause();
+    }
 }
 // Fin
 
@@ -70,6 +101,8 @@ function createSceneHotspot(position, sceneURL, text, title) {
 
     // Cambiar de escena al hacer clic en el hotspot
     sceneHotspot.addEventListener('click', () => {
+        playSoundSceneChange();//Sonido al cambiar de escena
+        musicElevator(sceneURL);//Musica del elevador
 
         const newPanorama = new PANOLENS.ImagePanorama(sceneURL);
 
@@ -80,10 +113,6 @@ function createSceneHotspot(position, sceneURL, text, title) {
             newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
             const newSceneHotspots = createSceneHotspotsForScene(sceneURL);
             newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newWalkHotspots = createWalkHotspotsForScene(sceneURL);
-            newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newPageHotspots = createPageHotspotsForScene(sceneURL);
-            newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
             saveCurrentScene(sceneURL); // Guardar la escena actual
@@ -120,7 +149,7 @@ function saveCurrentScene(sceneURL) {
 
 // Función para cargar la escena actual desde localStorage
 function loadCurrentScene() {
-    return localStorage.getItem('currentScene') || '../Img/auditorioCongreso.jpg';
+    return localStorage.getItem = '../Img/PanoramaInterior.png';
 }
 // Fin
 
@@ -140,7 +169,7 @@ function createInfoHotspotsForScene(sceneURL) {
 
     if (sceneURL === '../Img/auditorioCongreso.jpg') {
       infoHotspots = [
-        { position: { x: -1000, y: 1000, z: -5000 }, text: 'Bienvenido a REDESLA', title: 'Vive RedesLa', image: '../Icons/CursosImage.png', description: 'Este recorrido virtual trata de trasmitir la mayor inmersión posible, y así usted puedad vivir las experiencia RedesLA desde la comodidad de su hogar' },
+        { position: { x: -1000, y: 1000, z: -5000 }, text: 'Bienvenido al congreso de REDESLA', title: 'Bienvenido al congreso de REDESLA', image: '', description: 'El congreso de REDESLA se celebra cada añoS' },
     ];
     }
 
@@ -156,7 +185,11 @@ function createSceneHotspotsForScene(sceneURL) {
     // Pagina principal
     if (sceneURL === '../Img/auditorioCongreso.jpg') {// Pagina principal con sus hotspot
         sceneHotspots = [
-            { position: { x: 1000, y: 1000, z: -5000 }, sceneURL: '../Img/RedesSalones.png', text: 'Entrar a Oficinas', title: 'Oficinas' },
+            { position: { x: 1000, y: 1000, z: -5000 }, sceneURL: '../Img/salaOrgulloRDLA.jpg', text: 'Entrar a congreso', title: 'Sala de congreso' },
+        ];
+    }else if (sceneURL === '../Img/salaOrgulloRDLA.jpg') {// Pagina principal con sus hotspot
+        sceneHotspots = [
+            { position: { x: 2000, y: 1000, z: -5000 }, sceneURL: '../Img/auditorioCongreso.jpg', text: 'Regresar', title: 'Congreso' },
         ];
     }
 
