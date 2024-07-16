@@ -14,7 +14,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: #5E63BA;
+    background: #0000003b;
 }
 
 .container {
@@ -49,6 +49,13 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+}
+
+.game-box .timer-score {
+    top: 20px; /* Ajusta la distancia desde la parte superior */
+    width: 100%; /* Ocupa el ancho completo */
+    padding: 190px 20px;
+    z-index: 1000; /* Asegura que esté por encima del contenido */
 }
 
 .word-display .letter {
@@ -98,7 +105,7 @@ body {
     font-weight: 600;
     border-radius: 4px;
     text-transform: uppercase;
-    background: #5E63BA;
+    background: #000dff;
 }
 
 .keyboard button {
@@ -112,7 +119,7 @@ body {
 }
 
 :where(.game-modal, .keyboard) button:hover {
-    background: #8286c9;
+    background: #5b63ff;
 }
 
 .game-modal {
@@ -146,6 +153,10 @@ body {
     background: #fff;
     text-align: center;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .game-modal img {
@@ -168,7 +179,7 @@ body {
 }
 
 .game-modal p b {
-    color: #5E63BA;
+    color: #000dff;
     font-weight: 600;
 }
 
@@ -220,7 +231,15 @@ body {
     margin-bottom: 20px;
 }
 
+.timer-score .card {
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.1);
+}
+
 .timer-score h4 {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.9rem;
+    font-weight: 900;
+    margin: 0;
 }

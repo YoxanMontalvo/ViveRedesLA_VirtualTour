@@ -4,7 +4,7 @@ const wordList = [
         hint: "Un instrumento musical con cuerdas."
     },
     {
-        word: "oxígeno",
+        word: "oxigeno",
         hint: "Un gas incoloro e inodoro esencial para la vida."
     },
     {
@@ -16,11 +16,11 @@ const wordList = [
         hint: "Una forma de arte que utiliza colores en una superficie para crear imágenes o expresión."
     },
     {
-        word: "astronomía",
+        word: "astronomia",
         hint: "El estudio científico de objetos y fenómenos celestiales."
     },
     {
-        word: "fútbol",
+        word: "futbol",
         hint: "Un deporte popular jugado con una pelota esférica."
     },
     {
@@ -44,7 +44,7 @@ const wordList = [
         hint: "Un género de música caracterizado por la improvisación y la síncopa."
     },
     {
-        word: "cámara",
+        word: "camara",
         hint: "Un dispositivo utilizado para capturar y grabar imágenes o videos."
     },
     {
@@ -68,7 +68,7 @@ const wordList = [
         hint: "La desaparición diaria del sol por debajo del horizonte."
     },
     {
-        word: "café",
+        word: "cafe",
         hint: "Una bebida popular con cafeína hecha de granos de café tostados."
     },
     {
@@ -84,7 +84,7 @@ const wordList = [
         hint: "Un gran conjunto de músicos que tocan varios instrumentos."
     },
     {
-        word: "volcán",
+        word: "volcan",
         hint: "Una montaña o colina con una abertura por la cual se expulsan lava, fragmentos de roca, vapor caliente y gas."
     },
     {
@@ -96,7 +96,7 @@ const wordList = [
         hint: "Una forma de arte tridimensional creada al moldear o combinar materiales."
     },
     {
-        word: "sinfonía",
+        word: "sinfonia",
         hint: "Una larga composición musical para una orquesta completa, típicamente en varios movimientos."
     },
     {
@@ -116,11 +116,11 @@ const wordList = [
         hint: "Una caída de agua desde una altura."
     },
     {
-        word: "tecnología",
+        word: "tecnologia",
         hint: "La aplicación del conocimiento científico para fines prácticos."
     },
     {
-        word: "arcoíris",
+        word: "arcoiris",
         hint: "Un fenómeno meteorológico causado por la reflexión, refracción y dispersión de la luz."
     },
     {
@@ -144,7 +144,7 @@ const wordList = [
         hint: "Un edificio o área al aire libre donde se representan obras, películas u otras actuaciones."
     },
     {
-        word: "teléfono",
+        word: "telefono",
         hint: "Un dispositivo utilizado para transmitir sonido a largas distancias."
     },
     {
@@ -160,7 +160,7 @@ const wordList = [
         hint: "Una planta alta con una gran cabeza de flor amarilla."
     },
     {
-        word: "fantasía",
+        word: "fantasia",
         hint: "Un género de ficción imaginativa que involucra magia y elementos sobrenaturales."
     },
     {
@@ -176,7 +176,7 @@ const wordList = [
         hint: "Un lugar fértil en un desierto donde se encuentra agua."
     },
     {
-        word: "fotografía",
+        word: "fotografia",
         hint: "El arte, proceso o práctica de crear imágenes registrando la luz u otra radiación electromagnética."
     },
     {
@@ -188,7 +188,7 @@ const wordList = [
         hint: "Un cuerpo celeste que orbita una estrella y no produce luz propia."
     },
     {
-        word: "río",
+        word: "rio",
         hint: "Una gran corriente natural de agua que fluye en un canal hacia el mar, un lago u otra corriente similar."
     },
     {
@@ -240,7 +240,7 @@ const wordList = [
         hint: "Hacer conocido o revelar algo previamente secreto o desconocido."
     },
     {
-        word: "ilusión",
+        word: "ilusion",
         hint: "Una percepción o creencia falsa; una apariencia o impresión engañosa."
     },
     {

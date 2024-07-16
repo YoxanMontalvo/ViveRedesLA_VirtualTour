@@ -48,7 +48,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 18px;
+    font-size: 50px;
     color: #fff;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
     background-color: rgba(0, 0, 0, 0.7);

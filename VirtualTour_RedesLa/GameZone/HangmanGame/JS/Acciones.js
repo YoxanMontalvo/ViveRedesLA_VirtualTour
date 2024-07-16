@@ -4,9 +4,14 @@ const keyboardDiv = document.querySelector(".keyboard");
 const hangmanImage = document.querySelector(".hangman-box img");
 const gameModal = document.querySelector(".game-modal");
 const playAgainBtn = gameModal.querySelector("button");
+const scoreText = document.querySelector(".score");
+const timerText = document.querySelector(".timer");
 
-let currentWord, correctLetters, wrongGuessCount;
+let currentWord, correctLetters, wrongGuessCount, timerInterval;
 const maxGuesses = 6;
+let score = 0;
+let wordsGuessed = 0;
+let timeRemaining = 5 * 60;
 
 const resetGame = () => {
     correctLetters = [];
@@ -25,19 +30,54 @@ const getRandomWord = () => {
     resetGame();
 }
 
-const gameOver = (isVictory) => {
-    // After game complete.. showing modal with relevant details
-    const modalText = isVictory ? `Lo siento, se terminaron sus oportunidades:` : 'La palabra correcta era:';
+const gameOver = (isVictory, timeUp = false) => {
+    let modalText, titleText;
+    playAgainBtn.style.display = 'block';
+
+    if (timeUp) {
+        modalText = `Usted acertó ${wordsGuessed} palabra(s).`;
+        titleText = '¡Tiempo Agotado!';
+        playAgainBtn.style.display = 'block';
+    } else {
+        if (isVictory) {
+            modalText = `La palabra correcta era: <b>${currentWord}</b>`;
+            titleText = '¡Increíble!';
+            playAgainBtn.style.display = 'none';
+            setTimeout(() => {
+                getRandomWord();
+                resetGame();
+            }, 2000);
+        } else {
+            modalText = `No pudo adivinar la palabra: <b>${currentWord}</b>`;
+            titleText = '¡Ha perdido!';
+            playAgainBtn.style.display = 'block';
+            score = 0;
+            wordsGuessed = 0;
+        }
+    }
+    
     gameModal.querySelector("img").src = `Img/${isVictory ? 'victory' : 'lost'}.gif`;
-    gameModal.querySelector("h4").innerText = isVictory ? 'Acertaste!!!' : 'El juego termino!';
-    gameModal.querySelector("p").innerHTML = `${modalText} <b>${currentWord}</b>`;
+    gameModal.querySelector("h4").innerText = titleText;
+    gameModal.querySelector("p").innerHTML = modalText;
     gameModal.classList.add("show");
+
+    if (timeUp || !isVictory) {
+        clearInterval(timerInterval);
+    }
+
+    if (isVictory) {
+        score++;
+        wordsGuessed++;
+        scoreText.innerText = score;
+    } else {
+        scoreText.innerText = score;
+    }
 }
 
 const initGame = (button, clickedLetter) => {
-    if(currentWord.includes(clickedLetter)) {
+    if (currentWord.includes(clickedLetter)) {
         [...currentWord].forEach((letter, index) => {
-            if(letter === clickedLetter) {
+            if (letter === clickedLetter) {
                 correctLetters.push(letter);
                 wordDisplay.querySelectorAll("li")[index].innerText = letter;
                 wordDisplay.querySelectorAll("li")[index].classList.add("guessed");
@@ -50,8 +90,28 @@ const initGame = (button, clickedLetter) => {
     button.disabled = true;
     guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
 
-    if(wrongGuessCount === maxGuesses) return gameOver(false);
-    if(correctLetters.length === currentWord.length) return gameOver(true);
+    if (wrongGuessCount === maxGuesses) return gameOver(false);
+    if (correctLetters.length === currentWord.length) return gameOver(true);
+}
+
+const startTimer = () => {
+    timerInterval = setInterval(() => {
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        timerText.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        timeRemaining--;
+        if (timeRemaining < 0) {
+            clearInterval(timerInterval);
+            gameOver(false, true);
+        }
+    }, 1000);
+}
+
+const resetTimer = () => {
+    clearInterval(timerInterval);
+    timeRemaining = 5 * 60;
+    timerText.innerText = "05:00";
+    startTimer();
 }
 
 for (let i = 97; i <= 122; i++) {
@@ -62,4 +122,8 @@ for (let i = 97; i <= 122; i++) {
 }
 
 getRandomWord();
-playAgainBtn.addEventListener("click", getRandomWord);
+playAgainBtn.addEventListener("click", () => {
+    getRandomWord();
+    resetTimer();
+});
+startTimer();

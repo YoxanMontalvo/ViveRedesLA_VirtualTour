@@ -17,7 +17,7 @@ function loadGame(game) {
             gameContainer.innerHTML = '<iframe src="./SpaceWord/HTML/Index.html" width="100%" height="100%"></iframe>';
             break;
         case 'Memorama':
-            gameContainer.innerHTML = '<iframe src="./Memoram" width="100%" height="100%"></iframe>';
+            gameContainer.innerHTML = '<iframe src="./Memoria/Index.html" width="100%" height="100%"></iframe>';
             break;
         case 'HangMan':
             gameContainer.innerHTML = '<iframe src="./HangmanGame/Index.html" width="100%" height="100%"></iframe>';
@@ -37,7 +37,7 @@ function setModalTitle(game) {
             titleElement.textContent = 'SPACEWORD';
             break;
         case 'Memorama':
-            titleElement.textContent = 'MEMORAMA';
+            titleElement.textContent = 'Dungeon Memory';
             break;
         case 'HangMan':
             titleElement.textContent = 'HangMan';

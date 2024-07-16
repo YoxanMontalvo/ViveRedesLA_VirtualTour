@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hangman Game JavaScript | CodingNepal</title>
+    <title>Hangman Game</title>
     <link rel="stylesheet" href="./CSS/Estilos.css">
     <script src="./JS/Preguntas_Respuestas.js" defer></script>
     <script src="./JS/Acciones.js" defer></script>
@@ -24,12 +24,16 @@
         </div>
         <div class="game-box">
             <div class="timer-score">
-                <h4>Tiempo: <span class="timer">05:00</span></h4>
-                <h4>Puntuación: <span class="score">0</span></h4>
+                <div class="card timer-card">
+                    <h4>Tiempo: <span class="timer">05:00</span></h4>
+                </div>
+                <div class="card score-card">
+                    <h4>Puntuación: <span class="score">0</span></h4>
+                </div>
             </div>
             <ul class="word-display"></ul>
             <h4 class="hint-text">Descripción: <b></b></h4>
-            <h4 class="guesses-text">Intentos restantes: <b></b></h4>
+            <h4 class="guesses-text">Intentos restantes: <strong><b></b></strong></h4>
             <div class="keyboard"></div>
         </div>
     </div>
