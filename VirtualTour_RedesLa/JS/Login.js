@@ -3,6 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
+
+        // Borrar el localStorage antes de cambiar la escena
+        localStorage.removeItem('currentScene');
+
+        // Redirigir a la página del congreso
         window.location.href = '../Source/Congreso.html';
     });
 });

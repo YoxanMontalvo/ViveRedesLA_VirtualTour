@@ -1,3 +1,4 @@
+//////////////////////// Todas las funciones fuera de los hotspot //////////////
 // Reproducir el sonido al abrir el modal
 const InfoHotSound = new Audio('../Music/SoundInfoView.mp3');
 function playSoundInfo() {
@@ -5,6 +6,75 @@ function playSoundInfo() {
 }
 // Fin
 
+// Reproducir el sonido al cambiar de escena
+const SceneHotSound = new Audio('../Music/SoundChangeScene.mp3');
+function playSoundSceneChange() {
+    SceneHotSound.play();
+}
+// Fin
+
+// Reproducir el sonido al abrir el modal de inicio de sesion
+const LoginSound = new Audio('../Music/SoundLogin.mp3');
+function playLoginSound() {
+    LoginSound.play();
+}
+// Fin
+
+// Musica del elevador
+const elevatorMusic = new Audio('../Music/RelaxSong.mp3');
+function musicElevator(sceneURL) {
+    const scenesWithElevatorMusic = [
+        '../Img/elevadorRelayn.jpeg',
+        '../Img/elevadorRelep.jpeg',
+        '../Img/elevadorRelen.jpeg',
+        '../Img/elevadorReleem.jpeg',
+        '../Img/elevadorReleg.jpeg',
+        '../Img/elevadorREDESLA.jpeg',
+        '../Img/elevadorOrgulloRDLA.jpeg'
+    ];
+
+    if (scenesWithElevatorMusic.includes(sceneURL)) {
+        elevatorMusic.play();
+    } else {
+        elevatorMusic.pause();
+    }
+}
+// Fin
+
+// Función para guardar la escena actual en localStorage
+function saveCurrentScene(sceneURL) {
+    localStorage.setItem('currentScene', sceneURL);
+}
+// Fin
+
+// Función para cargar la escena actual desde localStorage
+function loadCurrentScene() {
+    const currentScene = localStorage.getItem('currentScene');
+    return currentScene ? currentScene : '../Img/PanoramaInterior.png';
+}
+// Fin
+
+// Función para actualizar el título de la escena
+function updateSceneTitle(title) {
+    const titleElement = document.getElementById('scene-title');
+    if (titleElement) {
+        titleElement.textContent = title;
+    }
+}
+// Fin
+
+// Función para limpiar hotspots actuales
+function clearCurrentHotspots() {
+    if (panorama && panorama.children) {
+        const hotspotsToRemove = panorama.children.filter(child => child instanceof PANOLENS.Infospot);
+        hotspotsToRemove.forEach(hotspot => panorama.remove(hotspot));
+    }
+}
+// Fin
+//////////////////////// Fin //////////////
+
+
+//////////////////////// Declaracion de los hotspot //////////////
 // Función para crear hotspot de información y la apertura del modal
 function createInfoHotspot(position, text, title, image, description) {
     let infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.WatchInfos);
@@ -32,34 +102,6 @@ function createInfoHotspot(position, text, title, image, description) {
     });
   
     return infospot;
-}
-// Fin
-
-// Reproducir el sonido al cambiar de escena
-const SceneHotSound = new Audio('../Music/SoundChangeScene.mp3');
-function playSoundSceneChange() {
-    SceneHotSound.play();
-}
-// Fin
-
-// Musica del elevador
-const elevatorMusic = new Audio('../Music/RelaxSong.mp3');
-function musicElevator(sceneURL) {
-    const scenesWithElevatorMusic = [
-        '../Img/elevadorRelayn.jpeg',
-        '../Img/elevadorRelep.jpeg',
-        '../Img/elevadorRelen.jpeg',
-        '../Img/elevadorReleem.jpeg',
-        '../Img/elevadorReleg.jpeg',
-        '../Img/elevadorREDESLA.jpeg',
-        '../Img/elevadorOrgulloRDLA.jpeg'
-    ];
-
-    if (scenesWithElevatorMusic.includes(sceneURL)) {
-        elevatorMusic.play();
-    } else {
-        elevatorMusic.pause();
-    }
 }
 // Fin
 
@@ -141,19 +183,7 @@ function createSceneHotspot(position, sceneURL, text, title) {
 }
 // Fin
 
-// Función para guardar la escena actual en localStorage
-function saveCurrentScene(sceneURL) {
-    localStorage.setItem('currentScene', sceneURL);
-}
-// Fin
-
-// Función para cargar la escena actual desde localStorage
-function loadCurrentScene() {
-    return localStorage.getItem('currentScene') || '../Img/PanoramaInterior.png';
-}
-// Fin
-
-// Modificar la función de crear hotspot de cambio de página para guardar el estado
+// Funcion para cambiar de pagina
 function createPageHotspot(position, pageURL, text, title) {
     const pageHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.Walker);
     pageHotspot.position.set(position.x, position.y, position.z);
@@ -208,16 +238,6 @@ function createPageHotspot(position, pageURL, text, title) {
 }
 // Fin
 
-
-// Función para actualizar el título de la escena
-function updateSceneTitle(title) {
-    const titleElement = document.getElementById('scene-title');
-    if (titleElement) {
-        titleElement.textContent = title;
-    }
-}
-// Fin
-
 // Función para crear hotspot de avanzar simulando caminar
 function createWalkHotspot(position, direction, text) {
     const walkHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.Feed);
@@ -269,23 +289,19 @@ function createLoginHotspot(position) {
 
     // Evento de clic para abrir el modal de inicio de sesión
     hotspot.addEventListener('click', () => {
+        playLoginSound();
         $('#loginModal').modal('show');
+        
     });
 
     document.getElementById('container').appendChild(hotspotText);
     return hotspot;
 }
 // Fin
+//////////////////////// Fin //////////////
 
-// Función para limpiar hotspots actuales
-function clearCurrentHotspots() {
-    if (panorama && panorama.children) {
-        const hotspotsToRemove = panorama.children.filter(child => child instanceof PANOLENS.Infospot);
-        hotspotsToRemove.forEach(hotspot => panorama.remove(hotspot));
-    }
-}
-// Fin
 
+//////////////////////// Se declaran los hotspot y su elemento junto con sus rutas //////////////
 // Hotspot de inicio de sesion
 function createLoginHotspotsForScene(sceneURL) {
     let loginHotspots = [];
@@ -705,7 +721,10 @@ function createWalkHotspotsForScene(sceneURL) {
     return walkHotspots.map(hotspot => createWalkHotspot(hotspot.position, hotspot.direction, hotspot.text));
 }
 // Fin
+//////////////////////// Fin //////////////
 
+
+//////////////////////// Inicialización de los hotspot //////////////
 // Vista del menú principal
 function initializeMainPanorama() {
     panorama = new PANOLENS.ImagePanorama('../Img/PanoramaInterior.png');
@@ -750,18 +769,7 @@ function addInitialHotspots() {
 }
 
 // Vista del menú principal
-function initializePanorama() {
-    const savedSceneURL = loadCurrentScene();
-    panorama = new PANOLENS.ImagePanorama(savedSceneURL);
-
-    panorama.addEventListener('load', () => {
-        addInitialHotspots();
-    });
-
-    viewer.add(panorama);
-}
-
-// Vista del menú principal
 const container = document.querySelector('#container');
 const viewer = new PANOLENS.Viewer({ container: container });
 initializePanorama();
+//////////////////////// Fin //////////////
