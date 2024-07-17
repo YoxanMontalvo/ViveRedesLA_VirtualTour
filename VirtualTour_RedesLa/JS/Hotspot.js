@@ -156,6 +156,9 @@ function createSceneHotspot(position, sceneURL, text, title) {
         newPanorama.addEventListener('load', () => {
             clearCurrentHotspots();
             updateSceneTitle(title);
+            // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
+            const newLoginHotspot = createLoginHotspotsForScene(sceneURL);
+            newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
             const newInfoHotspots = createInfoHotspotsForScene(sceneURL);
             newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
             const newSceneHotspots = createSceneHotspotsForScene(sceneURL);
@@ -308,7 +311,7 @@ function createLoginHotspotsForScene(sceneURL) {
 
     if (sceneURL === '../Img/PanoramaInterior.png') {
         loginHotspots = [
-            { position: { x: 3000, y: 100, z: -5000 }}
+            { position: { x: 3000, y: 1000, z: -5000 }}
         ];
     }
     return loginHotspots.map(hotspot => createLoginHotspot(hotspot.position));
@@ -381,7 +384,6 @@ function createSceneHotspotsForScene(sceneURL) {
         sceneHotspots = [
             { position: { x: 1000, y: 1000, z: -5000 }, sceneURL: '../Img/RedesSalones.png', text: 'Entrar a Oficinas', title: 'Oficinas' },
             { position: { x: 2000, y: 1000, z: -5000 }, sceneURL: '../Img/cursosOficinas.jpg', text: 'Entrar a Cursos', title: 'Recepción de Cursos' },
-            { position: { x: 3000, y: 1000, z: -5000 }, sceneURL: '../Img/congresosOficinas.jpg', text: 'Entrar a Congresos', title: 'Congresos ' },
             { position: { x: 4000, y: 1000, z: -5000 }, sceneURL: '../Img/CIROficinas.jpg', text: 'Entrar a Centro de Investigación REDESLA', title: 'Centro de Investigación REDESLA' },
             { position: { x: 5000, y: 1000, z: -5000 }, sceneURL: '../Img/redeslaOficinas.jpg', text: 'Entrar a REDESLA', title: 'Oficina REDESLA' },
         ];
@@ -692,11 +694,6 @@ function createSceneHotspotsForScene(sceneURL) {
         sceneHotspots = [
             // Hotspot para regresar
             { position: { x: 1000, y: -1000, z: -5000 }, sceneURL: '../Img/pasilloEstudiosCientificos.jpg', text: 'Regresar', title: 'Aulas de estudios científicos' },
-        ];
-    }else if (sceneURL === '../Img/congresosOficinas.jpg'){
-        sceneHotspots = [
-            // Hotspot para regresar
-            { position: { x: 6000, y: 1000, z: -5000 }, sceneURL: '../Img/PanoramaInterior.png', text: 'Regresar', title: 'Campus de la Institución' },
         ];
     }
 

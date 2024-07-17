@@ -149,6 +149,8 @@ function createSceneHotspot(position, sceneURL, text, title) {
             newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
             const newSceneHotspots = createSceneHotspotsForScene(sceneURL);
             newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newPageHotspots = createPageHotspotsForScene(sceneURL);
+            newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
             saveCurrentScene(sceneURL); // Guardar la escena actual
