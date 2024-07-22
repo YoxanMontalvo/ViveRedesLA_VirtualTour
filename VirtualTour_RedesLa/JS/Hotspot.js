@@ -1,3 +1,11 @@
+// Borrar el local storage y regresar a la primer escena al presionar el boton de recargar la pagina que tiene el navegador
+window.addEventListener('beforeunload', function(event) {
+    // Borra el localStorage
+    localStorage.clear();
+});
+// Fin
+
+
 //////////////////////// Todas las funciones fuera de los hotspot //////////////
 // Reproducir el sonido al abrir el modal
 const InfoHotSound = new Audio('../Music/SoundInfoView.mp3');
@@ -593,6 +601,7 @@ function createSceneHotspotsForScene(sceneURL) {
         sceneHotspots = [
             { position: { x: 2000, y: 1000, z: -5000 }, sceneURL: '../Img/RecervoriosSala.jpg', text: 'Entrar a Recervorios', title: 'Recervorios' },
             { position: { x: 4000, y: 1000, z: -5000 }, sceneURL: '../Img/centroComputoSala.jpg', text: 'Entrar a Centro de computo', title: 'Centro de computo' },
+            { position: { x: 1000, y: -1000, z: -5000 }, sceneURL: '../Img/cursosRecepcion.jpg', text: 'Regresar', title: 'Cursos' },
         ];
     }else if (sceneURL === '../Img/RecervoriosSala.jpg'){//SALIR DE LA SALA DE RESERVORIOS
         sceneHotspots = [

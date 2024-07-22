@@ -1,3 +1,7 @@
+// Borrar el local storage y regresar a la primer escena al presionar el boton
+
+// Fin
+
 //////////////////////// Todas las funciones fuera de los hotspot //////////////
 // Reproducir el sonido al abrir el modal
 const InfoHotSound = new Audio('../Music/SoundInfoView.mp3');
