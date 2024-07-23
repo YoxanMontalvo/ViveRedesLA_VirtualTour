@@ -1,7 +1,3 @@
-// Borrar el local storage y regresar a la primer escena al presionar el boton
-
-// Fin
-
 //////////////////////// Todas las funciones fuera de los hotspot //////////////
 // Reproducir el sonido al abrir el modal
 const InfoHotSound = new Audio('../Music/SoundInfoView.mp3');
@@ -70,32 +66,69 @@ function clearCurrentHotspots() {
 //////////////////////// Declaracion de los hotspot //////////////
 // Función para crear hotspot de información y la apertura del modal
 function createInfoHotspot(position, text, title, image, description) {
-    let infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.WatchInfos);
+    const infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.WatchInfos);
     infospot.position.set(position.x, position.y, position.z);
-    infospot.addHoverElement(document.querySelector('#panel'), 165);
-  
-    infospot.addEventListener('hoverenter', function(){
-        document.querySelector('#panel').classList.add('show');
-        document.querySelector('#panel h1').textContent = title;
-        document.querySelector('#panel p').textContent = description;
-        // document.querySelector('#panel img').src = image
-    });
-  
-    infospot.addEventListener('hoverleave', function(){
-      document.querySelector('#panel').classList.remove('show');
+
+    // Crear elemento de texto manualmente
+    const hotspotText = document.createElement('div');
+    hotspotText.classList.add('hoverModalText');
+    hotspotText.textContent = text;
+    hotspotText.style.display = 'none';
+
+    // Función para actualizar la posición del texto del hotspot
+    function updateHotspotTextPosition() {
+        const vector = new THREE.Vector3();
+        infospot.getWorldPosition(vector);
+        vector.project(viewer.camera);
+
+        const widthHalf = container.clientWidth / 2;
+        const heightHalf = container.clientHeight / 2;
+
+        // Coordenadas de pantalla
+        const screenX = (vector.x * widthHalf) + widthHalf;
+        const screenY = (-vector.y * heightHalf) + heightHalf;
+        const offsetTop = 105;
+
+        // Aplicar el desplazamiento hacia arriba
+        hotspotText.style.top = `${screenY - offsetTop}px`;
+        hotspotText.style.left = `${screenX}px`;
+    }
+
+    // Mostrar el texto al hacer hover sobre el hotspot
+    infospot.addEventListener('hoverenter', () => {
+        updateHotspotTextPosition();
+        hotspotText.style.display = 'block';
     });
 
-    // Evento de clic para abrir el panel de información y reproducir sonido
+    // Ocultar el texto al salir del hover
+    infospot.addEventListener('hoverleave', () => {
+        hotspotText.style.display = 'none';
+    });
+
+    // Evento de clic para abrir el modal de información y reproducir sonido
     infospot.addEventListener('click', () => {
         playSoundInfo();
 
-        // Funcion para mover la camara al hotspot seleccionado
+        // Actualizar el contenido del modal
+        const modal = document.querySelector('#infoModalLeft');
+        if (modal) {
+            modal.querySelector('h5').textContent = title;
+            modal.querySelector('.modal-body').textContent = description;
+            modal.classList.add('show');
+        }
+
+        // Función para mover la cámara al hotspot seleccionado
         const targetPosition = new THREE.Vector3(position.x, position.y, position.z);
         viewer.tweenControlCenter(targetPosition, 0);
     });
-  
+
+    // Agregar el elemento de texto al contenedor
+    document.getElementById('container').appendChild(hotspotText);
+
     return infospot;
 }
+// Fin
+
 // Fin
 
 // Función para crear hotspot de cambio de escena
@@ -239,7 +272,7 @@ function createInfoHotspotsForScene(sceneURL) {
 
     if (sceneURL === '../Img/auditorioCongreso.jpg') {
       infoHotspots = [
-        { position: { x: -1000, y: 1000, z: -5000 }, text: 'Bienvenido al congreso de REDESLA', title: 'Bienvenido al congreso de REDESLA', image: '', description: 'El congreso de REDESLA se celebra cada añoS' },
+        { position: { x: -1000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', image: '', description: 'El congreso de REDESLA se celebra cada añoS' },
     ];
     }
 

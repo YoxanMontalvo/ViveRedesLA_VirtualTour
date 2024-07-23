@@ -1,166 +1,213 @@
 html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    }
-    
-    #container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    }
-    
-    #panorama-container {
-    width: 100%;
-    height: 100%;
-    }
-    
-    #scene-title {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: white;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px 20px;
-    border-radius: 10px;
-    z-index: 1000;
-    font-size: 1.5em;
-    }
-    
-    #panel {
-    width: 320px;
-    height: 240px;
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    padding: 20px;
-    display: none; /* Para que solo se muestre en hover */
-    }
-    
-    #panel::after {
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: 48%;
-        margin-left: -5px;
-        border-width: 10px;
-        border-style: solid;
-        border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
-    }
-    
-    #panel.show {
-    display: block;
-    opacity: 1;
-    transform: scale(1);
-    }
-    
-    #panel h1 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    }
-    
-    #panel p {
-    font-size: 14px;
-    color: #333;
-    }
-    
-    .hotspot-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, 0.95);
-    color: black;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
-    display: none; /* Inicialmente oculto */
-    z-index: 1000;
-    }
-    .hotspot-text::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 48%;
-    margin-left: -5px;
-    border-width: 10px;
-    border-style: solid;
-    border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
-    }
-
-
-
-/* El Modal (oculto por defecto) */
-.modal {
-    display: none; /* Oculto por defecto */
-    position: fixed; /* Mantiene el modal en pantalla */
-    z-index: 1; /* Sitúa el modal en la parte superior */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Habilita el scroll si es necesario */
-    background-color: rgb(0, 0, 0); /* Color de fondo con transparencia */
-    background-color: rgba(0, 0, 0, 0.4);
+width: 100%;
+height: 100%;
+overflow: hidden;
+margin: 0;
+padding: 0;
 }
 
-/* Contenido del Modal */
+#container {
+position: relative;
+width: 100%;
+height: 100%;
+}
+
+#panorama-container {
+width: 100%;
+height: 100%;
+}
+
+#scene-title {
+position: absolute;
+bottom: 20px;
+left: 20px;
+color: white;
+background: rgba(0, 0, 0, 0.5);
+padding: 10px 20px;
+border-radius: 10px;
+z-index: 1000;
+font-size: 1.5em;
+}
+
+#panel {
+width: 320px;
+height: 150px;
+background-color: rgba(255, 255, 255, 0.95);
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+border-radius: 10px;
+padding: 20px;
+display: none; /* Para que solo se muestre en hover */
+}
+
+#panel::after {
+content: '';
+position: absolute;
+top: 100%;
+left: 48%;
+margin-left: -5px;
+border-width: 10px;
+border-style: solid;
+border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
+}
+
+#panel.show {
+display: block;
+opacity: 1;
+transform: scale(1);
+}
+
+#panel p {
+font-size: 14px;
+color: #333;
+}
+
+/* Hover de cambio de escena */
+.hotspot-text {
+position: absolute;
+top: 50%;
+left: 50%;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+transform: translate(-50%, -50%);
+background-color: rgba(255, 255, 255, 0.95);
+color: black;
+padding: 10px 20px;
+border-radius: 5px;
+font-size: 14px;
+font-weight: bold;
+display: none;
+z-index: 1000;
+}
+.hotspot-text::after {
+content: '';
+position: absolute;
+top: 100%;
+left: 48%;
+margin-left: -5px;
+border-width: 10px;
+border-style: solid;
+border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
+}
+
+/* Contenido del Modal de inicio de sesion*/
+.modal {
+display: none;
+position: fixed;
+z-index: 1;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgb(0, 0, 0);
+background-color: rgba(0, 0, 0, 0.4);
+}
+
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% desde la parte superior y centrado */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Podrías ajustar el tamaño según sea necesario */
-    max-width: 400px;
+background-color: #fefefe;
+margin: 15% auto;
+padding: 20px;
+border: 1px solid #888;
+width: 80%;
+max-width: 400px;
 }
 
 /* Botón de cierre */
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+color: black;
+text-decoration: none;
+cursor: pointer;
 }
 
 /* Estilos del formulario */
 form {
-    display: flex;
-    flex-direction: column;
+display: flex;
+flex-direction: column;
 }
 
 label {
-    margin-top: 10px;
+margin-top: 10px;
 }
 
 input[type="text"],
 input[type="password"] {
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+padding: 10px;
+margin-top: 5px;
+margin-bottom: 15px;
+border: 1px solid #ccc;
+border-radius: 4px;
 }
 
 button[type="submit"] {
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+padding: 10px;
+background-color: #4CAF50;
+color: white;
+border: none;
+border-radius: 4px;
+cursor: pointer;
 }
 
 button[type="submit"]:hover {
-    background-color: #45a049;
+background-color: #45a049;
+}
+
+/* Modal del hotspot de informacion */
+#infoModalLeft {
+position: fixed;
+top: 10px;
+left: 10px;
+width: 30%;
+height: 90%;
+background-color: white;
+z-index: 1050;
+border: 1px solid #ccc;
+padding: 15px;
+overflow-y: auto;
+display: none; 
+border-radius: 5px;
+}
+
+#infoModalLeft.show {
+display: block;
+}
+
+/* Ocultar fondo difuminado */
+.modal-backdrop {
+display: none;
+}
+
+/* Hover de cambio modal de informacion */
+/* Estilos del hotspot de información */
+.hoverModalText {
+position: absolute;
+top: 50%;
+left: 40%;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+transform: translate(-50%, -50%);
+background-color: rgba(255, 255, 255, 0.95);
+color: black;
+padding: 20px 20px;
+border-radius: 10px;
+height: 100px;
+font-size: 16px;
+font-weight: bold;
+display: none; /* Inicialmente oculto */
+z-index: 1000;
+}
+.hoverModalText::after {
+content: '';
+position: absolute;
+top: 100%;
+left: 48%;
+margin-left: -10px;
+border-width: 15px;
+border-style: solid;
+border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
 }

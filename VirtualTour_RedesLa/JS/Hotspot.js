@@ -1,11 +1,3 @@
-// Borrar el local storage y regresar a la primer escena al presionar el boton de recargar la pagina que tiene el navegador
-window.addEventListener('beforeunload', function(event) {
-    // Borra el localStorage
-    localStorage.clear();
-});
-// Fin
-
-
 //////////////////////// Todas las funciones fuera de los hotspot //////////////
 // Reproducir el sonido al abrir el modal
 const InfoHotSound = new Audio('../Music/SoundInfoView.mp3');

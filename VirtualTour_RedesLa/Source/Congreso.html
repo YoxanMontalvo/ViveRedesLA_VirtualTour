@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vive RedesLa</title>
-    <link rel="icon" href="../Icons/tourVirtualcon.png" type="image/x-icon">
+    <link rel="icon" href="../Documents/Icons/tourVirtualcon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="../CSS/InicioSescion.css">
 </head>
@@ -20,10 +20,23 @@
 
     <!-- Panel del hotspot de informacion -->
     <div id="panel">
-        <h1>Título</h1>
         <p>Descripción</p>
     </div>
     <!-- Fin -->
+
+    <!-- Modal del hotspot de información -->
+    <div id="infoModalLeft">
+        <div class="modal-header">
+            <h5 class="modal-title" id="infoModalLeftLabel">Título del Modal</h5>
+            <button type="button" class="close" onclick="closeInfoModalLeft()">
+                <span>&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            Descripción del Modal
+        </div>
+    </div>
+    <!-- Fin del Modal -->
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
@@ -31,5 +44,6 @@
     <script src="../Lib/three.min.js"></script>
     <script src="../Lib/panolens.min.js"></script>
     <script src="../JS/Congreso.js"></script>
+    <script src="../JS/InformationModal.js"></script>
 </body>
 </html>
