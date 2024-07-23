@@ -14,7 +14,7 @@ var typed = new Typed("#typed", {
       setTimeout(function() {
         document.body.style.opacity = 0;
         setTimeout(function() {
-          window.location.href = './Source/MenuPrincipal.html';
+          window.location.href = './HTML/MenuPrincipal.html';
         }, 400); // Esperar 500 milisegundos antes de redirigir
       }, 1800); // Esperar 2 segundos antes de iniciar el efecto de fundido
     }

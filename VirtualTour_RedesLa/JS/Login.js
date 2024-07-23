@@ -8,6 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('currentScene');
 
         // Redirigir a la página del congreso
-        window.location.href = '../Source/Congreso.html';
+        window.location.href = '../HTML/Congreso.html';
     });
 });

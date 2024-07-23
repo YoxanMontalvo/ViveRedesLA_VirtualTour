@@ -65,7 +65,7 @@ function clearCurrentHotspots() {
 
 //////////////////////// Declaracion de los hotspot //////////////
 // Función para crear hotspot de información y la apertura del modal
-function createInfoHotspot(position, text, title, image, description) {
+function createInfoHotspot(position, text, title, fileUrl, description) {
     const infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.WatchInfos);
     infospot.position.set(position.x, position.y, position.z);
 
@@ -110,12 +110,7 @@ function createInfoHotspot(position, text, title, image, description) {
         playSoundInfo();
 
         // Actualizar el contenido del modal
-        const modal = document.querySelector('#infoModalLeft');
-        if (modal) {
-            modal.querySelector('h5').textContent = title;
-            modal.querySelector('.modal-body').textContent = description;
-            modal.classList.add('show');
-        }
+        openInfoModalLeft(title, fileUrl, description);
 
         // Función para mover la cámara al hotspot seleccionado
         const targetPosition = new THREE.Vector3(position.x, position.y, position.z);
@@ -129,7 +124,6 @@ function createInfoHotspot(position, text, title, image, description) {
 }
 // Fin
 
-// Fin
 
 // Función para crear hotspot de cambio de escena
 function createSceneHotspot(position, sceneURL, text, title) {
@@ -271,12 +265,14 @@ function createInfoHotspotsForScene(sceneURL) {
     let infoHotspots = [];
 
     if (sceneURL === '../Img/auditorioCongreso.jpg') {
-      infoHotspots = [
-        { position: { x: -1000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', image: '', description: 'El congreso de REDESLA se celebra cada añoS' },
-    ];
+        infoHotspots = [
+            { position: { x: -3000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', fileUrl: 'https://www.youtube.com/watch?v=62ctHqCjtxg', description: 'El congreso de REDESLA se celebra cada añoS' },
+            { position: { x: -1000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', fileUrl: '../Documents/PDF/AcuseCita.pdf', description: 'El congreso de REDESLA se celebra cada añoS' },
+            { position: { x: -2000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', fileUrl: '../Img/auditorioCongreso.jpg', description: 'El congreso de REDESLA se celebra cada añoS' },
+        ];
     }
 
-    return infoHotspots.map(hotspot => createInfoHotspot(hotspot.position, hotspot.text, hotspot.title, hotspot.image, hotspot.description));
+    return infoHotspots.map(hotspot => createInfoHotspot(hotspot.position, hotspot.text, hotspot.title, hotspot.fileUrl, hotspot.description));
 }
 // Fin
 

@@ -163,8 +163,8 @@ background-color: #45a049;
 position: fixed;
 top: 10px;
 left: 10px;
-width: 30%;
-height: 90%;
+width: 50%;
+height: 80%;
 background-color: white;
 z-index: 1050;
 border: 1px solid #ccc;
@@ -182,6 +182,11 @@ display: block;
 .modal-backdrop {
 display: none;
 }
+.modal-body{
+    width: 100%;
+    height: 90%;
+}
+
 
 /* Hover de cambio modal de informacion */
 /* Estilos del hotspot de información */
