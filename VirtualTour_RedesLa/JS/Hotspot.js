@@ -177,6 +177,7 @@ function createSceneHotspot(position, sceneURL, text, title) {
         });
         newPanorama.load(sceneURL);
         viewer.add(newPanorama);
+        viewer.tweenControlCenter(new THREE.Vector3(3000, 0, 0), 0);
     });
 
     // Agregar el elemento de texto al contenedor
@@ -313,6 +314,7 @@ function createWalkHotspot(position, sceneURL, text, title) {
         });
         newPanorama.load(sceneURL);
         viewer.add(newPanorama);
+        viewer.tweenControlCenter(new THREE.Vector3(3000, 0, 0), 0);
     });
 
     // Agregar el elemento de texto al contenedor
@@ -830,6 +832,7 @@ function initializePanorama() {
     });
 
     viewer.add(panorama);
+    viewer.tweenControlCenter(new THREE.Vector3(3000, 0, 0), 0);
 }
 
 // Función para agregar hotspots iniciales
