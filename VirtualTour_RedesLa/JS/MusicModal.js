@@ -10,9 +10,9 @@ var nextBtn = document.getElementById("next");
 
 // Lista de canciones
 var canciones = [
-    "./Music/ambientacionSong.mp3",
-    "./Music/PianoRelax.mp3",
-    "./Music/RelaxSong.mp3",
+    "../Music/ambientacionSong.mp3",
+    "../Music/PianoRelax.mp3",
+    "../Music/RelaxSong.mp3",
 ];
 var currentSongIndex = 0;
 
