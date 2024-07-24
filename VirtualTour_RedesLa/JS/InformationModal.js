@@ -6,8 +6,6 @@ function openInfoModalLeft(title, fileUrl, description) {
     const container = $('#modal-content-container');
     container.empty(); // Limpiar contenido previo
 
-    console.log('File URL:', fileUrl); // Verifica la URL
-
     // Convertir URL corta de YouTube al formato de embed
     if (fileUrl.includes('youtu.be')) {
         const videoId = fileUrl.split('youtu.be/')[1];
