@@ -459,6 +459,7 @@ function initializePanorama() {
     });
 
     viewer.add(panorama);
+    viewer.tweenControlCenter(new THREE.Vector3(3000, 0, 0), 0);
 }
 
 // Función para agregar hotspots iniciales
@@ -474,19 +475,6 @@ function addInitialHotspots() {
 
     const initialWalkHotspots = createWalkHotspotsForScene(panorama.src);
     initialWalkHotspots.forEach(hotspot => panorama.add(hotspot));
-}
-
-// Vista del menú principal
-function initializePanorama() {
-    const savedSceneURL = loadCurrentScene();
-    panorama = new PANOLENS.ImagePanorama(savedSceneURL);
-
-    panorama.addEventListener('load', () => {
-        addInitialHotspots();
-    });
-
-    viewer.add(panorama);
-    viewer.tweenControlCenter(new THREE.Vector3(3000, 0, 0), 0);
 }
 
 // Vista del menú principal
