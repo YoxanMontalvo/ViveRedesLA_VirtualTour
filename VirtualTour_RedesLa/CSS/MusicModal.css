@@ -1,5 +1,5 @@
 /* Estilos para el modal */
-.modales {
+.modalMuscia {
     display: none; /* Ocultar el modal por defecto */
     position: fixed;
     z-index: 1;
@@ -22,8 +22,8 @@
     }
 }
 
-.modal-cont{
-    background-color: #fefefe;
+.contenModal{
+    background-color: #ffffff; 
     margin: 5% auto;
     padding: 20px;
     width: 80%;
