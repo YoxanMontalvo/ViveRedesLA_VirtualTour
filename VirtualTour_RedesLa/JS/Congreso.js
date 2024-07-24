@@ -311,8 +311,8 @@ function createWalkHotspot(position, sceneURL, text, title) {
             clearCurrentHotspots();
             updateSceneTitle(title);
             // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
-            const newLoginHotspot = createLoginHotspotsForScene(sceneURL);
-            newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
+            /* const newLoginHotspot = createLoginHotspotsForScene(sceneURL);
+            newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot)); */
             const newInfoHotspots = createInfoHotspotsForScene(sceneURL);
             newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
             const newSceneHotspots = createSceneHotspotsForScene(sceneURL);
@@ -425,7 +425,7 @@ function createWalkHotspotsForScene(sceneURL) {
         ];
     }else if (sceneURL === '../Img/Congresos/Escalerascabina.jpg') {
         walkHotspots = [
-            { position: { x: 200, y: 200, z: 200 }, sceneURL: '../Img/Congresos/mezzanine.jpg', text: 'Bajar escaleras', title: 'Sala de Mezzanine' },
+            { position: { x: -934.97, y: -2788.14, z: 4035.68 }, sceneURL: '../Img/Congresos/mezzanine.jpg', text: 'Bajar escaleras', title: 'Sala de Mezzanine' },
         ];
     }
 
@@ -479,6 +479,6 @@ function addInitialHotspots() {
 
 // Vista del menú principal
 const container = document.querySelector('#container');
-const viewer = new PANOLENS.Viewer({ container: container });
+const viewer = new PANOLENS.Viewer({ container: container,  output: 'console' });
 initializePanorama();
 //////////////////////// Fin //////////////
