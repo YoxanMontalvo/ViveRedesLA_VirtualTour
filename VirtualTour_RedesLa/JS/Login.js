@@ -4,10 +4,20 @@ document.addEventListener('DOMContentLoaded', function() {
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        // Borrar el localStorage antes de cambiar la escena
-        localStorage.removeItem('currentScene');
+        const claveGafete = document.getElementById('claveGafete').value.trim();
+        const claveCorrecta = '12345';
 
-        // Redirigir a la página del congreso
-        window.location.href = '../HTML/Congreso.html';
+        // Validar la clave de gafete
+        if (claveGafete === claveCorrecta) {
+            localStorage.removeItem('currentScene');
+            window.location.href = '../HTML/Congreso.html';
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: '¡Clave de gafete no encontrada!',
+                text: 'La clave de gafete no existe. Por favor contacte a sistemas',
+                confirmButtonText: 'Aceptar'
+            });
+        }
     });
 });
