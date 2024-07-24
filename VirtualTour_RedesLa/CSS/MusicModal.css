@@ -1,5 +1,5 @@
 /* Estilos para el modal */
-.modal {
+.modales {
     display: none; /* Ocultar el modal por defecto */
     position: fixed;
     z-index: 1;
@@ -22,7 +22,7 @@
     }
 }
 
-.modal-content {
+.modal-cont{
     background-color: #fefefe;
     margin: 5% auto;
     padding: 20px;
@@ -37,7 +37,7 @@
     animation: modalFadeIn 0.3s ease-out forwards;
 }
 
-.close {
+.closeModal {
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -45,8 +45,8 @@
     transition: transform 0.3s ease-out;
 }
 
-.close:hover,
-.close:focus {
+.closeModal:hover,
+.closeModal:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;

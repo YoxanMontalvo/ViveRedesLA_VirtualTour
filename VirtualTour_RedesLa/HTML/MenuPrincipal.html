@@ -7,7 +7,10 @@
     <title>Vive RedesLa</title>
     <link rel="icon" href="../Documents/Icons/tourVirtualcon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../CSS/Estilos.css">
+    <link rel="stylesheet" href="../CSS/MusicModal.css">
 </head>
 <body>
     <!-- Contener del visor -->
@@ -38,12 +41,8 @@
                 <div class="modal-body">
                     <form id="loginForm">
                         <div class="form-group">
-                            <label for="username">Correo electronico:</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Contraseña:</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <label for="claveGafete">Clave de gafete:</label>
+                            <input type="text" class="form-control" id="claveGafete" name="claveGafete" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
                     </form>
@@ -53,6 +52,26 @@
     </div>
     <!-- Fin Modal -->
 
+    <!-- Modal del reproductor de musica -->
+  <div id="myModal" class="modal">
+    <!-- Contenido del Modal -->
+    <div class="modal-cont">
+        <span class="closeModal">&times;</span>
+        <h3>Ambientación Musical</h3>
+        <div id="music-controls">
+          <button id="prev" class="btn"><i class="fas fa-backward"></i></button>
+          <button id="play-pause" class="btn"><i class="fas fa-play"></i></button>
+          <button id="next" class="btn"><i class="fas fa-forward"></i></button>
+        </div>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+        <audio id="musica" loop>
+            <source src="../Music/ambientacionSong.mp3" type="audio/mp3">
+            Tu navegador no soporta la reproducción de audio.
+        </audio>
+    </div>
+  </div>
+  <!-- Fin -->
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -60,5 +79,6 @@
     <script src="../Lib/panolens.min.js"></script>
     <script src="../JS/Hotspot.js"></script>
     <script src="../JS/Login.js"></script>
+    <script src="../JS/MusicModal.js"></script>
 </body>
 </html>

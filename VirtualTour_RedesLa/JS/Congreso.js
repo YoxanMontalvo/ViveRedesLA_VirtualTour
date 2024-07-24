@@ -17,8 +17,7 @@ function playSoundSceneChange() {
 const elevatorMusic = new Audio('../Music/RelaxSong.mp3');
 function musicElevator(sceneURL) {
     const scenesWithElevatorMusic = [
-        '../Img/elevadorRelayn.jpeg',
-        '../Img/elevadorRelep.jpeg',
+        '../Img/Congresos/Elevador.jpg',
     ];
 
     if (scenesWithElevatorMusic.includes(sceneURL)) {
@@ -47,7 +46,7 @@ function saveCurrentScene(sceneURL) {
 // Función para cargar la escena actual desde localStorage
 function loadCurrentScene() {
     const currentScene = localStorage.getItem('currentScene');
-    return currentScene ? currentScene : '../Img/auditorioCongreso.jpg';
+    return currentScene ? currentScene : '../Img/Congresos/Lobby.jpg';
     // return localStorage.getItem = '../Img/auditorioCongreso.jpg';
 }
 // Fin
@@ -180,6 +179,8 @@ function createSceneHotspot(position, sceneURL, text, title) {
             newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
             const newSceneHotspots = createSceneHotspotsForScene(sceneURL);
             newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newWalkHotspots = createWalkHotspotsForScene(sceneURL);
+            newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
             const newPageHotspots = createPageHotspotsForScene(sceneURL);
             newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
             viewer.setPanorama(newPanorama);
@@ -192,6 +193,7 @@ function createSceneHotspot(position, sceneURL, text, title) {
         });
         newPanorama.load(sceneURL);
         viewer.add(newPanorama);
+        viewer.tweenControlCenter(newTHREE.Vector3(3000, 0, 0), 0);
     });
 
     // Agregar el elemento de texto al contenedor
@@ -256,6 +258,87 @@ function createPageHotspot(position, pageURL, text, title) {
     return pageHotspot;
 }
 // Fin
+
+// Función para crear hotspot de avanzar simulando caminar
+function createWalkHotspot(position, sceneURL, text, title) {
+    const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.ArroyDoble);
+    sceneHotspot.position.set(position.x, position.y, position.z);
+
+    // Crear elemento de texto manualmente
+    const hotspotText = document.createElement('div');
+    hotspotText.classList.add('hotspot-text');
+    hotspotText.textContent = text;
+    hotspotText.style.display = 'none';
+
+    // Función para actualizar la posición del texto del hotspot
+    function updateHotspotTextPosition() {
+        const vector = new THREE.Vector3();
+        sceneHotspot.getWorldPosition(vector);
+        vector.project(viewer.camera);
+
+        const widthHalf = container.clientWidth / 2;
+        const heightHalf = container.clientHeight / 2;
+
+        // Coordenadas de pantalla
+        const screenX = (vector.x * widthHalf) + widthHalf;
+        const screenY = (-vector.y * heightHalf) + heightHalf;
+        const offsetTop = 65;
+
+        // Aplicar el desplazamiento hacia arriba
+        hotspotText.style.top = `${screenY - offsetTop}px`;
+        hotspotText.style.left = `${screenX}px`;
+    }
+
+    // Mostrar el texto al hacer hover sobre el hotspot
+    sceneHotspot.addEventListener('hoverenter', () => {
+        updateHotspotTextPosition();
+        hotspotText.style.display = 'block';
+    });
+
+    // Ocultar el texto al salir del hover
+    sceneHotspot.addEventListener('hoverleave', () => {
+        hotspotText.style.display = 'none';
+    });
+
+    // Cambiar de escena al hacer clic en el hotspot
+    sceneHotspot.addEventListener('click', () => {
+        playSoundSceneChange();//Sonido al cambiar de escena
+        musicElevator(sceneURL);//Musica del elevador
+
+        const newPanorama = new PANOLENS.ImagePanorama(sceneURL);
+
+        newPanorama.addEventListener('load', () => {
+            clearCurrentHotspots();
+            updateSceneTitle(title);
+            // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
+            const newLoginHotspot = createLoginHotspotsForScene(sceneURL);
+            newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
+            const newInfoHotspots = createInfoHotspotsForScene(sceneURL);
+            newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newSceneHotspots = createSceneHotspotsForScene(sceneURL);
+            newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newWalkHotspots = createWalkHotspotsForScene(sceneURL);
+            newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newPageHotspots = createPageHotspotsForScene(sceneURL);
+            newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            viewer.setPanorama(newPanorama);
+            panorama = newPanorama;
+            saveCurrentScene(sceneURL); // Guardar la escena actual
+        });
+
+        newPanorama.addEventListener('error', (event) => {
+            console.error('Error al cargar la nueva imagen panorámica:', event);
+        });
+        newPanorama.load(sceneURL);
+        viewer.add(newPanorama);
+    });
+
+    // Agregar el elemento de texto al contenedor
+    document.getElementById('container').appendChild(hotspotText);
+
+    return sceneHotspot;
+}
+// Fin
 //////////////////////// Fin //////////////
 
 
@@ -264,7 +347,7 @@ function createPageHotspot(position, pageURL, text, title) {
 function createInfoHotspotsForScene(sceneURL) {
     let infoHotspots = [];
 
-    if (sceneURL === '../Img/auditorioCongreso.jpg') {
+    if (sceneURL === '../Img/Congresos/Lobby.jpg') {
         infoHotspots = [
             { position: { x: -3000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', fileUrl: 'https://www.youtube.com/watch?v=62ctHqCjtxg', description: 'El congreso de REDESLA se celebra cada añoS' },
             { position: { x: -1000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', fileUrl: '../Documents/PDF/AcuseCita.pdf', description: 'El congreso de REDESLA se celebra cada añoS' },
@@ -281,13 +364,34 @@ function createSceneHotspotsForScene(sceneURL) {
     let sceneHotspots = [];
 
     // Pagina principal
-    if (sceneURL === '../Img/auditorioCongreso.jpg') {// Pagina principal con sus hotspot
+    if (sceneURL === '../Img/Congresos/Lobby.jpg') {// Pagina principal con sus hotspot
         sceneHotspots = [
-            { position: { x: 1000, y: 1000, z: -5000 }, sceneURL: '../Img/salaOrgulloRDLA.jpg', text: 'Entrar a congreso', title: 'Sala de congreso' },
+            { position: { x: 8000, y: -500, z: -400 }, sceneURL: '../Img/Congresos/Elevador.jpg', text: 'Entrar al elevador', title: 'Elevador' },
+            { position: { x: 2200, y: -300, z: -4000 }, sceneURL: '../Img/Congresos/mezzanine.jpg', text: 'Entrar a Mezzanine', title: 'Sala de Mezzanine' },
+            { position: { x: 3000, y: -400, z: 5000 }, sceneURL: '../Img/Congresos/IQuatro.jpg', text: 'Entrar a Zona iQuatro', title: 'Zona iQuatro' },
         ];
-    }else if (sceneURL === '../Img/salaOrgulloRDLA.jpg') {// Pagina principal con sus hotspot
+    }else if (sceneURL === '../Img/Congresos/Elevador.jpg') {// Pagina principal con sus hotspot
         sceneHotspots = [
-            { position: { x: 2000, y: 1000, z: -5000 }, sceneURL: '../Img/auditorioCongreso.jpg', text: 'Regresar', title: 'Congreso' },
+            { position: { x: 6000, y: 400, z: -4700 }, sceneURL: '../Img/Congresos/Lobby.jpg', text: 'Lobby', title: 'Congreso' },
+            { position: { x: 6000, y: -500, z: -4700 }, sceneURL: '../Img/Congresos/PasilloSalones.jpg', text: 'Pasillo salones', title: 'Pasillo de los salones' },
+            { position: { x: 6000, y: -1400, z: -4700 }, sceneURL: '../Img/Congresos/AuditorioCongreso.jpg', text: 'Auditorio', title: 'Auditorio' },
+        ];
+    }else if (sceneURL === '../Img/Congresos/mezzanine.jpg') {// Pagina principal con sus hotspot
+        sceneHotspots = [
+            { position: { x: 8000, y: -200, z: -4000 }, sceneURL: '../Img/Congresos/Lago.jpg', text: 'Ir al lago', title: 'Lago' },
+            { position: { x: -8000, y: -200, z: -1000 }, sceneURL: '../Img/Congresos/Lobby.jpg', text: 'Volver al congreso', title: 'Congreso' },
+        ];
+    }else if (sceneURL === '../Img/Congresos/Lago.jpg') {// Pagina principal con sus hotspot
+        sceneHotspots = [
+            { position: { x: -8000, y: -200, z: -4000 }, sceneURL: '../Img/Congresos/mezzanine.jpg', text: 'Volver al Mezzanine', title: 'Sala de Mezzanine' },
+        ];
+    }else if (sceneURL === '../Img/Congresos/PasilloSalones.jpg') {
+        sceneHotspots = [
+            { position: { x: -9000, y: -200, z: 100 }, sceneURL: '../Img/Congresos/Elevador.jpg', text: 'Volver al elevador', title: 'Elevador' },
+        ];
+    }else if (sceneURL === '../Img/Congresos/AuditorioCongreso.jpg') {
+        sceneHotspots = [
+            { position: { x: -9100, y: -400, z: 100 }, sceneURL: '../Img/Congresos/Elevador.jpg', text: 'Volver al elevador', title: 'Elevador' },
         ];
     }
 
@@ -299,13 +403,32 @@ function createSceneHotspotsForScene(sceneURL) {
 function createPageHotspotsForScene(sceneURL) {
     let pageHotspots = [];
 
-    if(sceneURL === '../Img/auditorioCongreso.jpg') { // Ejemplo de una escena
+    if(sceneURL === '../Img/Congresos/Lobby.jpg') { // Ejemplo de una escena
         pageHotspots = [
-            { position: { x: 6000, y: 1000, z: -5000 }, pageURL: '../Source/MenuPrincipal.html', text: 'Salir del congreso', title: 'Campus de la Institución' },
+            { position: { x: -7100, y: -1000, z: -800 }, pageURL: '../HTML/MenuPrincipal.html', text: 'Salir del congreso', title: 'Campus de la Institución' },
         ];
     }
     
     return pageHotspots.map(hotspot => createPageHotspot(hotspot.position, hotspot.pageURL, hotspot.text, hotspot.title));
+}
+// Fin
+
+// Función para crear hotspots de caminata específicos para una escena
+function createWalkHotspotsForScene(sceneURL) {
+    let walkHotspots = [];
+
+    //Pagina de inicio del recorrido
+    if (sceneURL === '../Img/Congresos/mezzanine.jpg') {// Pagina principal con sus hotspot
+        walkHotspots = [
+            { position: { x: 8000, y: 1500, z: -4000 }, sceneURL: '../Img/Congresos/Escalerascabina.jpg', text: 'Subir escaleras', title: 'Cabina fotografica' },
+        ];
+    }else if (sceneURL === '../Img/Congresos/Escalerascabina.jpg') {
+        walkHotspots = [
+            { position: { x: 200, y: 200, z: 200 }, sceneURL: '../Img/Congresos/mezzanine.jpg', text: 'Bajar escaleras', title: 'Sala de Mezzanine' },
+        ];
+    }
+
+    return walkHotspots.map(hotspot => createWalkHotspot(hotspot.position, hotspot.sceneURL, hotspot.text, hotspot.title));
 }
 // Fin
 //////////////////////// Fin //////////////
@@ -314,7 +437,7 @@ function createPageHotspotsForScene(sceneURL) {
 //////////////////////// Inicialización de los hotspot //////////////
 // Vista del menú principal
 function initializeMainPanorama() {
-    panorama = new PANOLENS.ImagePanorama('../Img/auditorioCongreso.jpg');
+    panorama = new PANOLENS.ImagePanorama('../Img/Congresos/Lobby.jpg');
     panorama.addEventListener('load', () => {
         addInitialHotspots();
     });
@@ -347,6 +470,9 @@ function addInitialHotspots() {
 
     const initialPageHotspots = createPageHotspotsForScene(panorama.src);
     initialPageHotspots.forEach(hotspot => panorama.add(hotspot));
+
+    const initialWalkHotspots = createWalkHotspotsForScene(panorama.src);
+    initialWalkHotspots.forEach(hotspot => panorama.add(hotspot));
 }
 
 // Vista del menú principal

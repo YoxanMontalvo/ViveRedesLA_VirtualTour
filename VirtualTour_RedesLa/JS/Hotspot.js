@@ -50,7 +50,7 @@ function saveCurrentScene(sceneURL) {
 // Función para cargar la escena actual desde localStorage
 function loadCurrentScene() {
     const currentScene = localStorage.getItem('currentScene');
-    return currentScene ? currentScene : '../Img/PanoramaInterior.png';
+    return currentScene ? currentScene : '../Img/Exterior/EntradaViveRedesla.jpg';
 }
 // Fin
 
@@ -242,15 +242,83 @@ function createPageHotspot(position, pageURL, text, title) {
 // Fin
 
 // Función para crear hotspot de avanzar simulando caminar
-function createWalkHotspot(position, direction, text) {
-    const walkHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.Feed);
-    walkHotspot.position.set(position.x, position.y, position.z);
-    walkHotspot.addHoverText(text, 40);
-    walkHotspot.userData.direction = direction;
-    walkHotspot.addEventListener('click', () => {
-        console.log('Avanzar:', direction);
+function createWalkHotspot(position, sceneURL, text, title) {
+    const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.ArroyDoble);
+    sceneHotspot.position.set(position.x, position.y, position.z);
+
+    // Crear elemento de texto manualmente
+    const hotspotText = document.createElement('div');
+    hotspotText.classList.add('hotspot-text');
+    hotspotText.textContent = text;
+    hotspotText.style.display = 'none';
+
+    // Función para actualizar la posición del texto del hotspot
+    function updateHotspotTextPosition() {
+        const vector = new THREE.Vector3();
+        sceneHotspot.getWorldPosition(vector);
+        vector.project(viewer.camera);
+
+        const widthHalf = container.clientWidth / 2;
+        const heightHalf = container.clientHeight / 2;
+
+        // Coordenadas de pantalla
+        const screenX = (vector.x * widthHalf) + widthHalf;
+        const screenY = (-vector.y * heightHalf) + heightHalf;
+        const offsetTop = 65;
+
+        // Aplicar el desplazamiento hacia arriba
+        hotspotText.style.top = `${screenY - offsetTop}px`;
+        hotspotText.style.left = `${screenX}px`;
+    }
+
+    // Mostrar el texto al hacer hover sobre el hotspot
+    sceneHotspot.addEventListener('hoverenter', () => {
+        updateHotspotTextPosition();
+        hotspotText.style.display = 'block';
     });
-    return walkHotspot;
+
+    // Ocultar el texto al salir del hover
+    sceneHotspot.addEventListener('hoverleave', () => {
+        hotspotText.style.display = 'none';
+    });
+
+    // Cambiar de escena al hacer clic en el hotspot
+    sceneHotspot.addEventListener('click', () => {
+        playSoundSceneChange();//Sonido al cambiar de escena
+        musicElevator(sceneURL);//Musica del elevador
+
+        const newPanorama = new PANOLENS.ImagePanorama(sceneURL);
+
+        newPanorama.addEventListener('load', () => {
+            clearCurrentHotspots();
+            updateSceneTitle(title);
+            // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
+            const newLoginHotspot = createLoginHotspotsForScene(sceneURL);
+            newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
+            const newInfoHotspots = createInfoHotspotsForScene(sceneURL);
+            newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newSceneHotspots = createSceneHotspotsForScene(sceneURL);
+            newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newWalkHotspots = createWalkHotspotsForScene(sceneURL);
+            newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newPageHotspots = createPageHotspotsForScene(sceneURL);
+            newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            viewer.setPanorama(newPanorama);
+            panorama = newPanorama;
+            saveCurrentScene(sceneURL); // Guardar la escena actual
+        });
+
+        newPanorama.addEventListener('error', (event) => {
+            console.error('Error al cargar la nueva imagen panorámica:', event);
+        });
+        newPanorama.load(sceneURL);
+        viewer.add(newPanorama);
+    });
+
+    // Agregar el elemento de texto al contenedor
+    document.getElementById('container').appendChild(hotspotText);
+
+    return sceneHotspot;
 }
 // Fin
 
@@ -313,7 +381,12 @@ function createLoginHotspotsForScene(sceneURL) {
         loginHotspots = [
             { position: { x: 3000, y: 1000, z: -5000 }}
         ];
+    }else if (sceneURL === '../Img/Exterior/PatioCongreso.jpg') {
+        loginHotspots = [
+            { position: { x: 6000, y: 1000, z: -1100 }}
+        ];
     }
+
     return loginHotspots.map(hotspot => createLoginHotspot(hotspot.position));
 }
 // Fin
@@ -379,8 +452,21 @@ function createPageHotspotsForScene(sceneURL) {
 function createSceneHotspotsForScene(sceneURL) {
     let sceneHotspots = [];
 
+    //Pagina de inicio del recorrido
+    if (sceneURL === '../Img/Exterior/EntradaViveRedesla.jpg') {// Pagina principal con sus hotspot
+        sceneHotspots = [
+            { position: { x: 8000, y: -400, z: 100 }, sceneURL: '../Img/Exterior/CurcePatioCongreso.jpg', text: 'Ingresar a las instalaciones', title: 'Edificios de RedesLA' },
+        ];
+    }else if (sceneURL === '../Img/Exterior/CurcePatioCongreso.jpg') {// Pagina principal con sus hotspot
+        sceneHotspots = [
+            { position: { x: -7000, y: 100, z: 100 }, sceneURL: '../Img/Exterior/EntradaViveRedesla.jpg', text: 'Salir de la institución', title: 'Estacionamiento' },
+        ];
+    }
+
+
+
     // Pagina principal
-    if (sceneURL === '../Img/PanoramaInterior.png') {// Pagina principal con sus hotspot
+    else if (sceneURL === '../Img/PanoramaInterior.png') {// Pagina principal con sus hotspot
         sceneHotspots = [
             { position: { x: 1000, y: 1000, z: -5000 }, sceneURL: '../Img/RedesSalones.png', text: 'Entrar a Oficinas', title: 'Oficinas' },
             { position: { x: 2000, y: 1000, z: -5000 }, sceneURL: '../Img/cursosOficinas.jpg', text: 'Entrar a Cursos', title: 'Recepción de Cursos' },
@@ -706,17 +792,15 @@ function createSceneHotspotsForScene(sceneURL) {
 function createWalkHotspotsForScene(sceneURL) {
     let walkHotspots = [];
 
-    if (sceneURL === '../Img/salones.png') {
+    //Pagina de inicio del recorrido
+    if (sceneURL === '../Img/Exterior/CurcePatioCongreso.jpg') {// Pagina principal con sus hotspot
         walkHotspots = [
-            { position: { x: 7000, y: 1000, z: -5000 }, text: 'Avanzar hacia adelante' },
-        ];
-    } else if (sceneURL === '../Img/otra_escena.png') {
-        walkHotspots = [
-            { position: { x: 6000, y: 1200, z: -5000 }, text: 'Avanzar en la otra dirección' },
+            { position: { x: 8000, y: -400, z: 100 }, sceneURL: '../Img/Exterior/PatioCongreso.jpg', text: 'Avanzar al congreso', title: 'Edificio del congreso' },
+            { position: { x: 10, y: 100, z: 6000 }, sceneURL: '../Img/PanoramaInterior.png', text: 'Avanzar a los salones', title: 'Salones de las Redes' },
         ];
     }
 
-    return walkHotspots.map(hotspot => createWalkHotspot(hotspot.position, hotspot.direction, hotspot.text));
+    return walkHotspots.map(hotspot => createWalkHotspot(hotspot.position, hotspot.sceneURL, hotspot.text, hotspot.title));
 }
 // Fin
 //////////////////////// Fin //////////////
@@ -725,7 +809,7 @@ function createWalkHotspotsForScene(sceneURL) {
 //////////////////////// Inicialización de los hotspot //////////////
 // Vista del menú principal
 function initializeMainPanorama() {
-    panorama = new PANOLENS.ImagePanorama('../Img/PanoramaInterior.png');
+    panorama = new PANOLENS.ImagePanorama('../Img/Exterior/EntradaViveRedesla.jpg');
     panorama.addEventListener('load', () => {
         addInitialHotspots();
     });

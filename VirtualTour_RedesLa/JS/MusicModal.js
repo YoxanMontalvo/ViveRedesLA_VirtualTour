@@ -1,6 +1,5 @@
 var modal = document.getElementById("myModal");
-var btn = document.getElementById("music-button");
-var span = document.getElementsByClassName("close")[0];
+var span = document.getElementsByClassName("closeModal")[0];
 
 // Obtener los elementos de audio y botones
 var audio = document.getElementById("musica");
@@ -20,11 +19,6 @@ var currentSongIndex = 0;
 // Función para cargar una canción
 function loadSong(index) {
     audio.src = canciones[index];
-}
-
-// Abrir el modal
-btn.onclick = function() {
-    modal.style.display = "block";
 }
 
 // Cerrar el modal
