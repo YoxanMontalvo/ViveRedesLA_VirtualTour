@@ -54,17 +54,23 @@ html, body {
 
 #dialog {
   position: absolute;
-  top: 60%;
-  left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: auto;
   padding: 20px;
   box-sizing: border-box;
   z-index: 20; /* Asegura que esté por encima del botón */
   pointer-events: none;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  #typed {
+    font-size: 12pt !important;
+  }
 }
 
 #typed {
