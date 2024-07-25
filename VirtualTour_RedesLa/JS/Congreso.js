@@ -357,16 +357,16 @@ function setCameraHotspots(sceneURL) {
     //Pagina de inicio del recorrido
     if (sceneURL === '../Img/Congresos/Escalerascabina.jpg') {
         walkHotspots = [
-            { position: { x: 4966.71, y: -224.58, z: -466.84 }, sceneURL: '../Img/Congresos/mezzanine.jpg', text: 'Tomarse una foto', title: 'Tomarse una foto' },
+            { position: { x: 4966.71, y: -224.58, z: -466.84 }, sceneURL: 'Cabina fotográfica', text: 'Tomarse una foto', title: 'Tomarse una foto' },
         ];
     }
 
-    return walkHotspots.map(hotspot => createCameraHotspots(hotspot.position, hotspot.sceneURL, hotspot.text, hotspot.title));
+    return walkHotspots.map(hotspot => createCameraHotspots(hotspot.scale ?? 300,hotspot.position, hotspot.sceneURL, hotspot.text, hotspot.title));
 }
 
-function createCameraHotspots(position, sceneURL, text, title) {
-    const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.CamaraIcon);
-    sceneHotspot.position.set(position.x, position.y, position.z);
+function createCameraHotspots(scale, position, text, title, fileUrl, description) {
+    const infospot = new PANOLENS.Infospot(scale, PANOLENS.DataImage.CamaraIcon);
+    infospot.position.set(position.x, position.y, position.z);
 
     // Crear elemento de texto manualmente
     const hotspotText = document.createElement('div');
@@ -374,10 +374,11 @@ function createCameraHotspots(position, sceneURL, text, title) {
     hotspotText.textContent = text;
     hotspotText.style.display = 'none';
 
+
     // Función para actualizar la posición del texto del hotspot
     function updateHotspotTextPosition() {
         const vector = new THREE.Vector3();
-        sceneHotspot.getWorldPosition(vector);
+        infospot.getWorldPosition(vector);
         vector.project(viewer.camera);
 
         const widthHalf = container.clientWidth / 2;
@@ -386,7 +387,7 @@ function createCameraHotspots(position, sceneURL, text, title) {
         // Coordenadas de pantalla
         const screenX = (vector.x * widthHalf) + widthHalf;
         const screenY = (-vector.y * heightHalf) + heightHalf;
-        const offsetTop = 65;
+        const offsetTop = 105;
 
         // Aplicar el desplazamiento hacia arriba
         hotspotText.style.top = `${screenY - offsetTop}px`;
@@ -394,47 +395,32 @@ function createCameraHotspots(position, sceneURL, text, title) {
     }
 
     // Mostrar el texto al hacer hover sobre el hotspot
-    sceneHotspot.addEventListener('hoverenter', () => {
+    infospot.addEventListener('hoverenter', () => {
         updateHotspotTextPosition();
         hotspotText.style.display = 'block';
     });
 
     // Ocultar el texto al salir del hover
-    sceneHotspot.addEventListener('hoverleave', () => {
+    infospot.addEventListener('hoverleave', () => {
         hotspotText.style.display = 'none';
     });
 
-    // Cambiar de escena al hacer clic en el hotspot
-    sceneHotspot.addEventListener('click', () => {
-        playSoundSceneChange();//Sonido al cambiar de escena
-        musicElevator(sceneURL);//Musica del elevador
+    // Evento de clic para abrir el modal de información y reproducir sonido
+    infospot.addEventListener('click', () => {
+        playSoundInfo();
 
-        const newPanorama = new PANOLENS.ImagePanorama(sceneURL);
+        // Actualizar el contenido del modal
+        openCameraModal(title, fileUrl, description, true);
 
-        newPanorama.addEventListener('load', () => {
-            clearCurrentHotspots();
-            updateSceneTitle(title);
-            // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
-            /* const newLoginHotspot = createLoginHotspotsForScene(sceneURL);
-            newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot)); */
-            updateInitialHotspots(newPanorama, sceneURL)
-            viewer.setPanorama(newPanorama);
-            panorama = newPanorama;
-            saveCurrentScene(sceneURL); // Guardar la escena actual
-        });
-
-        newPanorama.addEventListener('error', (event) => {
-            console.error('Error al cargar la nueva imagen panorámica:', event);
-        });
-        newPanorama.load(sceneURL);
-        viewer.add(newPanorama);
-        viewer.tweenControlCenter(new THREE.Vector3(3000, 0, 0), 0);
+        // Función para mover la cámara al hotspot seleccionado
+        const targetPosition = new THREE.Vector3(position.x, position.y, position.z);
+        viewer.tweenControlCenter(targetPosition, 0);
     });
 
     // Agregar el elemento de texto al contenedor
     document.getElementById('container').appendChild(hotspotText);
 
-    return sceneHotspot;
+    return infospot;
 }
 /* FIN */
 
