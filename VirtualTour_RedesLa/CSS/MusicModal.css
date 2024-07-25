@@ -72,7 +72,8 @@
 }
 
 /* Estilos para el botón y control de volumen */
-.btn {
+
+.modalMuscia .btn{
     padding: 10px 20px;
     background-color: rgb(0, 153, 255);
     color: rgb(255, 255, 255);
@@ -83,7 +84,7 @@
     transition: transform 0.3s ease-out;
 }
 
-.btn:hover {
+.modalMuscia .btn:hover{
     background-color: rgb(0, 116, 194);
     transform: scale(1.2); 
 }

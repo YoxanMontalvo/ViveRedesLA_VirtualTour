@@ -12,12 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.removeItem('currentScene');
             window.location.href = '../HTML/Congreso.html';
         } else {
-            Swal.fire({
-                icon: 'error',
-                title: '¡Clave de gafete no encontrada!',
-                text: 'La clave de gafete no existe. Por favor contacte a sistemas',
-                confirmButtonText: 'Aceptar'
-            });
+            $("#login-status").html('<b>La clave de gafete es incorrecta</b>').css('color', '#ff5252')
+            $("#claveGafete").focus()
         }
     });
 });

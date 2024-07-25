@@ -34,18 +34,25 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Inicio de sesión</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="loginModalLabel">Comprobación de acceso</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Cerrar ventana emergente">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form id="loginForm">
                         <div class="form-group">
-                            <label for="claveGafete">Clave de gafete:</label>
+                            <label for="claveGafete">Ingrese su clave de gafete <span class="text-danger" title="Campo obligatorio">*</span></label>
                             <input type="text" class="form-control" id="claveGafete" name="claveGafete" required>
+                            <span id="login-status"></span>
                         </div>
-                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block" id="btnLogin">Iniciar sesión</button>
+                        </div>
+
+                        <div class="form-group">
+                            <a href="#">¿Donde encuentro mi clave de gafete?</a>
+                        </div>
                     </form>
                 </div>
             </div>

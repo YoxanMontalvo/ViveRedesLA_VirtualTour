@@ -95,3 +95,13 @@ body {
   border-style: solid;
   border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
 }
+
+#btnLogin {
+  background-color: #000;
+  border-color: transparent;
+  color: #fff;
+}
+
+.close:hover{
+  color: #ff5252;
+}
