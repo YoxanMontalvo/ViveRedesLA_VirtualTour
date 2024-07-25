@@ -77,9 +77,7 @@ function clearCurrentHotspots() {
 
 /* ============================================================================= */
 
-
 /* PUERTAS */
-
 function setHotspotPuerta(sceneURL) {
     let sceneHotspots = [];
 
@@ -497,6 +495,8 @@ function createHotspotPuerta(position, sceneURL, text, title) {
 
     return sceneHotspot;
 }
+/* FIN */
+
 
 const doorHotspotSound = new Audio('../Music/sonidos/door.mp3');
 function playDoorSoundSceneChange() {
@@ -504,7 +504,6 @@ function playDoorSoundSceneChange() {
 }
 
 /* CAMINAR */
-
 function setWalkHotspots(sceneURL) {
     let walkHotspots = [];
 
@@ -602,6 +601,8 @@ function createHotspotCaminar(position, sceneURL, text, title) {
 
     return sceneHotspot;
 }
+/* FIN */
+
 
 const walkHotspotSound = new Audio('../Music/sonidos/walk.mp3');
 function playWalkSoundSceneChange() {
@@ -609,7 +610,6 @@ function playWalkSoundSceneChange() {
 }
 
 /* LOGIN */
-
 function createHotspotLogin(position) {
     const hotspot = new PANOLENS.Infospot(350, PANOLENS.DataImage.LoginIcon);
     hotspot.position.set(position.x, position.y, position.z);
@@ -671,9 +671,9 @@ function setLoginHotspots(sceneURL) {
 
     return loginHotspots.map(hotspot => createHotspotLogin(hotspot.position));
 }
+/* FIN */
 
 /* INFO */
-
 function createHotspotInfo(position, text, title, image, description) {
     let infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.InfoIcon);
     infospot.position.set(position.x, position.y, position.z);
@@ -713,25 +713,10 @@ function setInfoHotspots(sceneURL) {
 
     return infoHotspots.map(hotspot => createHotspotInfo(hotspot.position, hotspot.text, hotspot.title, hotspot.image, hotspot.description));
 }
-
-/* ============================================================================= */
-
+/* FIN */
 
 
-// Fin
-//////////////////////// Fin //////////////
-
-
-//////////////////////// Declaracion de los hotspot //////////////
-// Función para crear hotspot de información y la apertura del modal
-
-// Fin
-
-// Función para crear hotspot de cambio de escena
-
-// Fin
-
-// Funcion para cambiar de pagina
+/* CAMBIAR PAGINA */
 function createPageHotspot(position, pageURL, text, title) {
     const pageHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.Walker);
     pageHotspot.position.set(position.x, position.y, position.z);
@@ -785,12 +770,6 @@ function createPageHotspot(position, pageURL, text, title) {
     return pageHotspot;
 }
 
-
-// Función para crear hotspots de información específicos para una escena
-
-// Fin
-
-// Hotspot para cambiar de pagina no se escena
 function createPageHotspotsForScene(sceneURL) {
     let pageHotspots = [];
 
@@ -831,9 +810,11 @@ function createPageHotspotsForScene(sceneURL) {
     
     return pageHotspots.map(hotspot => createPageHotspot(hotspot.position, hotspot.pageURL, hotspot.text, hotspot.title));
 }
+/* FIN */
 
+/* ============================================================================= */
 
-// Vista del menú principal
+//////////////////////// Inicialización de los hotspot y escenas ////////////////////////
 function initializeMainPanorama() {
     panorama = new PANOLENS.ImagePanorama('../Img/Exterior/EntradaViveRedesla.jpg');
     panorama.addEventListener('load', () => {
@@ -842,7 +823,7 @@ function initializeMainPanorama() {
     viewer.add(panorama);
 }
 
-// Función para inicializar la escena guardada o la inicial
+/////////////// Función para inicializar la escena guardada o la inicial ///////////////
 function initializePanorama() {
     const savedSceneURL = loadCurrentScene();
     if (savedSceneURL) {
