@@ -22,6 +22,7 @@ function playLoginSound() {
 
 // Musica del elevador
 const elevatorMusic = new Audio('../Music/RelaxSong.mp3');
+
 function musicElevator(sceneURL) {
     const scenesWithElevatorMusic = [
         '../Img/elevadorRelayn.jpeg',
@@ -70,388 +71,14 @@ function clearCurrentHotspots() {
         hotspotsToRemove.forEach(hotspot => panorama.remove(hotspot));
     }
 }
-// Fin
-//////////////////////// Fin //////////////
 
 
-//////////////////////// Declaracion de los hotspot //////////////
-// Función para crear hotspot de información y la apertura del modal
-function createInfoHotspot(position, text, title, image, description) {
-    let infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.WatchInfos);
-    infospot.position.set(position.x, position.y, position.z);
-    infospot.addHoverElement(document.querySelector('#panel'), 165);
-  
-    infospot.addEventListener('hoverenter', function(){
-        document.querySelector('#panel').classList.add('show');
-        document.querySelector('#panel h1').textContent = title;
-        document.querySelector('#panel p').textContent = description;
-        // document.querySelector('#panel img').src = image
-    });
-  
-    infospot.addEventListener('hoverleave', function(){
-      document.querySelector('#panel').classList.remove('show');
-    });
-
-    // Evento de clic para abrir el panel de información y reproducir sonido
-    infospot.addEventListener('click', () => {
-        playSoundInfo();
-
-        // Funcion para mover la camara al hotspot seleccionado
-        const targetPosition = new THREE.Vector3(position.x, position.y, position.z);
-        viewer.tweenControlCenter(targetPosition, 0);
-    });
-  
-    return infospot;
-}
-// Fin
-
-// Función para crear hotspot de cambio de escena
-function createSceneHotspot(position, sceneURL, text, title) {
-    const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.EnterDoor);
-    sceneHotspot.position.set(position.x, position.y, position.z);
-
-    // Crear elemento de texto manualmente
-    const hotspotText = document.createElement('div');
-    hotspotText.classList.add('hotspot-text');
-    hotspotText.textContent = text;
-    hotspotText.style.display = 'none';
-
-    // Función para actualizar la posición del texto del hotspot
-    function updateHotspotTextPosition() {
-        const vector = new THREE.Vector3();
-        sceneHotspot.getWorldPosition(vector);
-        vector.project(viewer.camera);
-
-        const widthHalf = container.clientWidth / 2;
-        const heightHalf = container.clientHeight / 2;
-
-        // Coordenadas de pantalla
-        const screenX = (vector.x * widthHalf) + widthHalf;
-        const screenY = (-vector.y * heightHalf) + heightHalf;
-        const offsetTop = 65;
-
-        // Aplicar el desplazamiento hacia arriba
-        hotspotText.style.top = `${screenY - offsetTop}px`;
-        hotspotText.style.left = `${screenX}px`;
-    }
-
-    // Mostrar el texto al hacer hover sobre el hotspot
-    sceneHotspot.addEventListener('hoverenter', () => {
-        updateHotspotTextPosition();
-        hotspotText.style.display = 'block';
-    });
-
-    // Ocultar el texto al salir del hover
-    sceneHotspot.addEventListener('hoverleave', () => {
-        hotspotText.style.display = 'none';
-    });
-
-    // Cambiar de escena al hacer clic en el hotspot
-    sceneHotspot.addEventListener('click', () => {
-        playSoundSceneChange();//Sonido al cambiar de escena
-        musicElevator(sceneURL);//Musica del elevador
-
-        const newPanorama = new PANOLENS.ImagePanorama(sceneURL);
-
-        newPanorama.addEventListener('load', () => {
-            clearCurrentHotspots();
-            updateSceneTitle(title);
-            // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
-            const newLoginHotspot = createLoginHotspotsForScene(sceneURL);
-            newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
-            const newInfoHotspots = createInfoHotspotsForScene(sceneURL);
-            newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newSceneHotspots = createSceneHotspotsForScene(sceneURL);
-            newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newWalkHotspots = createWalkHotspotsForScene(sceneURL);
-            newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newPageHotspots = createPageHotspotsForScene(sceneURL);
-            newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            viewer.setPanorama(newPanorama);
-            panorama = newPanorama;
-            saveCurrentScene(sceneURL); // Guardar la escena actual
-        });
-
-        newPanorama.addEventListener('error', (event) => {
-            console.error('Error al cargar la nueva imagen panorámica:', event);
-        });
-        newPanorama.load(sceneURL);
-        viewer.add(newPanorama);
-        viewer.tweenControlCenter(new THREE.Vector3(3000, 0, 0), 0);
-    });
-
-    // Agregar el elemento de texto al contenedor
-    document.getElementById('container').appendChild(hotspotText);
-
-    return sceneHotspot;
-}
-// Fin
-
-// Funcion para cambiar de pagina
-function createPageHotspot(position, pageURL, text, title) {
-    const pageHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.Walker);
-    pageHotspot.position.set(position.x, position.y, position.z);
-
-    // Crear elemento de texto manualmente
-    const hotspotText = document.createElement('div');
-    hotspotText.classList.add('hotspot-text');
-    hotspotText.textContent = text;
-    hotspotText.style.display = 'none';
-
-    // Función para actualizar la posición del texto del hotspot
-    function updateHotspotTextPosition() {
-        const vector = new THREE.Vector3();
-        pageHotspot.getWorldPosition(vector);
-        vector.project(viewer.camera);
-
-        const widthHalf = container.clientWidth / 2;
-        const heightHalf = container.clientHeight / 2;
-
-        // Coordenadas de pantalla
-        const screenX = (vector.x * widthHalf) + widthHalf;
-        const screenY = (-vector.y * heightHalf) + heightHalf;
-        const offsetTop = 65;
-
-        // Aplicar el desplazamiento hacia arriba
-        hotspotText.style.top = `${screenY - offsetTop}px`;
-        hotspotText.style.left = `${screenX}px`;
-    }
-
-    // Mostrar el texto al hacer hover sobre el hotspot
-    pageHotspot.addEventListener('hoverenter', () => {
-        updateHotspotTextPosition();
-        hotspotText.style.display = 'block';
-    });
-
-    // Ocultar el texto al salir del hover
-    pageHotspot.addEventListener('hoverleave', () => {
-        hotspotText.style.display = 'none';
-    });
-
-    // Evento de clic para redirigir a la URL de la página
-    pageHotspot.addEventListener('click', () => {
-        console.log('Hotspot clickeado, redirigiendo a:', pageURL);
-        saveCurrentScene(panorama.src); // Guardar la escena actual antes de cambiar de página
-        window.location.href = pageURL; // Redirige a la URL especificada
-    });
-
-    // Agregar el elemento de texto al contenedor
-    document.getElementById('container').appendChild(hotspotText);
-
-    return pageHotspot;
-}
-// Fin
-
-// Función para crear hotspot de avanzar simulando caminar
-function createWalkHotspot(position, sceneURL, text, title) {
-    const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.ArroyDoble);
-    sceneHotspot.position.set(position.x, position.y, position.z);
-
-    // Crear elemento de texto manualmente
-    const hotspotText = document.createElement('div');
-    hotspotText.classList.add('hotspot-text');
-    hotspotText.textContent = text;
-    hotspotText.style.display = 'none';
-
-    // Función para actualizar la posición del texto del hotspot
-    function updateHotspotTextPosition() {
-        const vector = new THREE.Vector3();
-        sceneHotspot.getWorldPosition(vector);
-        vector.project(viewer.camera);
-
-        const widthHalf = container.clientWidth / 2;
-        const heightHalf = container.clientHeight / 2;
-
-        // Coordenadas de pantalla
-        const screenX = (vector.x * widthHalf) + widthHalf;
-        const screenY = (-vector.y * heightHalf) + heightHalf;
-        const offsetTop = 65;
-
-        // Aplicar el desplazamiento hacia arriba
-        hotspotText.style.top = `${screenY - offsetTop}px`;
-        hotspotText.style.left = `${screenX}px`;
-    }
-
-    // Mostrar el texto al hacer hover sobre el hotspot
-    sceneHotspot.addEventListener('hoverenter', () => {
-        updateHotspotTextPosition();
-        hotspotText.style.display = 'block';
-    });
-
-    // Ocultar el texto al salir del hover
-    sceneHotspot.addEventListener('hoverleave', () => {
-        hotspotText.style.display = 'none';
-    });
-
-    // Cambiar de escena al hacer clic en el hotspot
-    sceneHotspot.addEventListener('click', () => {
-        playSoundSceneChange();//Sonido al cambiar de escena
-        musicElevator(sceneURL);//Musica del elevador
-
-        const newPanorama = new PANOLENS.ImagePanorama(sceneURL);
-
-        newPanorama.addEventListener('load', () => {
-            clearCurrentHotspots();
-            updateSceneTitle(title);
-            // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
-            const newLoginHotspot = createLoginHotspotsForScene(sceneURL);
-            newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
-            const newInfoHotspots = createInfoHotspotsForScene(sceneURL);
-            newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newSceneHotspots = createSceneHotspotsForScene(sceneURL);
-            newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newWalkHotspots = createWalkHotspotsForScene(sceneURL);
-            newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newPageHotspots = createPageHotspotsForScene(sceneURL);
-            newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            viewer.setPanorama(newPanorama);
-            panorama = newPanorama;
-            saveCurrentScene(sceneURL); // Guardar la escena actual
-        });
-
-        newPanorama.addEventListener('error', (event) => {
-            console.error('Error al cargar la nueva imagen panorámica:', event);
-        });
-        newPanorama.load(sceneURL);
-        viewer.add(newPanorama);
-        viewer.tweenControlCenter(new THREE.Vector3(3000, 0, 0), 0);
-    });
-
-    // Agregar el elemento de texto al contenedor
-    document.getElementById('container').appendChild(hotspotText);
-
-    return sceneHotspot;
-}
-// Fin
-
-// Funcion para crear un hotspot para desplegar el inicio de sesion mediante un modal
-function createLoginHotspot(position) {
-    const hotspot = new PANOLENS.Infospot(350, PANOLENS.DataImage.LoginIcon);
-    hotspot.position.set(position.x, position.y, position.z);
-
-    // Crear elemento de texto para el hotspot
-    const hotspotText = document.createElement('div');
-    hotspotText.classList.add('hotspot-text');
-    hotspotText.textContent = 'Entrar a Congresos';
-    hotspotText.style.display = 'none';
-
-    // Función para actualizar la posición del texto del hotspot
-    function updateHotspotTextPosition() {
-        const vector = new THREE.Vector3();
-        hotspot.getWorldPosition(vector);
-        vector.project(viewer.camera);
-        const widthHalf = container.clientWidth / 2;
-        const heightHalf = container.clientHeight / 2;
-        const screenX = (vector.x * widthHalf) + widthHalf;
-        const screenY = (-vector.y * heightHalf) + heightHalf;
-        const offsetTop = 75;
-        hotspotText.style.top = `${screenY - offsetTop}px`;
-        hotspotText.style.left = `${screenX}px`;
-    }
-
-    // Mostrar el texto al hacer hover sobre el hotspot
-    hotspot.addEventListener('hoverenter', () => {
-        updateHotspotTextPosition();
-        hotspotText.style.display = 'block';
-    });
-
-    // Ocultar el texto al salir del hover
-    hotspot.addEventListener('hoverleave', () => {
-        hotspotText.style.display = 'none';
-    });
-
-    // Evento de clic para abrir el modal de inicio de sesión
-    hotspot.addEventListener('click', () => {
-        playLoginSound();
-        $('#loginModal').modal('show');
-        
-    });
-
-    document.getElementById('container').appendChild(hotspotText);
-    return hotspot;
-}
-// Fin
-//////////////////////// Fin //////////////
+/* ============================================================================= */
 
 
-//////////////////////// Se declaran los hotspot y su elemento junto con sus rutas //////////////
-// Hotspot de inicio de sesion
-function createLoginHotspotsForScene(sceneURL) {
-    let loginHotspots = [];
+/* PUERTAS */
 
-    if (sceneURL === '../Img/PanoramaInterior.png') {
-        loginHotspots = [
-            { position: { x: 3000, y: 1000, z: -5000 }}
-        ];
-    }else if (sceneURL === '../Img/Exterior/PatioCongreso.jpg') {
-        loginHotspots = [
-            { position: { x: 6000, y: 1000, z: -1100 }}
-        ];
-    }
-
-    return loginHotspots.map(hotspot => createLoginHotspot(hotspot.position));
-}
-// Fin
-
-// Función para crear hotspots de información específicos para una escena
-function createInfoHotspotsForScene(sceneURL) {
-    let infoHotspots = [];
-
-    if (sceneURL === '../Img/PanoramaInterior.png') {
-      infoHotspots = [
-        { position: { x: -1000, y: 1000, z: -5000 }, text: 'Bienvenido a REDESLA', title: 'Vive RedesLa', image: '../Icons/CursosImage.png', description: 'Este recorrido virtual trata de trasmitir la mayor inmersión posible, y así usted puedad vivir las experiencia RedesLA desde la comodidad de su hogar' },
-    ];
-    }
-
-    return infoHotspots.map(hotspot => createInfoHotspot(hotspot.position, hotspot.text, hotspot.title, hotspot.image, hotspot.description));
-}
-// Fin
-
-// Hotspot para cambiar de pagina no se escena
-function createPageHotspotsForScene(sceneURL) {
-    let pageHotspots = [];
-
-    if(sceneURL === '../Img/cafeteriaPlanta.png') { // Ejemplo de una escena
-        pageHotspots = [
-            { position: { x: 1000, y: 1000, z: -5000 }, pageURL: '../GameZone/index.html', text: 'Entrar al Arcade', title: 'Zona de videojuegos' },
-        ];
-    }else if (sceneURL === '../Img/auditorioPlanta.png') { // Ejemplo de una escena
-        pageHotspots = [
-            { position: { x: 1000, y: 1000, z: -5000 }, pageURL: 'https://us02web.zoom.us/j/89184349159?pwd=OTNvWUg3MjdEK1FFSjNwWXZaa0E2UT09#success', text: 'Acceder al curso', title: 'Acceder al curso' },
-        ];
-    }else if (sceneURL === '../Img/RecervoriosSala.jpg'){
-        pageHotspots = [
-            { position: { x: 1000, y: 1000, z: -5000 }, pageURL: 'https://iquatroeditores.org/revista/', text: '¡Quatro Editores', title: 'Acceder a ¡Quatro Editores' },//¡Quatro Editores
-            { position: { x: 2000, y: 1000, z: -5000 }, pageURL: 'https://www.mheducation.com.mx/mh_redesla', text: 'Mc Graw Hill-RedesLA', title: 'Acceder a Mc Graw Hill-RedesLA' },//Mc Graw Hill-RedesLA
-            { position: { x: 3000, y: 1000, z: -5000 }, pageURL: 'https://publicaciones.redesla.la/', text: 'Productos académicos RedesLA', title: 'Acceder a Productos académicos RedesLA' },//Productos académicos RedesLA
-            { position: { x: 4000, y: 1000, z: -5000 }, pageURL: 'https://drive.google.com/drive/folders/1qsuM3Ps235kfiabNtnyhZ_Xj9O73otYt', text: 'Trabajos académicos RedesLA', title: 'Acceder a Trabajos académicos RedesLA' },//Trabajos académicos RedesLA
-
-            { position: { x: 1000, y: 2000, z: -5000 }, pageURL: 'https://www.redalyc.org/', text: 'REDALYC', title: 'Acceder a REDALYC' },//REDALYC
-            { position: { x: 2000, y: 2000, z: -5000 }, pageURL: 'https://dialnet.unirioja.es/', text: 'DIALNET', title: 'Acceder a DIALNET' },//DIALNET
-            { position: { x: 3000, y: 2000, z: -5000 }, pageURL: 'https://scielo.org/es/', text: 'SCIELO', title: 'Acceder a SCIELO' },//SCIELO
-            { position: { x: 4000, y: 2000, z: -5000 }, pageURL: 'https://journals.sagepub.com/', text: 'SAGE JOURNALS', title: 'Acceder a SAGE JOURNALS' },//SAGE JOURNALS
-            { position: { x: 5000, y: 2000, z: -5000 }, pageURL: 'https://scholar.google.es/schhp?hl=es', text: 'GOOGLE ACADÉMICO', title: 'Acceder a GOOGLE ACADÉMICO' },//GOOGLE ACADÉMICO
-            { position: { x: 5000, y: 2000, z: -5000 }, pageURL: 'https://link.springer.com/', text: 'SPRINGER LINK', title: 'Acceder a SPRINGER LINK' },//SPRINGER LINK
-        ];
-    }else if (sceneURL === '../Img/centroComputoSala.jpg'){
-        pageHotspots = [
-            { position: { x: 1000, y: 1000, z: -5000 }, pageURL: 'https://www.jamovi.org/', text: 'Descargar Jamovi', title: 'Descargar Jamovi' },//Jamovy
-            { position: { x: 2000, y: 1000, z: -5000 }, pageURL: 'https://www.mendeley.com/', text: 'Descargar Mendeley', title: 'Descargar Mendeley' },//Mendeley
-            { position: { x: 3000, y: 1000, z: -5000 }, pageURL: 'https://www.gnu.org/software/pspp/', text: 'Descargar PSPP', title: 'Descargar PSPP' },//PSPP
-            { position: { x: 4000, y: 1000, z: -5000 }, pageURL: 'https://atlasti.com/es', text: 'Descargar Atlas.ti', title: 'Descargar Atlas.ti' },//Atlas.ti
-            { position: { x: 5000, y: 1000, z: -5000 }, pageURL: 'https://www.decisionanalyst.com/download/#desktop', text: 'Descargar Decision Analyst', title: 'Descargar Decision Analyst' },//Decision Analyst
-
-            { position: { x: 3000, y: 2000, z: -5000 }, pageURL: 'https://moodle.redesla.la/login/index.php', text: 'Entrar a Moodle RedesLA', title: 'Entrar a Moodle RedesLA' },//Moodle RedesLA
-            { position: { x: 4000, y: 2000, z: -5000 }, pageURL: 'https://redesla.la/redesla/', text: 'Entrar a Plataforma RedesLA', title: 'Entrar a Plataforma RedesLA' },//Plataforma RedesLA
-        ];
-    }
-    
-    return pageHotspots.map(hotspot => createPageHotspot(hotspot.position, hotspot.pageURL, hotspot.text, hotspot.title));
-}
-// Fin
-
-// Función para crear hotspots de cambio de escena específicos para una escena
-function createSceneHotspotsForScene(sceneURL) {
+function setHotspotPuerta(sceneURL) {
     let sceneHotspots = [];
 
     //Pagina de inicio del recorrido
@@ -786,29 +413,414 @@ function createSceneHotspotsForScene(sceneURL) {
         ];
     }
 
-    return sceneHotspots.map(hotspot => createSceneHotspot(hotspot.position, hotspot.sceneURL, hotspot.text, hotspot.title));
+    return sceneHotspots.map(hotspot => createHotspotPuerta(hotspot.position, hotspot.sceneURL, hotspot.text, hotspot.title));
 }
-// Fin
 
-// Función para crear hotspots de caminata específicos para una escena
-function createWalkHotspotsForScene(sceneURL) {
+function createHotspotPuerta(position, sceneURL, text, title) {
+    const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.DoorIcon);
+    sceneHotspot.position.set(position.x, position.y, position.z);
+
+    // Crear elemento de texto manualmente
+    const hotspotText = document.createElement('div');
+    hotspotText.classList.add('hotspot-text');
+    hotspotText.textContent = text;
+    hotspotText.style.display = 'none';
+
+    // Función para actualizar la posición del texto del hotspot
+    function updateHotspotTextPosition() {
+        const vector = new THREE.Vector3();
+        sceneHotspot.getWorldPosition(vector);
+        vector.project(viewer.camera);
+
+        const widthHalf = container.clientWidth / 2;
+        const heightHalf = container.clientHeight / 2;
+
+        // Coordenadas de pantalla
+        const screenX = (vector.x * widthHalf) + widthHalf;
+        const screenY = (-vector.y * heightHalf) + heightHalf;
+        const offsetTop = 65;
+
+        // Aplicar el desplazamiento hacia arriba
+        hotspotText.style.top = `${screenY - offsetTop}px`;
+        hotspotText.style.left = `${screenX}px`;
+    }
+
+    // Mostrar el texto al hacer hover sobre el hotspot
+    sceneHotspot.addEventListener('hoverenter', () => {
+        updateHotspotTextPosition();
+        hotspotText.style.display = 'block';
+    });
+
+    // Ocultar el texto al salir del hover
+    sceneHotspot.addEventListener('hoverleave', () => {
+        hotspotText.style.display = 'none';
+    });
+
+    // Cambiar de escena al hacer clic en el hotspot
+    sceneHotspot.addEventListener('click', () => {
+        playSoundSceneChange();//Sonido al cambiar de escena
+        musicElevator(sceneURL);//Musica del elevador
+
+        const newPanorama = new PANOLENS.ImagePanorama(sceneURL);
+
+        newPanorama.addEventListener('load', () => {
+            clearCurrentHotspots();
+            updateSceneTitle(title);
+            // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
+            const newLoginHotspot = setLoginHotspots(sceneURL);
+            newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
+            const newInfoHotspots = setInfoHotspots(sceneURL);
+            newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newSceneHotspots = setHotspotPuerta(sceneURL);
+            newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newWalkHotspots = setWalkHotspots(sceneURL);
+            newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newPageHotspots = createPageHotspotsForScene(sceneURL);
+            newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            viewer.setPanorama(newPanorama);
+            panorama = newPanorama;
+            saveCurrentScene(sceneURL); // Guardar la escena actual
+        });
+
+        newPanorama.addEventListener('error', (event) => {
+            console.error('Error al cargar la nueva imagen panorámica:', event);
+        });
+        newPanorama.load(sceneURL);
+        viewer.add(newPanorama);
+        viewer.tweenControlCenter(new THREE.Vector3(3000, 0, 0), 0);
+    });
+
+    // Agregar el elemento de texto al contenedor
+    document.getElementById('container').appendChild(hotspotText);
+
+    return sceneHotspot;
+}
+
+/* CAMINAR */
+
+function setWalkHotspots(sceneURL) {
     let walkHotspots = [];
 
     //Pagina de inicio del recorrido
     if (sceneURL === '../Img/Exterior/CurcePatioCongreso.jpg') {// Pagina principal con sus hotspot
         walkHotspots = [
             { position: { x: 8000, y: -400, z: 100 }, sceneURL: '../Img/Exterior/PatioCongreso.jpg', text: 'Avanzar al congreso', title: 'Edificio del congreso' },
-            { position: { x: 10, y: 100, z: 6000 }, sceneURL: '../Img/PanoramaInterior.png', text: 'Avanzar a los salones', title: 'Salones de las Redes' },
+            { position: { x: 92.81, y: -67.12, z: 4992.50 }, sceneURL: '../Img/PanoramaInterior.png', text: 'Avanzar a los salones', title: 'Salones de las Redes' },
+        ];
+    } else if (sceneURL === '../Img/Exterior/PatioCongreso.jpg') {
+        walkHotspots = [
+            { position: { x: -4984.35, y: -173.67, z: -168.41 }, sceneURL: '../Img/Exterior/CurcePatioCongreso.jpg', text: 'Regresar al cruce', title: 'Edificio del congreso' },
         ];
     }
 
-    return walkHotspots.map(hotspot => createWalkHotspot(hotspot.position, hotspot.sceneURL, hotspot.text, hotspot.title));
+    return walkHotspots.map(hotspot => createHotspotCaminar(hotspot.position, hotspot.sceneURL, hotspot.text, hotspot.title));
 }
+
+function createHotspotCaminar(position, sceneURL, text, title) {
+    const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.WalkIcon);
+    sceneHotspot.position.set(position.x, position.y, position.z);
+
+    // Crear elemento de texto manualmente
+    const hotspotText = document.createElement('div');
+    hotspotText.classList.add('hotspot-text');
+    hotspotText.textContent = text;
+    hotspotText.style.display = 'none';
+
+    // Función para actualizar la posición del texto del hotspot
+    function updateHotspotTextPosition() {
+        const vector = new THREE.Vector3();
+        sceneHotspot.getWorldPosition(vector);
+        vector.project(viewer.camera);
+
+        const widthHalf = container.clientWidth / 2;
+        const heightHalf = container.clientHeight / 2;
+
+        // Coordenadas de pantalla
+        const screenX = (vector.x * widthHalf) + widthHalf;
+        const screenY = (-vector.y * heightHalf) + heightHalf;
+        const offsetTop = 65;
+
+        // Aplicar el desplazamiento hacia arriba
+        hotspotText.style.top = `${screenY - offsetTop}px`;
+        hotspotText.style.left = `${screenX}px`;
+    }
+
+    // Mostrar el texto al hacer hover sobre el hotspot
+    sceneHotspot.addEventListener('hoverenter', () => {
+        updateHotspotTextPosition();
+        hotspotText.style.display = 'block';
+    });
+
+    // Ocultar el texto al salir del hover
+    sceneHotspot.addEventListener('hoverleave', () => {
+        hotspotText.style.display = 'none';
+    });
+
+    // Cambiar de escena al hacer clic en el hotspot
+    sceneHotspot.addEventListener('click', () => {
+        playSoundSceneChange();//Sonido al cambiar de escena
+        musicElevator(sceneURL);//Musica del elevador
+
+        const newPanorama = new PANOLENS.ImagePanorama(sceneURL);
+
+        newPanorama.addEventListener('load', () => {
+            clearCurrentHotspots();
+            updateSceneTitle(title);
+            // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
+            const newLoginHotspot = setLoginHotspots(sceneURL);
+            newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
+            const newInfoHotspots = setInfoHotspots(sceneURL);
+            newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newSceneHotspots = setHotspotPuerta(sceneURL);
+            newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newWalkHotspots = setWalkHotspots(sceneURL);
+            newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            const newPageHotspots = createPageHotspotsForScene(sceneURL);
+            newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            viewer.setPanorama(newPanorama);
+            panorama = newPanorama;
+            saveCurrentScene(sceneURL); // Guardar la escena actual
+        });
+
+        newPanorama.addEventListener('error', (event) => {
+            console.error('Error al cargar la nueva imagen panorámica:', event);
+        });
+        newPanorama.load(sceneURL);
+        viewer.add(newPanorama);
+        viewer.tweenControlCenter(new THREE.Vector3(3000, 0, 0), 0);
+    });
+
+    // Agregar el elemento de texto al contenedor
+    document.getElementById('container').appendChild(hotspotText);
+
+    return sceneHotspot;
+}
+
+/* LOGIN */
+
+function createHotspotLogin(position) {
+    const hotspot = new PANOLENS.Infospot(350, PANOLENS.DataImage.LoginIcon);
+    hotspot.position.set(position.x, position.y, position.z);
+
+    // Crear elemento de texto para el hotspot
+    const hotspotText = document.createElement('div');
+    hotspotText.classList.add('hotspot-text');
+    hotspotText.textContent = 'Entrar al congreso';
+    hotspotText.style.display = 'none';
+
+    // Función para actualizar la posición del texto del hotspot
+    function updateHotspotTextPosition() {
+        const vector = new THREE.Vector3();
+        hotspot.getWorldPosition(vector);
+        vector.project(viewer.camera);
+        const widthHalf = container.clientWidth / 2;
+        const heightHalf = container.clientHeight / 2;
+        const screenX = (vector.x * widthHalf) + widthHalf;
+        const screenY = (-vector.y * heightHalf) + heightHalf;
+        const offsetTop = 75;
+        hotspotText.style.top = `${screenY - offsetTop}px`;
+        hotspotText.style.left = `${screenX}px`;
+    }
+
+    // Mostrar el texto al hacer hover sobre el hotspot
+    hotspot.addEventListener('hoverenter', () => {
+        updateHotspotTextPosition();
+        hotspotText.style.display = 'block';
+    });
+
+    // Ocultar el texto al salir del hover
+    hotspot.addEventListener('hoverleave', () => {
+        hotspotText.style.display = 'none';
+    });
+
+    // Evento de clic para abrir el modal de inicio de sesión
+    hotspot.addEventListener('click', () => {
+        playLoginSound();
+        $('#loginModal').modal('show');
+        
+    });
+
+    document.getElementById('container').appendChild(hotspotText);
+    return hotspot;
+}
+
+function setLoginHotspots(sceneURL) {
+    let loginHotspots = [];
+
+    if (sceneURL === '../Img/PanoramaInterior.png') {
+        loginHotspots = [
+            { position: { x: 3000, y: 1000, z: -5000 }}
+        ];
+    }else if (sceneURL === '../Img/Exterior/PatioCongreso.jpg') {
+        loginHotspots = [
+            { position: { x: 6000, y: 1000, z: -1100 }}
+        ];
+    }
+
+    return loginHotspots.map(hotspot => createHotspotLogin(hotspot.position));
+}
+
+/* INFO */
+
+function createHotspotInfo(position, text, title, image, description) {
+    let infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.InfoIcon);
+    infospot.position.set(position.x, position.y, position.z);
+    infospot.addHoverElement(document.querySelector('#panel'), 165);
+  
+    infospot.addEventListener('hoverenter', function(){
+        document.querySelector('#panel').classList.add('show');
+        document.querySelector('#panel h1').textContent = title;
+        document.querySelector('#panel p').textContent = description;
+        // document.querySelector('#panel img').src = image
+    });
+  
+    infospot.addEventListener('hoverleave', function(){
+      document.querySelector('#panel').classList.remove('show');
+    });
+
+    // Evento de clic para abrir el panel de información y reproducir sonido
+    infospot.addEventListener('click', () => {
+        playSoundInfo();
+
+        // Funcion para mover la camara al hotspot seleccionado
+        const targetPosition = new THREE.Vector3(position.x, position.y, position.z);
+        viewer.tweenControlCenter(targetPosition, 0);
+    });
+  
+    return infospot;
+}
+
+function setInfoHotspots(sceneURL) {
+    let infoHotspots = [];
+
+    if (sceneURL === '../Img/PanoramaInterior.png') {
+      infoHotspots = [
+        { position: { x: -1000, y: 1000, z: -5000 }, text: 'Bienvenido a REDESLA', title: 'Vive RedesLa', image: '../Icons/CursosImage.png', description: 'Este recorrido virtual trata de trasmitir la mayor inmersión posible, y así usted puedad vivir las experiencia RedesLA desde la comodidad de su hogar' },
+    ];
+    }
+
+    return infoHotspots.map(hotspot => createHotspotInfo(hotspot.position, hotspot.text, hotspot.title, hotspot.image, hotspot.description));
+}
+
+/* ============================================================================= */
+
+
+
 // Fin
 //////////////////////// Fin //////////////
 
 
-//////////////////////// Inicialización de los hotspot //////////////
+//////////////////////// Declaracion de los hotspot //////////////
+// Función para crear hotspot de información y la apertura del modal
+
+// Fin
+
+// Función para crear hotspot de cambio de escena
+
+// Fin
+
+// Funcion para cambiar de pagina
+function createPageHotspot(position, pageURL, text, title) {
+    const pageHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.Walker);
+    pageHotspot.position.set(position.x, position.y, position.z);
+
+    // Crear elemento de texto manualmente
+    const hotspotText = document.createElement('div');
+    hotspotText.classList.add('hotspot-text');
+    hotspotText.textContent = text;
+    hotspotText.style.display = 'none';
+
+    // Función para actualizar la posición del texto del hotspot
+    function updateHotspotTextPosition() {
+        const vector = new THREE.Vector3();
+        pageHotspot.getWorldPosition(vector);
+        vector.project(viewer.camera);
+
+        const widthHalf = container.clientWidth / 2;
+        const heightHalf = container.clientHeight / 2;
+
+        // Coordenadas de pantalla
+        const screenX = (vector.x * widthHalf) + widthHalf;
+        const screenY = (-vector.y * heightHalf) + heightHalf;
+        const offsetTop = 65;
+
+        // Aplicar el desplazamiento hacia arriba
+        hotspotText.style.top = `${screenY - offsetTop}px`;
+        hotspotText.style.left = `${screenX}px`;
+    }
+
+    // Mostrar el texto al hacer hover sobre el hotspot
+    pageHotspot.addEventListener('hoverenter', () => {
+        updateHotspotTextPosition();
+        hotspotText.style.display = 'block';
+    });
+
+    // Ocultar el texto al salir del hover
+    pageHotspot.addEventListener('hoverleave', () => {
+        hotspotText.style.display = 'none';
+    });
+
+    // Evento de clic para redirigir a la URL de la página
+    pageHotspot.addEventListener('click', () => {
+        console.log('Hotspot clickeado, redirigiendo a:', pageURL);
+        saveCurrentScene(panorama.src); // Guardar la escena actual antes de cambiar de página
+        window.location.href = pageURL; // Redirige a la URL especificada
+    });
+
+    // Agregar el elemento de texto al contenedor
+    document.getElementById('container').appendChild(hotspotText);
+
+    return pageHotspot;
+}
+
+
+// Función para crear hotspots de información específicos para una escena
+
+// Fin
+
+// Hotspot para cambiar de pagina no se escena
+function createPageHotspotsForScene(sceneURL) {
+    let pageHotspots = [];
+
+    if(sceneURL === '../Img/cafeteriaPlanta.png') { // Ejemplo de una escena
+        pageHotspots = [
+            { position: { x: 1000, y: 1000, z: -5000 }, pageURL: '../GameZone/index.html', text: 'Entrar al Arcade', title: 'Zona de videojuegos' },
+        ];
+    }else if (sceneURL === '../Img/auditorioPlanta.png') { // Ejemplo de una escena
+        pageHotspots = [
+            { position: { x: 1000, y: 1000, z: -5000 }, pageURL: 'https://us02web.zoom.us/j/89184349159?pwd=OTNvWUg3MjdEK1FFSjNwWXZaa0E2UT09#success', text: 'Acceder al curso', title: 'Acceder al curso' },
+        ];
+    }else if (sceneURL === '../Img/RecervoriosSala.jpg'){
+        pageHotspots = [
+            { position: { x: 1000, y: 1000, z: -5000 }, pageURL: 'https://iquatroeditores.org/revista/', text: '¡Quatro Editores', title: 'Acceder a ¡Quatro Editores' },//¡Quatro Editores
+            { position: { x: 2000, y: 1000, z: -5000 }, pageURL: 'https://www.mheducation.com.mx/mh_redesla', text: 'Mc Graw Hill-RedesLA', title: 'Acceder a Mc Graw Hill-RedesLA' },//Mc Graw Hill-RedesLA
+            { position: { x: 3000, y: 1000, z: -5000 }, pageURL: 'https://publicaciones.redesla.la/', text: 'Productos académicos RedesLA', title: 'Acceder a Productos académicos RedesLA' },//Productos académicos RedesLA
+            { position: { x: 4000, y: 1000, z: -5000 }, pageURL: 'https://drive.google.com/drive/folders/1qsuM3Ps235kfiabNtnyhZ_Xj9O73otYt', text: 'Trabajos académicos RedesLA', title: 'Acceder a Trabajos académicos RedesLA' },//Trabajos académicos RedesLA
+
+            { position: { x: 1000, y: 2000, z: -5000 }, pageURL: 'https://www.redalyc.org/', text: 'REDALYC', title: 'Acceder a REDALYC' },//REDALYC
+            { position: { x: 2000, y: 2000, z: -5000 }, pageURL: 'https://dialnet.unirioja.es/', text: 'DIALNET', title: 'Acceder a DIALNET' },//DIALNET
+            { position: { x: 3000, y: 2000, z: -5000 }, pageURL: 'https://scielo.org/es/', text: 'SCIELO', title: 'Acceder a SCIELO' },//SCIELO
+            { position: { x: 4000, y: 2000, z: -5000 }, pageURL: 'https://journals.sagepub.com/', text: 'SAGE JOURNALS', title: 'Acceder a SAGE JOURNALS' },//SAGE JOURNALS
+            { position: { x: 5000, y: 2000, z: -5000 }, pageURL: 'https://scholar.google.es/schhp?hl=es', text: 'GOOGLE ACADÉMICO', title: 'Acceder a GOOGLE ACADÉMICO' },//GOOGLE ACADÉMICO
+            { position: { x: 5000, y: 2000, z: -5000 }, pageURL: 'https://link.springer.com/', text: 'SPRINGER LINK', title: 'Acceder a SPRINGER LINK' },//SPRINGER LINK
+        ];
+    }else if (sceneURL === '../Img/centroComputoSala.jpg'){
+        pageHotspots = [
+            { position: { x: 1000, y: 1000, z: -5000 }, pageURL: 'https://www.jamovi.org/', text: 'Descargar Jamovi', title: 'Descargar Jamovi' },//Jamovy
+            { position: { x: 2000, y: 1000, z: -5000 }, pageURL: 'https://www.mendeley.com/', text: 'Descargar Mendeley', title: 'Descargar Mendeley' },//Mendeley
+            { position: { x: 3000, y: 1000, z: -5000 }, pageURL: 'https://www.gnu.org/software/pspp/', text: 'Descargar PSPP', title: 'Descargar PSPP' },//PSPP
+            { position: { x: 4000, y: 1000, z: -5000 }, pageURL: 'https://atlasti.com/es', text: 'Descargar Atlas.ti', title: 'Descargar Atlas.ti' },//Atlas.ti
+            { position: { x: 5000, y: 1000, z: -5000 }, pageURL: 'https://www.decisionanalyst.com/download/#desktop', text: 'Descargar Decision Analyst', title: 'Descargar Decision Analyst' },//Decision Analyst
+
+            { position: { x: 3000, y: 2000, z: -5000 }, pageURL: 'https://moodle.redesla.la/login/index.php', text: 'Entrar a Moodle RedesLA', title: 'Entrar a Moodle RedesLA' },//Moodle RedesLA
+            { position: { x: 4000, y: 2000, z: -5000 }, pageURL: 'https://redesla.la/redesla/', text: 'Entrar a Plataforma RedesLA', title: 'Entrar a Plataforma RedesLA' },//Plataforma RedesLA
+        ];
+    }
+    
+    return pageHotspots.map(hotspot => createPageHotspot(hotspot.position, hotspot.pageURL, hotspot.text, hotspot.title));
+}
+
+
 // Vista del menú principal
 function initializeMainPanorama() {
     panorama = new PANOLENS.ImagePanorama('../Img/Exterior/EntradaViveRedesla.jpg');
@@ -835,26 +847,26 @@ function initializePanorama() {
     viewer.tweenControlCenter(new THREE.Vector3(3000, 0, 0), 0);
 }
 
-// Función para agregar hotspots iniciales
+// INICIALIZAR HOTSPOTS
 function addInitialHotspots() {
-    const initialInfoHotspots = createInfoHotspotsForScene(panorama.src);
+    const initialInfoHotspots = setInfoHotspots(panorama.src);
     initialInfoHotspots.forEach(hotspot => panorama.add(hotspot));
 
-    const initialSceneHotspots = createSceneHotspotsForScene(panorama.src);
+    const initialSceneHotspots = setHotspotPuerta(panorama.src);
     initialSceneHotspots.forEach(hotspot => panorama.add(hotspot));
 
-    const initialWalkHotspots = createWalkHotspotsForScene(panorama.src);
+    const initialWalkHotspots = setWalkHotspots(panorama.src);
     initialWalkHotspots.forEach(hotspot => panorama.add(hotspot));
 
     const initialPageHotspots = createPageHotspotsForScene(panorama.src);
     initialPageHotspots.forEach(hotspot => panorama.add(hotspot));
 
-    const initialLoginHotspots = createLoginHotspotsForScene(panorama.src);
+    const initialLoginHotspots = setLoginHotspots(panorama.src);
     initialLoginHotspots.forEach(hotspot => panorama.add(hotspot));
 }
 
 // Vista del menú principal
 const container = document.querySelector('#container');
-const viewer = new PANOLENS.Viewer({ container: container });
+const viewer = new PANOLENS.Viewer({ container: container, output: 'console' });
 initializePanorama();
 //////////////////////// Fin //////////////
