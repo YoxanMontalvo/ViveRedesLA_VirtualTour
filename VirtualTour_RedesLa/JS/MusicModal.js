@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var volumeControl = document.getElementById("volume");
     var prevBtn = document.getElementById("prev");
     var nextBtn = document.getElementById("next");
+    var disc = document.querySelector('.disc');
 
     // Lista de canciones
     var canciones = [
@@ -44,9 +45,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (audio.paused) {
             audio.play();
             playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            disc.style.animationPlayState = 'running';
         } else {
             audio.pause();
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            disc.style.animationPlayState = 'paused';
         }
     }
 
@@ -55,12 +58,18 @@ document.addEventListener('DOMContentLoaded', function() {
         audio.volume = this.value;
     }
 
+    // Prevenir la propagación de eventos cuando se arrastra la barra de volumen
+    volumeControl.addEventListener('mousedown', function(event) {
+        event.stopPropagation();
+    });
+
     // Manejar el botón de siguiente
     nextBtn.onclick = function() {
         currentSongIndex = (currentSongIndex + 1) % canciones.length;
         loadSong(currentSongIndex);
         audio.play();
         playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        disc.style.animationPlayState = 'running';
     }
 
     // Manejar el botón de anterior
@@ -68,7 +77,8 @@ document.addEventListener('DOMContentLoaded', function() {
         currentSongIndex = (currentSongIndex - 1 + canciones.length) % canciones.length;
         loadSong(currentSongIndex);
         audio.play();
-        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        playPauseBtn.innerHTML = '<i class "fas fa-pause"></i>';
+        disc.style.animationPlayState = 'running';
     }
 
     // Cargar la primera canción al inicio
