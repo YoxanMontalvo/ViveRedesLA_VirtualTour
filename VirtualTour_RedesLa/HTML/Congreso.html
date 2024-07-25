@@ -1,48 +1,93 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vive RedesLa</title>
-    <link rel="icon" href="../Documents/Icons/tourVirtualcon.png" type="image/x-icon">
-    <link rel="stylesheet" href="../Lib/CSS/bootstrap.min.css">
-    <link rel="stylesheet" href="../Lib/CSS/fontawesome.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="../Lib/CSS/fontawesome.all.min.css">
-    <link rel="stylesheet" href="../CSS/InicioSescion.css">
-    <link rel="stylesheet" href="../CSS/Estilos.css">
-</head>
-<body>
+    <link
+      rel="icon"
+      href="../Documents/Icons/tourVirtualcon.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="../Lib/CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="../Lib/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/InicioSescion.css" />
+    <link rel="stylesheet" href="../CSS/Estilos.css" />
+    <link rel="stylesheet" href="../CSS/fotos.css" />
+
+  </head>
+  <body>
     <!-- Contener del visor -->
-    <div id="container" style="position: relative; width: 100%; height: 100vh;">
-        <!-- Contenedor del título sobre el visor -->
-        <div id="scene-title">Congreso</div>
-        
+    <div id="container" style="position: relative; width: 100%; height: 100vh">
+      <!-- Contenedor del título sobre el visor -->
+      <div id="scene-title">Congreso</div>
     </div>
     <!-- Fin -->
 
     <!-- Panel del hotspot de informacion -->
 
     <div id="panel">
-        <h1>Título</h1>
-        <p>Descripción</p>
+      <h1>Título</h1>
+      <p>Descripción</p>
     </div>
     <!-- Fin -->
 
     <!-- Modal del hotspot de información -->
     <div id="infoModalLeft" class="modal">
-        <div class="modal-header">
-            <h5 class="modal-title" id="infoModalLeftLabel">Título del Modal</h5>
-            <button type="button" class="close" onclick="closeInfoModalLeft()">
-                <span>&times;</span>
-            </button>
-        </div>
-        <div id="modal-content-container" class="modal-body">
-            
-        </div>
+      <div class="modal-header">
+        <h5 class="modal-title" id="infoModalLeftLabel">Título del Modal</h5>
+        <button type="button" class="close" onclick="closeInfoModalLeft()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div id="modal-content-container" class="modal-body"></div>
     </div>
-    <!-- Fin del Modal -->
 
+    <div class="modal" tabindex="-1" role="dialog" id="cameraModal">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cabina fotográfica</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <section class="cam-container">
+              <div class="video-wrap">
+                <video class="video"></video>
+              </div>
+              <div class="canvas-wrap">
+                <canvas class="canvas">
+                  <img src="" class="photo" alt="photo" />
+                </canvas>
+              </div>
+              <button type="button" class="start-btn btn btn-block" title="Da clíc para tomar una foto">Tomar foto <i class="fa-solid fa-camera"></i></button>
+              <button type="button" class="btn btn-block" id="anotherTake" title="Tomar nuevamente la fotografía">Tomar otra foto <i class="fa-solid fa-camera-rotate"></i></button>
+              <button type="button" class="btn btn-block" id="savePhoto" title="Guarda esta foto en tu dispositivo">Guardar foto <i class="fa-solid fa-download"></i></button>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- <div id="cameraModal" class="modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="infoModalLeftLabel">Título del Modal</h5>
+        <button type="button" class="close" onclick="closeCameraModalLeft()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div id="modal-content-container" class="modal-body">
+        
+      </div>
+    </div> -->
+
+    <!-- Fin del Modal -->
+    <script src="../Lib/sweetAlert.min.js"></script>
     <script src="../Lib/jquery.min.js"></script>
     <script src="../Lib/popper.min.js"></script>
     <script src="../Lib/bootstrap.min.js"></script>
@@ -52,5 +97,7 @@
     <script src="../Lib/panolens.min.js"></script>
     <script src="../JS/Congreso.js"></script>
     <script src="../JS/InformationModal.js"></script>
-</body>
+    <script src="../JS/fotos.js"></script>
+
+  </body>
 </html>

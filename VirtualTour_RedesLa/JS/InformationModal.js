@@ -53,3 +53,13 @@ function openInfoModalLeft(title, fileUrl, description, isWebSite=false) {
     $('#infoModalLeft .modal-title').text(title);
     $('#infoModalLeft').modal('show');
 }
+
+function openCameraModal() {
+    $(".canvas-wrap").hide()
+    $('#cameraModal .modal-title').text('Cabina fotográfica');
+    $('#cameraModal').modal('show');
+}
+
+function closeCameraModalLeft() {
+    $('#cameraModal').modal('hide');
+}
