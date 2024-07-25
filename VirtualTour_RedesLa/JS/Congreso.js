@@ -202,6 +202,11 @@ function setDoorHotspots(sceneURL) {
     }else if (sceneURL === '../Img/Congresos/PasilloSalones.jpg') {
         sceneHotspots = [
             { position: { x: -9000, y: -200, z: 100 }, sceneURL: '../Img/Congresos/Elevador.jpg', text: 'Volver al elevador', title: 'Elevador' },
+            { position: { x: 24.68, y: -1087.24, z: -4876.47 }, sceneURL: '../Img/Congresos/Salones.jpg', text: 'Ingresar al salon 3', title: 'Salon 3' },
+        ];
+    }else if (sceneURL === '../Img/Congresos/Salones.jpg') {
+        sceneHotspots = [
+            { position: { x: -4934.28, y: -506.02, z: 580.35 }, sceneURL: '../Img/Congresos/PasilloSalones.jpg', text: 'Volver al pasillo de salones', title: 'Pasillo de los salones' },
         ];
     }else if (sceneURL === '../Img/Congresos/AuditorioCongreso.jpg') {
         sceneHotspots = [
@@ -475,6 +480,10 @@ function setModalHotspots(sceneURL) {
             { position: { x: -1000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', fileUrl: '../Documents/PDF/AcuseCita.pdf', description: 'El congreso de REDESLA se celebra cada añoS' },
             { position: { x: -2000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', fileUrl: '../Img/auditorioCongreso.jpg', description: 'El congreso de REDESLA se celebra cada añoS' },
         ];
+    } else if (sceneURL === '../Img/Congresos/Salones.jpg') {
+        infoHotspots = [
+            { position: { x: 4364.25, y: -2425.33, z: 71.92 }, text: 'Ingresar para calificar ponencias', title: 'Calificar ponencias', fileUrl: 'https://redesla.la/redesla/', description: 'Calificar ponencias' },
+        ];
     }
 
     return infoHotspots.map(hotspot => createModalHotspots(hotspot.position, hotspot.text, hotspot.title, hotspot.fileUrl, hotspot.description));
@@ -525,7 +534,7 @@ function createModalHotspots(position, text, title, fileUrl, description) {
         playSoundInfo();
 
         // Actualizar el contenido del modal
-        openInfoModalLeft(title, fileUrl, description);
+        openInfoModalLeft(title, fileUrl, description, true);
 
         // Función para mover la cámara al hotspot seleccionado
         const targetPosition = new THREE.Vector3(position.x, position.y, position.z);
