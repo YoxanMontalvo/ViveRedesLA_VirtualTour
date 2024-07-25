@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
+    modal.style.display = "none";
+
     // Obtener los elementos de audio y botones
     var audio = document.getElementById("musica");
     var playPauseBtn = document.getElementById("play-pause");
