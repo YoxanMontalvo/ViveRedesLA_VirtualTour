@@ -37,17 +37,21 @@ function updateSceneTitle(title) {
 }
 // Fin
 
-// Función para guardar la escena actual en localStorage
-function saveCurrentScene(sceneURL) {
+// Función para guardar la escena y el título actual en localStorage
+function saveCurrentScene(sceneURL, sceneTitle) {
     localStorage.setItem('currentScene', sceneURL);
+    localStorage.setItem('currentSceneTitle', sceneTitle);
 }
 // Fin
 
-// Función para cargar la escena actual desde localStorage
+// Función para cargar la escena y el título actual desde localStorage
 function loadCurrentScene() {
     const currentScene = localStorage.getItem('currentScene');
-    return currentScene ? currentScene : '../Img/Congresos/Lobby.jpg';
-    // return localStorage.getItem = '../Img/auditorioCongreso.jpg';
+    const currentSceneTitle = localStorage.getItem('currentSceneTitle');
+    return {
+        sceneURL: currentScene ? currentScene : '../Img/Congresos/Lobby.jpg',
+        sceneTitle: currentSceneTitle ? currentSceneTitle : 'Lobby'
+    };
 }
 // Fin
 
@@ -119,7 +123,7 @@ function createDoorHotspots(position, sceneURL, text, title) {
             updateInitialHotspots(newPanorama, sceneURL)
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
-            saveCurrentScene(sceneURL); // Guardar la escena actual
+            saveCurrentScene(sceneURL, title); // Guardar la escena actual
         });
 
         newPanorama.addEventListener('error', (event) => {
@@ -263,7 +267,7 @@ function createEscalerasHotspots(position, sceneURL, text, title) {
             updateInitialHotspots(newPanorama, sceneURL)
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
-            saveCurrentScene(sceneURL); // Guardar la escena actual
+            saveCurrentScene(sceneURL, title); // Guardar la escena actual
         });
 
         newPanorama.addEventListener('error', (event) => {
@@ -626,7 +630,7 @@ function createHotspotCaminar(position, sceneURL, text, title) {
             newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
-            saveCurrentScene(sceneURL); // Guardar la escena actual
+            saveCurrentScene(sceneURL, title); // Guardar la escena actual
         });
 
         newPanorama.addEventListener('error', (event) => {
@@ -741,15 +745,12 @@ function initializeMainPanorama() {
 
 // Función para inicializar la escena guardada o la inicial
 function initializePanorama() {
-    const savedSceneURL = loadCurrentScene();
-    if (savedSceneURL) {
-        panorama = new PANOLENS.ImagePanorama(savedSceneURL);
-    } else {
-        initializeMainPanorama();
-    }
+    const { sceneURL, sceneTitle } = loadCurrentScene();
+    panorama = new PANOLENS.ImagePanorama(sceneURL);
 
     panorama.addEventListener('load', () => {
         addInitialHotspots();
+        updateSceneTitle(sceneTitle);
     });
 
     viewer.add(panorama);
