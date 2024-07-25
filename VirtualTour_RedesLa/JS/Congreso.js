@@ -154,14 +154,7 @@ function createDoorHotspots(position, sceneURL, text, title) {
         newPanorama.addEventListener('load', () => {
             clearCurrentHotspots();
             updateSceneTitle(title);
-            const newInfoHotspots = setModalHotspots(sceneURL);
-            newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newSceneHotspots = setDoorHotspots(sceneURL);
-            newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newWalkHotspots = setEscalerasHotspots(sceneURL);
-            newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newPageHotspots = setLogoutHotspots(sceneURL);
-            newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            updateInitialHotspots(newPanorama, sceneURL)
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
             saveCurrentScene(sceneURL); // Guardar la escena actual
@@ -295,14 +288,7 @@ function createEscalerasHotspots(position, sceneURL, text, title) {
             // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
             /* const newLoginHotspot = createLoginHotspotsForScene(sceneURL);
             newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot)); */
-            const newInfoHotspots = setModalHotspots(sceneURL);
-            newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newSceneHotspots = setDoorHotspots(sceneURL);
-            newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newWalkHotspots = setEscalerasHotspots(sceneURL);
-            newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newPageHotspots = setLogoutHotspots(sceneURL);
-            newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            updateInitialHotspots(newPanorama, sceneURL)
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
             saveCurrentScene(sceneURL); // Guardar la escena actual
@@ -398,7 +384,7 @@ function setCameraHotspots(sceneURL) {
     //Pagina de inicio del recorrido
     if (sceneURL === '../Img/Congresos/Escalerascabina.jpg') {
         walkHotspots = [
-            { position: { x: 4974.72, y: -260.64, z: -286.94 }, sceneURL: '../Img/Congresos/mezzanine.jpg', text: 'Tomarse una foto', title: 'Tomarse una foto' },
+            { position: { x: 4966.71, y: -224.58, z: -466.84 }, sceneURL: '../Img/Congresos/mezzanine.jpg', text: 'Tomarse una foto', title: 'Tomarse una foto' },
         ];
     }
 
@@ -458,14 +444,7 @@ function createCameraHotspots(position, sceneURL, text, title) {
             // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
             /* const newLoginHotspot = createLoginHotspotsForScene(sceneURL);
             newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot)); */
-            const newInfoHotspots = setModalHotspots(sceneURL);
-            newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newSceneHotspots = setDoorHotspots(sceneURL);
-            newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newWalkHotspots = setEscalerasHotspots(sceneURL);
-            newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
-            const newPageHotspots = setLogoutHotspots(sceneURL);
-            newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
+            updateInitialHotspots(newPanorama, sceneURL)
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
             saveCurrentScene(sceneURL); // Guardar la escena actual
@@ -666,6 +645,26 @@ function addInitialHotspots() {
 
     const initialInfoHotspots = setInfoHotspots(panorama.src);
     initialInfoHotspots.forEach(hotspot => panorama.add(hotspot));
+}
+
+function updateInitialHotspots(newPanorama, sceneURL) {
+    const initialModalHotspots = setModalHotspots(sceneURL);
+    initialModalHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
+    const initialSceneHotspots = setDoorHotspots(sceneURL);
+    initialSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
+    const initialPageHotspots = setLogoutHotspots(sceneURL);
+    initialPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
+    const initialWalkHotspots = setEscalerasHotspots(sceneURL);
+    initialWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
+    const initialCameraHotspots = setCameraHotspots(sceneURL);
+    initialCameraHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
+    const initialInfoHotspots = setInfoHotspots(sceneURL);
+    initialInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
 }
 
 // Vista del menú principal
