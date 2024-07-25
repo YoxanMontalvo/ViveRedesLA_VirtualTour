@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    modal.style.display = "none";
+    
 
     // Obtener los elementos de audio y botones
     var audio = document.getElementById("musica");
@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
     var prevBtn = document.getElementById("prev");
     var nextBtn = document.getElementById("next");
     var disc = document.querySelector('.disc');
+
+    modal.style.display = "none";
+    disc.style.animationPlayState = 'paused';
 
     // Lista de canciones
     var canciones = [
