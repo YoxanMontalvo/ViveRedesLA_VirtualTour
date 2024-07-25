@@ -42,16 +42,21 @@ function musicElevator(sceneURL) {
 }
 // Fin
 
-// Función para guardar la escena actual en localStorage
-function saveCurrentScene(sceneURL) {
+// Función para guardar la escena y el título actual en localStorage
+function saveCurrentScene(sceneURL, sceneTitle) {
     localStorage.setItem('currentScene', sceneURL);
+    localStorage.setItem('currentSceneTitle', sceneTitle);
 }
 // Fin
 
-// Función para cargar la escena actual desde localStorage
+// Función para cargar la escena y el título actual desde localStorage
 function loadCurrentScene() {
     const currentScene = localStorage.getItem('currentScene');
-    return currentScene ? currentScene : '../Img/Exterior/EntradaViveRedesla.jpg';
+    const currentSceneTitle = localStorage.getItem('currentSceneTitle');
+    return {
+        sceneURL: currentScene ? currentScene : '../Img/Exterior/EntradaViveRedesla.jpg',
+        sceneTitle: currentSceneTitle ? currentSceneTitle : 'Entrada de Vive RedesLA'
+    };
 }
 // Fin
 
@@ -88,7 +93,7 @@ function setHotspotPuerta(sceneURL) {
         ];
     }else if (sceneURL === '../Img/Exterior/CurcePatioCongreso.jpg') {// Pagina principal con sus hotspot
         sceneHotspots = [
-            { position: { x: -7000, y: 100, z: 100 }, sceneURL: '../Img/Exterior/EntradaViveRedesla.jpg', text: 'Salir de la institución', title: 'Estacionamiento' },
+            { position: { x: -7000, y: 100, z: 100 }, sceneURL: '../Img/Exterior/EntradaViveRedesla.jpg', text: 'Salir de la institución', title: 'Entrada de Vive RedesLA' },
         ];
     }
 
@@ -479,7 +484,7 @@ function createHotspotPuerta(position, sceneURL, text, title) {
             newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
-            saveCurrentScene(sceneURL); // Guardar la escena actual
+            saveCurrentScene(sceneURL, title); // Guardar la escena actual
         });
 
         newPanorama.addEventListener('error', (event) => {
@@ -585,7 +590,7 @@ function createHotspotCaminar(position, sceneURL, text, title) {
             newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
-            saveCurrentScene(sceneURL); // Guardar la escena actual
+            saveCurrentScene(sceneURL, title); // Guardar la escena actual
         });
 
         newPanorama.addEventListener('error', (event) => {
@@ -823,17 +828,14 @@ function initializeMainPanorama() {
     viewer.add(panorama);
 }
 
-/////////////// Función para inicializar la escena guardada o la inicial ///////////////
+// Función para inicializar la escena guardada o la inicial
 function initializePanorama() {
-    const savedSceneURL = loadCurrentScene();
-    if (savedSceneURL) {
-        panorama = new PANOLENS.ImagePanorama(savedSceneURL);
-    } else {
-        initializeMainPanorama();
-    }
+    const { sceneURL, sceneTitle } = loadCurrentScene();
+    panorama = new PANOLENS.ImagePanorama(sceneURL);
 
     panorama.addEventListener('load', () => {
         addInitialHotspots();
+        updateSceneTitle(sceneTitle);
     });
 
     viewer.add(panorama);
