@@ -1,8 +1,8 @@
 /* Estilos para el modal */
 .modalMuscia {
     display: none; /* Ocultar el modal por defecto */
-    position: fixed;
-    z-index: 1;
+    position: absolute;
+    z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;

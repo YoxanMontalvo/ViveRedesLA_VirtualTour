@@ -62,48 +62,10 @@ function clearCurrentHotspots() {
 //////////////////////// Fin //////////////
 
 
-//////////////////////// Declaracion de los hotspot //////////////
-// Función para crear hotspot de información y la apertura del modal
-
-// Fin
-
-
-// Función para crear hotspot de cambio de escena
-
-// Fin
-
-// Funcion para cambiar de pagina
-
-// Fin
-
-// Función para crear hotspot de avanzar simulando caminar
-
-// Fin
-//////////////////////// Fin //////////////
-
-
-//////////////////////// Se declaran los hotspot y su elemento junto con sus rutas //////////////
-// Función para crear hotspots de información específicos para una escena
-
-// Fin
-
-// Función para crear hotspots de cambio de escena específicos para una escena
-
-// Fin
-
-// Hotspot para cambiar de pagina no se escena
-
-// Fin
-
-// Función para crear hotspots de caminata específicos para una escena
-
-
-
-
 /* ============================================================================= */
 
-/* PUERTAS */
 
+/* PUERTAS */
 function createDoorHotspots(position, sceneURL, text, title) {
     const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.DoorIcon);
     sceneHotspot.position.set(position.x, position.y, position.z);
@@ -225,9 +187,9 @@ const doorHotspotSound = new Audio('../Music/sonidos/door.mp3');
 function playDoorSoundSceneChange() {
     doorHotspotSound.play();
 }
+/* PUERTAS */
 
 /* Escaleras */
-
 function setEscalerasHotspots(sceneURL) {
     let walkHotspots = [];
 
@@ -317,9 +279,9 @@ function createEscalerasHotspots(position, sceneURL, text, title) {
 
     return sceneHotspot;
 }
+/* FIN */
 
 /* LOGOUT */
-
 function setLogoutHotspots(sceneURL) {
     let pageHotspots = [];
 
@@ -386,9 +348,9 @@ function createLogoutHotspots(position, pageURL, text, title) {
 
     return pageHotspot;
 }
+/* FIN */
 
 /* FOTO */
-
 function setCameraHotspots(sceneURL) {
     let walkHotspots = [];
 
@@ -460,9 +422,9 @@ function createCameraHotspots(scale, position, text, title, fileUrl, description
 
     return infospot;
 }
+/* FIN */
 
 /* Modal */
-
 function setModalHotspots(sceneURL) {
     let infoHotspots = [];
 
@@ -543,9 +505,9 @@ function createModalHotspots(scale, position, text, title, fileUrl, description)
 
     return infospot;
 }
+/* FIN */
 
 /* INFO */
-
 function createHotspotInfo(scale, position, text, title, image, description) {
     let infospot = new PANOLENS.Infospot(scale, PANOLENS.DataImage.InfoIcon);
     infospot.position.set(position.x, position.y, position.z);
@@ -585,9 +547,9 @@ function setInfoHotspots(sceneURL) {
 
     return infoHotspots.map(hotspot => createHotspotInfo(hotspot.scale ?? 300, hotspot.position, hotspot.text, hotspot.title, hotspot.image, hotspot.description));
 }
+/* FIN */
 
 /* CAMINAR */
-
 function setWalkHotspots(sceneURL) {
     let walkHotspots = [];
 
@@ -685,9 +647,9 @@ const walkHotspotSound = new Audio('../Music/sonidos/walk.mp3');
 function playWalkSoundSceneChange() {
     walkHotspotSound.play();
 }
+/* FIN */
 
 /* ZOOM */
-
 function setZoomHotspots(sceneURL) {
     let pageHotspots = [];
 
@@ -761,24 +723,10 @@ function createZoomHotspots(position, pageURL, text, title) {
 
     return pageHotspot;
 }
+/* FIN */
+
 
 /* ============================================================================= */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Fin
-//////////////////////// Fin //////////////
 
 
 //////////////////////// Inicialización de los hotspot //////////////

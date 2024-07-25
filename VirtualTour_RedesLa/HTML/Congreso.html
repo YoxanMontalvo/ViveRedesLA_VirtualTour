@@ -10,20 +10,54 @@
       href="../Documents/Icons/tourVirtualcon.png"
       type="image/x-icon"
     />
-    <link rel="stylesheet" href="../Lib/CSS/bootstrap.min.css" />
+    <link rel="icon" href="../Documents/Icons/tourVirtualcon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../Lib/CSS/bootstrap.min.css">
     <link rel="stylesheet" href="../Lib/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="../CSS/InicioSescion.css" />
-    <link rel="stylesheet" href="../CSS/Estilos.css" />
-    <link rel="stylesheet" href="../CSS/fotos.css" />
-
-  </head>
-  <body>
+    <link rel="stylesheet" href="../CSS/InicioSescion.css">
+    <link rel="stylesheet" href="../CSS/Estilos.css">
+    <link rel="stylesheet" href="../CSS/MusicModal.css">
+    <link rel="stylesheet" href="../CSS/fotos.css" /> 
+</head>
+<body>
     <!-- Contener del visor -->
-    <div id="container" style="position: relative; width: 100%; height: 100vh">
-      <!-- Contenedor del título sobre el visor -->
-      <div id="scene-title">Congreso</div>
-    </div>
-    <!-- Fin -->
+    <div id="container" style="position: relative; width: 100%; height: 100vh;">
+        <!-- Contenedor del título sobre el visor -->
+        <div id="scene-title">Congreso</div>
+        
+
+        <!-- Modal del hotspot de información -->
+        <div id="infoModalLeft" class="modal">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoModalLeftLabel">Título del Modal</h5>
+                <button type="button" class="close" onclick="closeInfoModalLeft()">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div id="modal-content-container" class="modal-body">
+                
+            </div>
+        </div>
+        <!-- Fin del Modal -->
+
+        <!-- Modal del reproductor de musica -->
+        <div id="modalMostrar" class="modalMuscia">
+            <!-- Contenido del Modal -->
+            <div class="contenModal">
+                <span class="closeModal" title="Cerrar ventana emergente">&times;</span>
+                <h3>Ambientación musical</h3>
+                <div id="music-controls">
+                <button id="prev" class="btn" title="Anterior"><i class="fas fa-backward"></i></button>
+                <button id="play-pause" title="Reproducir / pausar" class="btn"><i class="fas fa-play"></i></button>
+                <button id="next" title="Siguiente" class="btn"><i class="fas fa-forward"></i></button>
+                </div>
+                <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+                <audio id="musica" loop>
+                    <source src="../Music/music/moonlight.mp3" type="audio/mp3">
+                    Tu navegador no soporta la reproducción de audio.
+                </audio>
+            </div>
+        </div>
+        <!-- Fin -->
 
     <!-- Panel del hotspot de informacion -->
 
@@ -97,7 +131,7 @@
     <script src="../Lib/panolens.min.js"></script>
     <script src="../JS/Congreso.js"></script>
     <script src="../JS/InformationModal.js"></script>
-    <script src="../JS/fotos.js"></script>
-
+  <script src="../JS/fotos.js"></script>
+  <script src="../JS/MusicModal.js"></script>
   </body>
 </html>
