@@ -16,9 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Lista de canciones
     var canciones = [
-        "../Music/ambientacionSong.mp3",
-        "../Music/PianoRelax.mp3",
-        "../Music/RelaxSong.mp3",
+        "../Music/music/coffee shop.mp3",
+        "../Music/music/forward.mp3",
+        "../Music/music/moonlight.mp3",
     ];
     var currentSongIndex = 0;
 

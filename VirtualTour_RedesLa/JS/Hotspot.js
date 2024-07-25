@@ -73,6 +73,8 @@ function clearCurrentHotspots() {
 }
 
 
+
+
 /* ============================================================================= */
 
 
@@ -458,7 +460,7 @@ function createHotspotPuerta(position, sceneURL, text, title) {
 
     // Cambiar de escena al hacer clic en el hotspot
     sceneHotspot.addEventListener('click', () => {
-        playSoundSceneChange();//Sonido al cambiar de escena
+        playDoorSoundSceneChange();//Sonido al cambiar de escena
         musicElevator(sceneURL);//Musica del elevador
 
         const newPanorama = new PANOLENS.ImagePanorama(sceneURL);
@@ -494,6 +496,11 @@ function createHotspotPuerta(position, sceneURL, text, title) {
     document.getElementById('container').appendChild(hotspotText);
 
     return sceneHotspot;
+}
+
+const doorHotspotSound = new Audio('../Music/sonidos/door.mp3');
+function playDoorSoundSceneChange() {
+    doorHotspotSound.play();
 }
 
 /* CAMINAR */
@@ -558,7 +565,7 @@ function createHotspotCaminar(position, sceneURL, text, title) {
 
     // Cambiar de escena al hacer clic en el hotspot
     sceneHotspot.addEventListener('click', () => {
-        playSoundSceneChange();//Sonido al cambiar de escena
+        playWalkSoundSceneChange();//Sonido al cambiar de escena
         musicElevator(sceneURL);//Musica del elevador
 
         const newPanorama = new PANOLENS.ImagePanorama(sceneURL);
@@ -594,6 +601,11 @@ function createHotspotCaminar(position, sceneURL, text, title) {
     document.getElementById('container').appendChild(hotspotText);
 
     return sceneHotspot;
+}
+
+const walkHotspotSound = new Audio('../Music/sonidos/walk.mp3');
+function playWalkSoundSceneChange() {
+    walkHotspotSound.play();
 }
 
 /* LOGIN */
