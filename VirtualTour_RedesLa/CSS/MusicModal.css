@@ -24,7 +24,7 @@
 }
 
 .contenModal{
-    background-color: #333; 
+    background-color: black; 
     margin: 5% auto;
     padding: 20px;
     width: 80%;
@@ -103,6 +103,10 @@
 
 #music-controls .btn {
     margin: 0 10px;
+}
+#music-controls .btn:hover {
+    cursor:pointer;
+    transform: scale(1.4); 
 }
 
 #volume {

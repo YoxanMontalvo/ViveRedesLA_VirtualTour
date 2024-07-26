@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="../Lib/CSS/fontawesome.all.min.css">
     <link rel="stylesheet" href="../CSS/Estilos.css">
     <link rel="stylesheet" href="../CSS/MusicModal.css">
+    <link rel="stylesheet" href="../CSS/Calendario.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.7/index.min.css">
 </head>
 <body>
     <!-- Contener del visor -->
@@ -19,7 +21,6 @@
         <!-- Contenedor del título sobre el visor -->
         <div id="scene-title"></div>
         
-
         <!-- Modal de inicio de sesion-->
         <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -77,6 +78,29 @@
             </div>
         </div>
         <!-- Fin -->
+
+        <!-- Calendario del congreso -->
+        <div id="calendarioPanel">
+            <div class="panel-body">
+                <!-- Contenedor para el calendario -->
+                <div id="calendar"></div>
+            </div>
+            <div class="panel-footer">
+                <!-- Aquí puedes añadir contenido adicional o botones -->
+                <button id="footerButton">Botón en el pie del panel</button>
+                <button id="closePanelC" title="Cerrar">&times;</button>
+            </div>
+        </div>
+        <!-- Panel de mensaje -->
+        <div id="hoverInfoPanel">
+            <p>Calendario del congreso</p>
+        </div>
+        <!-- Botón flotante -->
+        <div id="botonCalendario" title="Calendario">
+            <i class="fas fa-calendar-alt"></i>
+        </div>
+        <!-- Fin -->
+
     </div>
     <!-- Fin -->
 
@@ -96,5 +120,7 @@
     <script src="../JS/Hotspot.js"></script>
     <script src="../JS/Login.js"></script>
     <script src="../JS/MusicModal.js"></script>
+    <script src="../JS/Calendario.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.7/index.global.min.js"></script>
 </body>
 </html>
