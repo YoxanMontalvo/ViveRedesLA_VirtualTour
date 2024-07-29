@@ -1,27 +1,18 @@
 "use strict";
 
 $(document).ready(() => {
-  $("#anotherTake").hide()
-  $("#savePhoto").hide()
-})
+  $("#anotherTake").hide();
+  $("#savePhoto").hide();
+});
 
-//capturar video ó imagen
 const video = document.querySelector(".video");
 const canvas = document.querySelector(".canvas");
-
-//tomar foto
 const button = document.querySelector(".start-btn");
-
-//mostrar foto
 const photo = document.querySelector(".photo");
+const frame = new Image();
+frame.src = '../Img/marcos/marco.png'; // asegúrate de que la ruta a tu marco PNG sea correcta
 
-//constrains
-/*
-Aquí enviamos las caracteristicas del video y
-audio que solicitamos
-*/
-
-const widthCamera = 916
+const widthCamera = 916;
 const heightCamera = 520;
 
 const constraints = {
@@ -29,15 +20,13 @@ const constraints = {
   audio: false,
 };
 
+let stream = null; // Definición de la variable stream en el ámbito global
 
-//acceso a la webcam
-/*
-Aquí recibimos la respuesta del navegador, es una promesa
- */
+// Acceso a la webcam
 const getVideo = async () => {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
-    handleSucces(stream);
+    stream = await navigator.mediaDevices.getUserMedia(constraints);
+    handleSuccess(stream);
     console.log(stream);
   } catch (error) {
     $('#cameraModal').modal('hide');
@@ -50,20 +39,35 @@ const getVideo = async () => {
   }
 };
 
-//3. -----------> si la promesa tiene exito
-const handleSucces = (stream) => {
+// Manejo de éxito al obtener el flujo de video
+const handleSuccess = (stream) => {
   video.srcObject = stream;
   video.play();
 };
 
-//4.------------>Llamada a la función get
-
-$(document).on('show.bs.modal','#cameraModal', function () {
+// Llamada a la función getVideo cuando se muestra el modal
+$(document).on('show.bs.modal', '#cameraModal', function () {
   getVideo();
 });
 
-const frame = new Image();
-frame.src = '../Img/marcos/marco.png'; // asegúrate de que la ruta a tu marco PNG sea correcta
+// Detener el flujo de la cámara al cerrar el modal
+$('#cameraModal').on('hide.bs.modal', function () {
+  if (stream) {
+    let tracks = stream.getTracks();
+    tracks.forEach(track => track.stop()); // Detener todas las pistas
+  }
+  video.srcObject = null; // Desconectar el video
+});
+
+// Manejar el clic en el botón de cerrar modal
+document.getElementById('closeModalCamera').addEventListener('click', () => {
+  $('#cameraModal').modal('hide'); // Cerrar el modal
+  if (stream) {
+    let tracks = stream.getTracks();
+    tracks.forEach(track => track.stop()); // Detener todas las pistas
+  }
+  video.srcObject = null; // Desconectar el video
+});
 
 
 
