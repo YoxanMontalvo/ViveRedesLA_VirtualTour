@@ -1,37 +1,16 @@
-const floatingButton = document.getElementById('botonCalendario');
-const expandedPanel = document.getElementById('calendarioPanel');
-const messagePanel = document.getElementById('hoverInfoPanel');
-
-// Mostrar el panel desplegable y cambiar el estado del botón al hacer clic
-floatingButton.addEventListener('click', function() {
-    expandedPanel.classList.toggle('active');
-    floatingButton.classList.toggle('active');
-    messagePanel.classList.toggle('active');
-});
-
-
-// Mostrar el panel de mensaje al pasar el cursor sobre el botón
-floatingButton.addEventListener('mouseover', function() {
-    messagePanel.style.opacity = '1';
-    messagePanel.style.transform = 'translateX(0)';
-    messagePanel.style.display = 'block';
-});
-
-// Ocultar el panel de mensaje al retirar el cursor del botón
-floatingButton.addEventListener('mouseout', function() {
-    if (!expandedPanel.classList.contains('active')) {
-        messagePanel.style.opacity = '0';
-        messagePanel.style.transform = 'translateX(50px)';
-    }
-});
-
-// Inicializar Pikaday
 document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar FullCalendar
+    const floatingButton = document.getElementById('botonCalendario');
+    const expandedPanel = document.getElementById('calendarioPanel');
+    const messagePanel = document.getElementById('hoverInfoPanel');
+    const toggleViewButton = document.getElementById('toggleViewButton');
     const calendarEl = document.getElementById('calendar');
+    const remindersEl = document.getElementById('reminders');
+    const remindersList = document.getElementById('remindersList');
 
+    // Inicializar FullCalendar
+    // Inicializar FullCalendar
     const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth', // Vista inicial del calendario
+        initialView: 'dayGridMonth',
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
@@ -40,12 +19,78 @@ document.addEventListener('DOMContentLoaded', function() {
         events: [
             // Puedes añadir eventos aquí
             {
-                title: 'Evento Ejemplo',
-                start: '2024-08-01',
-                end: '2024-08-02'
+                title: 'Reunion del congreso',
+                start: '2024-07-30'
+            },
+            {
+                title: 'Visitar el arcade',
+                start: '2024-07-22'
+            },
+            {
+                title: 'Reunion en Relayn',
+                start: '2024-07-25'
             }
         ]
     });
 
+    // Renderizar el calendario
     calendar.render();
+
+    // Inicialmente mostrar los recordatorios y ocultar el calendario
+    calendarEl.style.display = 'none';
+    remindersEl.style.display = 'block';
+
+    toggleViewButton.addEventListener('click', function() {
+        if (calendarEl.style.display === 'none') {
+            calendarEl.style.display = 'block';
+            remindersEl.style.display = 'none';
+            toggleViewButton.textContent = 'Ver Recordatorios';
+        } else {
+            calendarEl.style.display = 'none';
+            remindersEl.style.display = 'block';
+            toggleViewButton.textContent = 'Ver Calendario';
+        }
+    });
+
+    // Función para agregar recordatorios
+    function addReminder(title, startDate) {
+        const li = document.createElement('li');
+        li.textContent = `${title} - Fecha: ${startDate}`;
+        remindersList.appendChild(li);
+    }
+
+    // Función para actualizar la lista de recordatorios
+    function updateReminders() {
+        remindersList.innerHTML = '';
+        const events = calendar.getEvents();
+        events.forEach(event => {
+            addReminder(event.title, event.startStr);
+        });
+    }
+
+    // Actualizar los recordatorios al cargar la página
+    updateReminders();
+
+
+    // Mostrar el panel desplegable y cambiar el estado del botón al hacer clic
+    floatingButton.addEventListener('click', function() {
+        expandedPanel.classList.toggle('active');
+        floatingButton.classList.toggle('active');
+        messagePanel.classList.toggle('active');
+    });
+
+    // Mostrar el panel de mensaje al pasar el cursor sobre el botón
+    floatingButton.addEventListener('mouseover', function() {
+        messagePanel.style.opacity = '1';
+        messagePanel.style.transform = 'translateX(0)';
+        messagePanel.style.display = 'block';
+    });
+
+    // Ocultar el panel de mensaje al retirar el cursor del botón
+    floatingButton.addEventListener('mouseout', function() {
+        if (!expandedPanel.classList.contains('active')) {
+            messagePanel.style.opacity = '0';
+            messagePanel.style.transform = 'translateX(50px)';
+        }
+    });
 });

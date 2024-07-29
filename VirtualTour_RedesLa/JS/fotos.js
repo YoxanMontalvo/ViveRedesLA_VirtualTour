@@ -31,9 +31,9 @@ const getVideo = async () => {
   } catch (error) {
     $('#cameraModal').modal('hide');
     Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'No se pudo acceder a la cámara. Por favor, otorga los permisos necesarios al navegador.',
+      icon: 'info',
+      title: 'No se pudo acceder a la cámara',
+      text: 'Asegúrese de que la cámara no esté siendo usada por otras aplicaciones y permita el acceso a la cámara en su navegador.',
     });
     console.log(error);
   }
