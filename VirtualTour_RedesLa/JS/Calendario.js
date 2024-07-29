@@ -1,6 +1,5 @@
 const floatingButton = document.getElementById('botonCalendario');
 const expandedPanel = document.getElementById('calendarioPanel');
-const closeButton = document.getElementById('closePanelC');
 const messagePanel = document.getElementById('hoverInfoPanel');
 
 // Mostrar el panel desplegable y cambiar el estado del botón al hacer clic
@@ -10,12 +9,6 @@ floatingButton.addEventListener('click', function() {
     messagePanel.classList.toggle('active');
 });
 
-// Cerrar el panel desplegable y restaurar el estado del botón al hacer clic en el botón de cierre
-closeButton.addEventListener('click', function() {
-    expandedPanel.classList.remove('active');
-    floatingButton.classList.remove('active');
-    messagePanel.style.display = 'none';
-});
 
 // Mostrar el panel de mensaje al pasar el cursor sobre el botón
 floatingButton.addEventListener('mouseover', function() {
