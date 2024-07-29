@@ -36,7 +36,8 @@
     position: fixed;
     top: 25px;
     right: 65px;
-    width: 405px;
+    width: 455px;
+    text-align: center;
     background-color: black;
     color: #fff; /* Color del texto */
     padding: 10px;
@@ -59,8 +60,8 @@
     position: fixed;
     top: 80px;
     right: 20px;
-    width: 450px;
-    height: 500px;
+    width: 500px;
+    height: 540px;
     background-color: black;
     color: #fff; /* Color del texto */
     padding: 0; /* Sin relleno para ajustar los márgenes internos */
@@ -94,7 +95,7 @@
 
 /* Estilo del pie del panel */
 .panel-footer {
-    padding: 20px;
+    padding: 8px;
     border-top: 1px solid #444; /* Línea divisoria superior */
     text-align: center;
 }
@@ -129,4 +130,28 @@
     position: absolute;
     top: 10px;
     right: 10px;
+}
+
+
+#reminders {
+    padding: 1px 1px 1px 1px;
+    color: black;
+    border-radius: 5px;
+}
+
+#remindersList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#remindersList li {
+    margin: 10px 0;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+#remindersList li:hover {
+    cursor: pointer;
+    transform: scale(1.05); /* Aumenta el tamaño del elemento al 105% */
 }
