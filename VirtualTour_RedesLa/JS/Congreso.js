@@ -63,6 +63,43 @@ function clearCurrentHotspots() {
     }
 }
 // Fin
+
+// Función para animar el hotspot
+function animateHotspot(hotspot, amplitude = 20, frequency = 1, duration = 3000, delay = 6000) {
+    const originalPosition = hotspot.position.clone();
+    let isJumping = false;
+    const jumpHeight = amplitude;
+
+    function startJump() {
+        if (isJumping) return;
+        isJumping = true;
+        const startTime = Date.now();
+
+        function jump() {
+            const elapsed = Date.now() - startTime;
+            if (elapsed > duration) {
+                hotspot.position.copy(originalPosition); // Regresa a la posición original
+                isJumping = false;
+                return;
+            }
+
+            const progress = (elapsed % 1000) / 1000;
+            const height = jumpHeight * Math.sin(progress * Math.PI * 2); // Movimiento de salto
+            hotspot.position.set(
+                originalPosition.x,
+                originalPosition.y + height,
+                originalPosition.z
+            );
+            requestAnimationFrame(jump);
+        }
+        jump();
+    }
+    // Configura el intervalo para repetir el salto cada 10 segundos
+    setInterval(startJump, delay);
+    // Inicia la animación inmediatamente para el primer ciclo
+    startJump();
+}
+// Fin
 //////////////////////// Fin //////////////
 
 
@@ -73,6 +110,7 @@ function clearCurrentHotspots() {
 function createDoorHotspots(position, sceneURL, text, title) {
     const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.DoorIcon);
     sceneHotspot.position.set(position.x, position.y, position.z);
+    animateHotspot(sceneHotspot);
 
     // Crear elemento de texto manualmente
     const hotspotText = document.createElement('div');
@@ -191,9 +229,10 @@ const doorHotspotSound = new Audio('../Music/sonidos/door.mp3');
 function playDoorSoundSceneChange() {
     doorHotspotSound.play();
 }
-/* PUERTAS */
+/* FIN */
 
-/* Escaleras */
+
+/* ESCALERAS */
 function setEscalerasHotspots(sceneURL) {
     let walkHotspots = [];
 
@@ -214,6 +253,7 @@ function setEscalerasHotspots(sceneURL) {
 function createEscalerasHotspots(position, sceneURL, text, title) {
     const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.EscalerasIcon);
     sceneHotspot.position.set(position.x, position.y, position.z);
+    animateHotspot(sceneHotspot);
 
     // Crear elemento de texto manualmente
     const hotspotText = document.createElement('div');
@@ -285,6 +325,7 @@ function createEscalerasHotspots(position, sceneURL, text, title) {
 }
 /* FIN */
 
+
 /* LOGOUT */
 function setLogoutHotspots(sceneURL) {
     let pageHotspots = [];
@@ -301,6 +342,7 @@ function setLogoutHotspots(sceneURL) {
 function createLogoutHotspots(position, pageURL, text, title) {
     const pageHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.DoorIcon);
     pageHotspot.position.set(position.x, position.y, position.z);
+    animateHotspot(pageHotspot);
 
     // Crear elemento de texto manualmente
     const hotspotText = document.createElement('div');
@@ -354,6 +396,7 @@ function createLogoutHotspots(position, pageURL, text, title) {
 }
 /* FIN */
 
+
 /* FOTO */
 function setCameraHotspots(sceneURL) {
     let walkHotspots = [];
@@ -371,6 +414,7 @@ function setCameraHotspots(sceneURL) {
 function createCameraHotspots(scale, position, text, title, fileUrl, description) {
     const infospot = new PANOLENS.Infospot(scale, PANOLENS.DataImage.CamaraIcon);
     infospot.position.set(position.x, position.y, position.z);
+    animateHotspot(infospot);
 
     // Crear elemento de texto manualmente
     const hotspotText = document.createElement('div');
@@ -428,7 +472,8 @@ function createCameraHotspots(scale, position, text, title, fileUrl, description
 }
 /* FIN */
 
-/* Modal */
+
+/* MODAL */
 function setModalHotspots(sceneURL) {
     let infoHotspots = [];
 
@@ -455,6 +500,7 @@ function setModalHotspots(sceneURL) {
 function createModalHotspots(scale, position, text, title, fileUrl, description) {
     const infospot = new PANOLENS.Infospot(scale, PANOLENS.DataImage.WebsitesIcon);
     infospot.position.set(position.x, position.y, position.z);
+    animateHotspot(infospot);
 
     // Crear elemento de texto manualmente
     const hotspotText = document.createElement('div');
@@ -511,11 +557,13 @@ function createModalHotspots(scale, position, text, title, fileUrl, description)
 }
 /* FIN */
 
+
 /* INFO */
 function createHotspotInfo(scale, position, text, title, image, description) {
     let infospot = new PANOLENS.Infospot(scale, PANOLENS.DataImage.InfoIcon);
     infospot.position.set(position.x, position.y, position.z);
     infospot.addHoverElement(document.querySelector('#panel'), 165);
+    animateHotspot(infospot);
   
     infospot.addEventListener('hoverenter', function(){
         document.querySelector('#panel').classList.add('show');
@@ -553,6 +601,7 @@ function setInfoHotspots(sceneURL) {
 }
 /* FIN */
 
+
 /* CAMINAR */
 function setWalkHotspots(sceneURL) {
     let walkHotspots = [];
@@ -570,6 +619,7 @@ function setWalkHotspots(sceneURL) {
 function createHotspotCaminar(position, sceneURL, text, title) {
     const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.WalkIcon);
     sceneHotspot.position.set(position.x, position.y, position.z);
+    animateHotspot(sceneHotspot);
 
     // Crear elemento de texto manualmente
     const hotspotText = document.createElement('div');
@@ -653,6 +703,7 @@ function playWalkSoundSceneChange() {
 }
 /* FIN */
 
+
 /* ZOOM */
 function setZoomHotspots(sceneURL) {
     let pageHotspots = [];
@@ -677,6 +728,7 @@ function setZoomHotspots(sceneURL) {
 function createZoomHotspots(position, pageURL, text, title) {
     const pageHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.ZoomIcon);
     pageHotspot.position.set(position.x, position.y, position.z);
+    animateHotspot(pageHotspot);
 
     // Crear elemento de texto manualmente
     const hotspotText = document.createElement('div');
