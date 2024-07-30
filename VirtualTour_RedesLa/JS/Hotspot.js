@@ -69,7 +69,45 @@ function clearCurrentHotspots() {
         hotspotsToRemove.forEach(hotspot => panorama.remove(hotspot));
     }
 }
+// Fin
 
+// Función para animar el hotspot
+function animateHotspot(hotspot, amplitude = 20, frequency = 1, duration = 3000, delay = 6000) {
+    const originalPosition = hotspot.position.clone();
+    let isJumping = false;
+    const jumpHeight = amplitude;
+
+    function startJump() {
+        if (isJumping) return;
+        isJumping = true;
+        const startTime = Date.now();
+
+        function jump() {
+            const elapsed = Date.now() - startTime;
+            if (elapsed > duration) {
+                hotspot.position.copy(originalPosition); // Regresa a la posición original
+                isJumping = false;
+                return;
+            }
+
+            const progress = (elapsed % 1000) / 1000;
+            const height = jumpHeight * Math.sin(progress * Math.PI * 2); // Movimiento de salto
+            hotspot.position.set(
+                originalPosition.x,
+                originalPosition.y + height,
+                originalPosition.z
+            );
+            requestAnimationFrame(jump);
+        }
+        jump();
+    }
+    // Configura el intervalo para repetir el salto cada 10 segundos
+    setInterval(startJump, delay);
+    // Inicia la animación inmediatamente para el primer ciclo
+    startJump();
+}
+// Fin
+//////////////////////// Fin //////////////
 
 
 
@@ -417,6 +455,7 @@ function setHotspotPuerta(sceneURL) {
 function createHotspotPuerta(position, sceneURL, text, title) {
     const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.DoorIcon);
     sceneHotspot.position.set(position.x, position.y, position.z);
+    animateHotspot(sceneHotspot);
 
     // Crear elemento de texto manualmente
     const hotspotText = document.createElement('div');
@@ -531,6 +570,7 @@ function setWalkHotspots(sceneURL) {
 function createHotspotCaminar(position, sceneURL, text, title) {
     const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.WalkIcon);
     sceneHotspot.position.set(position.x, position.y, position.z);
+    animateHotspot(sceneHotspot);
 
     // Crear elemento de texto manualmente
     const hotspotText = document.createElement('div');
@@ -627,6 +667,7 @@ function playWalkSoundSceneChange() {
 function createHotspotLogin(position) {
     const hotspot = new PANOLENS.Infospot(350, PANOLENS.DataImage.LoginIcon);
     hotspot.position.set(position.x, position.y, position.z);
+    animateHotspot(hotspot);
 
     // Crear elemento de texto para el hotspot
     const hotspotText = document.createElement('div');
@@ -699,6 +740,7 @@ function createHotspotInfo(position, text, title, image, description) {
     let infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.InfoIcon);
     infospot.position.set(position.x, position.y, position.z);
     infospot.addHoverElement(document.querySelector('#panel'), 165);
+    animateHotspot(infospot);
   
     infospot.addEventListener('hoverenter', function(){
         document.querySelector('#panel').classList.add('show');
@@ -741,6 +783,7 @@ function setInfoHotspots(sceneURL) {
 function createPageHotspot(position, pageURL, text, title) {
     const pageHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.Walker);
     pageHotspot.position.set(position.x, position.y, position.z);
+    animateHotspot(pageHotspot);
 
     // Crear elemento de texto manualmente
     const hotspotText = document.createElement('div');
@@ -833,8 +876,9 @@ function createPageHotspotsForScene(sceneURL) {
 /* ARCADE */
 // Crea el hotspot del arcade con el nombre del juego
 function createHotspotArcade(position, game, title) {
-    const hotspot = new PANOLENS.Infospot(350, PANOLENS.DataImage.LoginIcon);
+    const hotspot = new PANOLENS.Infospot(350, PANOLENS.DataImage.ArcadeIcon);
     hotspot.position.set(position.x, position.y, position.z);
+    animateHotspot(hotspot);
     
     // Evento de clic para abrir el modal del juego específico
     hotspot.addEventListener('click', () => {
@@ -852,7 +896,6 @@ function setArcadeHotspots(sceneURL) {
     if (sceneURL === '../Img/cafeteriaPlanta.png') {
         arcadeHotspots = [
             { position: { x: 3000, y: 1000, z: -5000 }, game: 'SpaceWord' },
-            // Agrega más hotspots aquí con diferentes posiciones y juegos
             { position: { x: -2000, y: 500, z: -4000 }, game: 'Memorama' },
             { position: { x: 1000, y: 0, z: -3000 }, game: 'HangMan' },
             { position: { x: 500, y: -500, z: -2000 }, game: 'Snake' }
