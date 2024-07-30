@@ -20,7 +20,7 @@ body {
 .container {
     display: flex;
     width: 1450px; /* Ajusta el ancho del contenedor si es necesario */
-    height: 650px;
+    height: 690px;
     gap: 70px;
     padding: 60px 40px;
     background: #fff;

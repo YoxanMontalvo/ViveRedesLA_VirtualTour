@@ -13,13 +13,6 @@ function playSoundSceneChange() {
 }
 // Fin
 
-// Reproducir el sonido al abrir el modal de inicio de sesion
-const LoginSound = new Audio('../Music/SoundLogin.mp3');
-function playLoginSound() {
-    LoginSound.play();
-}
-// Fin
-
 // Musica del elevador
 const elevatorMusic = new Audio('../Music/RelaxSong.mp3');
 
@@ -474,14 +467,22 @@ function createHotspotPuerta(position, sceneURL, text, title) {
             // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
             const newLoginHotspot = setLoginHotspots(sceneURL);
             newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
+
             const newInfoHotspots = setInfoHotspots(sceneURL);
             newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
             const newSceneHotspots = setHotspotPuerta(sceneURL);
             newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
             const newWalkHotspots = setWalkHotspots(sceneURL);
             newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
             const newPageHotspots = createPageHotspotsForScene(sceneURL);
             newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
+            const newArcadeHotspot = setArcadeHotspots(sceneURL);
+            newArcadeHotspot.forEach(hotspot => newPanorama.add(hotspot));
+
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
             saveCurrentScene(sceneURL, title); // Guardar la escena actual
@@ -500,13 +501,13 @@ function createHotspotPuerta(position, sceneURL, text, title) {
 
     return sceneHotspot;
 }
-/* FIN */
-
 
 const doorHotspotSound = new Audio('../Music/sonidos/door.mp3');
 function playDoorSoundSceneChange() {
     doorHotspotSound.play();
 }
+/* FIN */
+
 
 /* CAMINAR */
 function setWalkHotspots(sceneURL) {
@@ -580,14 +581,22 @@ function createHotspotCaminar(position, sceneURL, text, title) {
             // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
             const newLoginHotspot = setLoginHotspots(sceneURL);
             newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
+
             const newInfoHotspots = setInfoHotspots(sceneURL);
             newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
             const newSceneHotspots = setHotspotPuerta(sceneURL);
             newSceneHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
             const newWalkHotspots = setWalkHotspots(sceneURL);
             newWalkHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
             const newPageHotspots = createPageHotspotsForScene(sceneURL);
             newPageHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
+            const newArcadeHotspot = setArcadeHotspots(sceneURL);
+            newArcadeHotspot.forEach(hotspot => newPanorama.add(hotspot));
+            
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
             saveCurrentScene(sceneURL, title); // Guardar la escena actual
@@ -606,13 +615,13 @@ function createHotspotCaminar(position, sceneURL, text, title) {
 
     return sceneHotspot;
 }
-/* FIN */
-
 
 const walkHotspotSound = new Audio('../Music/sonidos/walk.mp3');
 function playWalkSoundSceneChange() {
     walkHotspotSound.play();
 }
+/* FIN */
+
 
 /* LOGIN */
 function createHotspotLogin(position) {
@@ -676,7 +685,14 @@ function setLoginHotspots(sceneURL) {
 
     return loginHotspots.map(hotspot => createHotspotLogin(hotspot.position));
 }
+
+// Reproducir el sonido al abrir el modal de inicio de sesion
+const LoginSound = new Audio('../Music/sonidos/SoundLogin.mp3');
+function playLoginSound() {
+    LoginSound.play();
+}
 /* FIN */
+
 
 /* INFO */
 function createHotspotInfo(position, text, title, image, description) {
@@ -778,11 +794,7 @@ function createPageHotspot(position, pageURL, text, title) {
 function createPageHotspotsForScene(sceneURL) {
     let pageHotspots = [];
 
-    if(sceneURL === '../Img/cafeteriaPlanta.png') { // Ejemplo de una escena
-        pageHotspots = [
-            { position: { x: 1000, y: 1000, z: -5000 }, pageURL: '../GameZone/index.html', text: 'Entrar al Arcade', title: 'Zona de videojuegos' },
-        ];
-    }else if (sceneURL === '../Img/auditorioPlanta.png') { // Ejemplo de una escena
+    if (sceneURL === '../Img/auditorioPlanta.png') { // Ejemplo de una escena
         pageHotspots = [
             { position: { x: 1000, y: 1000, z: -5000 }, pageURL: 'https://us02web.zoom.us/j/89184349159?pwd=OTNvWUg3MjdEK1FFSjNwWXZaa0E2UT09#success', text: 'Acceder al curso', title: 'Acceder al curso' },
         ];
@@ -817,6 +829,76 @@ function createPageHotspotsForScene(sceneURL) {
 }
 /* FIN */
 
+
+/* ARCADE */
+// Crea el hotspot del arcade con el nombre del juego
+function createHotspotArcade(position, game, title) {
+    const hotspot = new PANOLENS.Infospot(350, PANOLENS.DataImage.LoginIcon);
+    hotspot.position.set(position.x, position.y, position.z);
+    
+    // Evento de clic para abrir el modal del juego específico
+    hotspot.addEventListener('click', () => {
+        playArcadeSound();
+        openModal(game);
+    });
+
+    return hotspot;
+}
+
+// Configura los hotspots del arcade con sus respectivos juegos
+function setArcadeHotspots(sceneURL) {
+    let arcadeHotspots = [];
+
+    if (sceneURL === '../Img/cafeteriaPlanta.png') {
+        arcadeHotspots = [
+            { position: { x: 3000, y: 1000, z: -5000 }, game: 'SpaceWord' },
+            // Agrega más hotspots aquí con diferentes posiciones y juegos
+            { position: { x: -2000, y: 500, z: -4000 }, game: 'Memorama' },
+            { position: { x: 1000, y: 0, z: -3000 }, game: 'HangMan' },
+            { position: { x: 500, y: -500, z: -2000 }, game: 'Snake' }
+        ];
+    }
+
+    return arcadeHotspots.map(hotspot => createHotspotArcade(hotspot.position, hotspot.game));
+}
+
+// Funciones dedicadas al modal del Arcade
+function openModal(game) {
+    document.getElementById('modalArcade').style.display = 'flex';
+    loadGame(game);
+}
+// Cerrar modal
+function closeModal() {
+    document.getElementById('modalArcade').style.display = 'none';
+    document.getElementById('game-container').innerHTML = '';
+}
+// Cargar juegos en el modal
+function loadGame(game) {
+    let gameContainer = document.getElementById('game-container');
+    switch (game) {
+        case 'SpaceWord':
+            gameContainer.innerHTML = '<iframe src="../GameZone/SpaceWord/HTML/Index.html" width="100%" height="100%"></iframe>';
+            break;
+        case 'Memorama':
+            gameContainer.innerHTML = '<iframe src="../GameZone/Memoria/Index.html" width="100%" height="100%"></iframe>';
+            break;
+        case 'HangMan':
+            gameContainer.innerHTML = '<iframe src="../GameZone/HangmanGame/Index.html" width="100%" height="100%"></iframe>';
+            break;
+        case 'Snake':
+            gameContainer.innerHTML = '<iframe src="../GameZone/Snake/HTML/Index.html" width="100%" height="100%"></iframe>';
+            break;
+        default:
+            gameContainer.innerHTML = 'Juego no encontrado';
+    }
+}
+// Reproducir el sonido al abrir el modal del arcade
+const ArcadeSound = new Audio('../Music/sonidos/ArcadeSound2.mp3');
+function playArcadeSound() {
+    ArcadeSound.play();
+}
+/* FIN */
+
 /* ============================================================================= */
 
 //////////////////////// Inicialización de los hotspot y escenas ////////////////////////
@@ -844,20 +926,29 @@ function initializePanorama() {
 
 // INICIALIZAR HOTSPOTS
 function addInitialHotspots() {
+    // Informacion
     const initialInfoHotspots = setInfoHotspots(panorama.src);
     initialInfoHotspots.forEach(hotspot => panorama.add(hotspot));
 
+    // Cambio escena
     const initialSceneHotspots = setHotspotPuerta(panorama.src);
     initialSceneHotspots.forEach(hotspot => panorama.add(hotspot));
 
+    // Caminar
     const initialWalkHotspots = setWalkHotspots(panorama.src);
     initialWalkHotspots.forEach(hotspot => panorama.add(hotspot));
 
+    // Links
     const initialPageHotspots = createPageHotspotsForScene(panorama.src);
     initialPageHotspots.forEach(hotspot => panorama.add(hotspot));
 
+    // Login
     const initialLoginHotspots = setLoginHotspots(panorama.src);
     initialLoginHotspots.forEach(hotspot => panorama.add(hotspot));
+
+    // Arcade
+    const initialArcadeHotspots = setArcadeHotspots(panorama.src);
+    initialArcadeHotspots.forEach(hotspot => panorama.add(hotspot));
 }
 
 // Vista del menú principal
