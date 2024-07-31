@@ -1,10 +1,4 @@
 //////////////////////// Todas las funciones fuera de los hotspot //////////////
-// Reproducir el sonido al abrir el modal
-const InfoHotSound = new Audio('../Music/SoundInfoView.mp3');
-function playSoundInfo() {
-    InfoHotSound.play();
-}
-// Fin
 
 // Reproducir el sonido al cambiar de escena
 const SceneHotSound = new Audio('../Music/SoundChangeScene.mp3');
@@ -736,6 +730,9 @@ function playLoginSound() {
 
 
 /* CONVERSACIÓN */
+// Variable para almacenar el sonido
+let typingSound = new Audio('../Music/sonidos/TalkingSound.mp3');
+
 // Función para crear un hotspot de conversación
 function createHotspotConversation(position, text, title, image, description) {
     let infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.Conversation);
@@ -743,7 +740,7 @@ function createHotspotConversation(position, text, title, image, description) {
     infospot.addHoverElement(document.querySelector('#panel'), 165);
     animateHotspot(infospot);
 
-    // Deplegar panel
+    // Mostrar panel
     infospot.addEventListener('hoverenter', function() {
         document.querySelector('#panel').classList.add('show');
         document.querySelector('#panel h1').textContent = title;
@@ -759,8 +756,11 @@ function createHotspotConversation(position, text, title, image, description) {
         // Limpiar el texto y el timeout si es necesario
         if (typingTimeout) {
             clearTimeout(typingTimeout);
-            // document.querySelector('#panel p').textContent = '';
+            document.querySelector('#panel p').textContent = '';
         }
+        // Detener el sonido de tecleo
+        typingSound.pause();
+        typingSound.currentTime = 0; // Reiniciar el sonido
     });
     return infospot;
 }
@@ -771,26 +771,34 @@ function setConversationHotspots(sceneURL) {
 
     if (sceneURL === '../Img/PanoramaInterior.png') {
         infoHotspots = [
-            { position: { x: -1000, y: 1000, z: -5000 }, text: 'Bienvenido a REDESLA', title: 'Vive RedesLa', image: '../Icons/CursosImage.png', description: 'Este recorrido virtual trata de trasmitir la mayor inmersión posible, y así usted puedad vivir las experiencia RedesLA desde la comodidad de su hogar' },
+            { position: { x: -1000, y: 1000, z: -5000 }, text: 'Bienvenido a REDESLA', title: 'Vive RedesLa', image: '../Icons/CursosImage.png', description: 'Este recorrido virtual trata de trasmitir la mayor inmersión posible, y así usted pueda vivir la experiencia RedesLA desde la comodidad de su hogar' },
         ];
     }
 
     return infoHotspots.map(hotspot => createHotspotConversation(hotspot.position, hotspot.text, hotspot.title, hotspot.image, hotspot.description));
 }
 
-// Efecto de maquina de escribir
+// Efecto de máquina de escribir
 let typingTimeout;
 function conversacionEfecto(element, text, speed, callback) {
     let i = 0;
     element.innerHTML = ''; // Limpiar el contenido existente
+
+    // Iniciar el sonido de tecleo
+    typingSound.play();
+    typingSound.loop = true;
 
     function type() {
         if (i < text.length) {
             element.innerHTML += text.charAt(i);
             i++;
             typingTimeout = setTimeout(type, speed);
-        } else if (callback) {
-            callback();
+        } else {
+            typingSound.pause();
+            typingSound.currentTime = 0;
+            if (callback) {
+                callback();
+            }
         }
     }
 

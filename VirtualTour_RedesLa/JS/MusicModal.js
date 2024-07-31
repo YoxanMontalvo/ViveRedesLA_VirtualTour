@@ -5,9 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!modal || !span) {
         console.error("El modal o el botón de cerrar no se encontraron.");
         return;
-    }
-
-    
+    }   
 
     // Obtener los elementos de audio y botones
     var audio = document.getElementById("musica");
@@ -57,6 +55,15 @@ document.addEventListener('DOMContentLoaded', function() {
             disc.style.animationPlayState = 'paused';
         }
     }
+
+    // Funcion global para el pausa de la musica, se utiliza en los hotspot de zoom
+    window.pausarMusica = function() {
+        if (!audio.paused) {
+            audio.pause();
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            disc.style.animationPlayState = 'paused';
+        }
+    };
 
     // Manejar el control de volumen
     volumeControl.oninput = function() {
