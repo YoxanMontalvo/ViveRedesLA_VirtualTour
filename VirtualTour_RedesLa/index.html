@@ -14,20 +14,32 @@
 
   <!-- Contenido principal -->
   <div id="main-content">
+    <!-- Boton del comenzar -->
     <div id="start-button" class="btn-arcade">Comenzar recorrido</div>
+
+    <!-- Dialogo typeado -->
     <div id="dialog">
       <div id="typed"></div>
     </div>
+
+    <!-- Imagenes de los avatar -->
     <div id="gender-selection" style="display: none;">
-      <div class="avatar male" onmouseover="showGender('male')" onmouseout="hideGender()" onclick="selectGender('male')">
+      <div class="avatar male" onmouseover="showGender('masculino')" onmouseout="hideGender()" onclick="selectGender('masculino')">
         <img src="./Img/Gifs/AvatarMasculino.gif" alt="Avatar Masculino">
-        <div class="gender-label" id="male-label">Masculino</div>
+        <div class="gender-label" id="masculino-label">Masculino</div>
       </div>
-      <div class="avatar female" onmouseover="showGender('female')" onmouseout="hideGender()" onclick="selectGender('female')">
+      <div class="avatar female" onmouseover="showGender('femenino')" onmouseout="hideGender()" onclick="selectGender('femenino')">
         <img src="./Img/Gifs/AvatarFemenino.gif" alt="Avatar Femenino">
-        <div class="gender-label" id="female-label">Femenino</div>
+        <div class="gender-label" id="femenino-label">Femenino</div>
       </div>
     </div>
+    <!-- Fin -->
+
+    <!-- Botón para guardar el género -->
+    <div id="save-gender-button" style="display: none;" class="btn-generoLS" onclick="saveGender()">Guardar Género</div>
+
+    <!-- Fin -->
+
   </div>
   <!-- Fin -->
 

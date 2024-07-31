@@ -507,7 +507,7 @@ function createHotspotPuerta(position, sceneURL, text, title) {
             const newLoginHotspot = setLoginHotspots(sceneURL);
             newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
 
-            const newInfoHotspots = setInfoHotspots(sceneURL);
+            const newInfoHotspots = setConversationHotspots(sceneURL);
             newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
 
             const newSceneHotspots = setHotspotPuerta(sceneURL);
@@ -622,7 +622,7 @@ function createHotspotCaminar(position, sceneURL, text, title) {
             const newLoginHotspot = setLoginHotspots(sceneURL);
             newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
 
-            const newInfoHotspots = setInfoHotspots(sceneURL);
+            const newInfoHotspots = setConversationHotspots(sceneURL);
             newInfoHotspots.forEach(hotspot => newPanorama.add(hotspot));
 
             const newSceneHotspots = setHotspotPuerta(sceneURL);
@@ -735,46 +735,69 @@ function playLoginSound() {
 /* FIN */
 
 
-/* INFO */
-function createHotspotInfo(position, text, title, image, description) {
-    let infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.InfoIcon);
+/* CONVERSACIÓN */
+// Función para crear un hotspot de conversación
+function createHotspotConversation(position, text, title, image, description) {
+    let infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.Conversation);
     infospot.position.set(position.x, position.y, position.z);
     infospot.addHoverElement(document.querySelector('#panel'), 165);
     animateHotspot(infospot);
-  
-    infospot.addEventListener('hoverenter', function(){
+
+    // Deplegar panel
+    infospot.addEventListener('hoverenter', function() {
         document.querySelector('#panel').classList.add('show');
         document.querySelector('#panel h1').textContent = title;
-        document.querySelector('#panel p').textContent = description;
-        // document.querySelector('#panel img').src = image
-    });
-  
-    infospot.addEventListener('hoverleave', function(){
-      document.querySelector('#panel').classList.remove('show');
+        document.querySelector('#panel p').textContent = '';
+
+        // Iniciar el efecto de máquina de escribir
+        conversacionEfecto(document.querySelector('#panel p'), description, 50);
     });
 
-    // Evento de clic para abrir el panel de información y reproducir sonido
-    infospot.addEventListener('click', () => {
-        playSoundInfo();
-
-        // Funcion para mover la camara al hotspot seleccionado
-        const targetPosition = new THREE.Vector3(position.x, position.y, position.z);
-        viewer.tweenControlCenter(targetPosition, 0);
+    // Cerrar panel
+    infospot.addEventListener('hoverleave', function() {
+        document.querySelector('#panel').classList.remove('show');
+        // Limpiar el texto y el timeout si es necesario
+        if (typingTimeout) {
+            clearTimeout(typingTimeout);
+            // document.querySelector('#panel p').textContent = '';
+        }
     });
-  
     return infospot;
 }
 
-function setInfoHotspots(sceneURL) {
+// Función para establecer los hotspots de conversación
+function setConversationHotspots(sceneURL) {
     let infoHotspots = [];
 
     if (sceneURL === '../Img/PanoramaInterior.png') {
-      infoHotspots = [
-        { position: { x: -1000, y: 1000, z: -5000 }, text: 'Bienvenido a REDESLA', title: 'Vive RedesLa', image: '../Icons/CursosImage.png', description: 'Este recorrido virtual trata de trasmitir la mayor inmersión posible, y así usted puedad vivir las experiencia RedesLA desde la comodidad de su hogar' },
-    ];
+        infoHotspots = [
+            { position: { x: -1000, y: 1000, z: -5000 }, text: 'Bienvenido a REDESLA', title: 'Vive RedesLa', image: '../Icons/CursosImage.png', description: 'Este recorrido virtual trata de trasmitir la mayor inmersión posible, y así usted puedad vivir las experiencia RedesLA desde la comodidad de su hogar' },
+        ];
     }
 
-    return infoHotspots.map(hotspot => createHotspotInfo(hotspot.position, hotspot.text, hotspot.title, hotspot.image, hotspot.description));
+    return infoHotspots.map(hotspot => createHotspotConversation(hotspot.position, hotspot.text, hotspot.title, hotspot.image, hotspot.description));
+}
+
+// Efecto de maquina de escribir
+let typingTimeout;
+function conversacionEfecto(element, text, speed, callback) {
+    let i = 0;
+    element.innerHTML = ''; // Limpiar el contenido existente
+
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            typingTimeout = setTimeout(type, speed);
+        } else if (callback) {
+            callback();
+        }
+    }
+
+    if (typingTimeout) {
+        clearTimeout(typingTimeout);
+    }
+    type();
 }
 /* FIN */
 
@@ -970,7 +993,7 @@ function initializePanorama() {
 // INICIALIZAR HOTSPOTS
 function addInitialHotspots() {
     // Informacion
-    const initialInfoHotspots = setInfoHotspots(panorama.src);
+    const initialInfoHotspots = setConversationHotspots(panorama.src);
     initialInfoHotspots.forEach(hotspot => panorama.add(hotspot));
 
     // Cambio escena
