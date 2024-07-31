@@ -122,3 +122,14 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+/* Avatar */
+#avatar-image {
+  z-index: 1000;
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  border-radius: 100%;
+}
