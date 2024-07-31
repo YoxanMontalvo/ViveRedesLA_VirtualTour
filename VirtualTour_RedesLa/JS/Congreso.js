@@ -94,9 +94,7 @@ function animateHotspot(hotspot, amplitude = 20, frequency = 1, duration = 3000,
         }
         jump();
     }
-    // Configura el intervalo para repetir el salto cada 10 segundos
     setInterval(startJump, delay);
-    // Inicia la animación inmediatamente para el primer ciclo
     startJump();
 }
 // Fin
@@ -768,7 +766,13 @@ function createZoomHotspots(position, pageURL, text, title) {
 
     // Evento de clic para redirigir a la URL de la página
     pageHotspot.addEventListener('click', () => {
-        saveCurrentScene(panorama.src); // Guardar la escena actual antes de cambiar de página
+        // Llamar a la función para pausar la música
+        if (typeof window.pausarMusica === 'function') {
+            window.pausarMusica();
+        }
+        
+        // Guardar la escena actual antes de cambiar de página
+        saveCurrentScene(panorama.src); 
         localStorage.removeItem('currentScene');
         window.open(pageURL, '_blank');
         //window.location.href = pageURL; // Redirige a la URL especificada
