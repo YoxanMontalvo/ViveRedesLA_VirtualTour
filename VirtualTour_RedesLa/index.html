@@ -16,14 +16,18 @@
   <div id="main-content">
     <div id="start-button" class="btn-arcade">Comenzar recorrido</div>
     <div id="dialog">
-      <div id="typed">¡Bienvenido!</div>
+      <div id="typed"></div>
     </div>
-  </div>
-  <!-- Fin -->
-
-  <!-- Boton para abrir el modal -->
-  <div id="music-button" class="btn-music">
-    <i class="fas fa-music"></i>
+    <div id="gender-selection" style="display: none;">
+      <div class="avatar male" onmouseover="showGender('male')" onmouseout="hideGender()" onclick="selectGender('male')">
+        <img src="./Img/Gifs/AvatarMasculino.gif" alt="Avatar Masculino">
+        <div class="gender-label" id="male-label">Masculino</div>
+      </div>
+      <div class="avatar female" onmouseover="showGender('female')" onmouseout="hideGender()" onclick="selectGender('female')">
+        <img src="./Img/Gifs/AvatarFemenino.gif" alt="Avatar Femenino">
+        <div class="gender-label" id="female-label">Femenino</div>
+      </div>
+    </div>
   </div>
   <!-- Fin -->
 
