@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "../Music/music/coffee shop.mp3",
         "../Music/music/forward.mp3",
         "../Music/music/moonlight.mp3",
+        "../Music/music/ambientacionSong.mp3"
     ];
     var currentSongIndex = 0;
 
