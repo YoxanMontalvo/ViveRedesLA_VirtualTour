@@ -1,14 +1,6 @@
 //////////////////////// Todas las funciones fuera de los hotspot //////////////
-
-// Reproducir el sonido al cambiar de escena
-const SceneHotSound = new Audio('../Music/SoundChangeScene.mp3');
-function playSoundSceneChange() {
-    SceneHotSound.play();
-}
-// Fin
-
 // Musica del elevador
-const elevatorMusic = new Audio('../Music/RelaxSong.mp3');
+const elevatorMusic = new Audio('../Music/sonidos/RelaxSong.mp3');
 
 function musicElevator(sceneURL) {
     const scenesWithElevatorMusic = [
@@ -562,7 +554,22 @@ function setWalkHotspots(sceneURL) {
 }
 
 function createHotspotCaminar(position, sceneURL, text, title) {
-    const sceneHotspot = new PANOLENS.Infospot(300, PANOLENS.DataImage.WalkIcon);
+    // Obtener el género del localStorage
+    const selectedGender = localStorage.getItem('selectedGender');
+    let walkIcon = PANOLENS.DataImage.WalkIcon
+    let walkSoundPath = '../Music/sonidos/walk.mp3';
+
+    if (selectedGender === 'femenino') {
+        walkIcon = PANOLENS.DataImage.WalkIcon;
+        walkSoundPath = '../Music/sonidos/WomenWalkingSound.mp3';
+    } else if (selectedGender === 'masculino') {
+        walkIcon = PANOLENS.DataImage.Feed;
+        walkSoundPath = '../Music/sonidos/MenWalkingSound.mp3';
+    }
+
+    const walkHotspotSound = new Audio(walkSoundPath);
+
+    const sceneHotspot = new PANOLENS.Infospot(300, walkIcon);
     sceneHotspot.position.set(position.x, position.y, position.z);
     animateHotspot(sceneHotspot);
 
@@ -604,15 +611,16 @@ function createHotspotCaminar(position, sceneURL, text, title) {
 
     // Cambiar de escena al hacer clic en el hotspot
     sceneHotspot.addEventListener('click', () => {
-        playWalkSoundSceneChange();//Sonido al cambiar de escena
-        musicElevator(sceneURL);//Musica del elevador
+        walkHotspotSound.play();
+        musicElevator(sceneURL); // Música del elevador
 
         const newPanorama = new PANOLENS.ImagePanorama(sceneURL);
 
         newPanorama.addEventListener('load', () => {
             clearCurrentHotspots();
             updateSceneTitle(title);
-            // Importante: Si se crea una nueva variante de un algun hotspot, siempre agregarlo tambien aqui asi como los demas, ya que cuando se cambie de escena y se regrese no aparecera
+
+            // Importante: Si se crea una nueva variante de un algún hotspot, siempre agregarlo también aquí así como los demás, ya que cuando se cambie de escena y se regrese no aparecerá
             const newLoginHotspot = setLoginHotspots(sceneURL);
             newLoginHotspot.forEach(hotspot => newPanorama.add(hotspot));
 
@@ -630,7 +638,7 @@ function createHotspotCaminar(position, sceneURL, text, title) {
 
             const newArcadeHotspot = setArcadeHotspots(sceneURL);
             newArcadeHotspot.forEach(hotspot => newPanorama.add(hotspot));
-            
+
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
             saveCurrentScene(sceneURL, title); // Guardar la escena actual
@@ -648,11 +656,6 @@ function createHotspotCaminar(position, sceneURL, text, title) {
     document.getElementById('container').appendChild(hotspotText);
 
     return sceneHotspot;
-}
-
-const walkHotspotSound = new Audio('../Music/sonidos/walk.mp3');
-function playWalkSoundSceneChange() {
-    walkHotspotSound.play();
 }
 /* FIN */
 
@@ -906,10 +909,63 @@ function createPageHotspotsForScene(sceneURL) {
 
 /* ARCADE */
 // Crea el hotspot del arcade con el nombre del juego
-function createHotspotArcade(position, game, title) {
+function createHotspotArcade(position, game, description, imageUrl) {
     const hotspot = new PANOLENS.Infospot(350, PANOLENS.DataImage.ArcadeIcon);
     hotspot.position.set(position.x, position.y, position.z);
     animateHotspot(hotspot);
+
+    // Crear el panel del hotspot con título, imagen y descripción
+    const hotspotPanel = document.createElement('div');
+    hotspotPanel.classList.add('game-panel');
+    hotspotPanel.style.display = 'none';
+
+    // Crear el título
+    const title = document.createElement('h3');
+    title.textContent = game;
+    hotspotPanel.appendChild(title);
+
+    // Crear la imagen
+    if (imageUrl) {
+        const image = document.createElement('img');
+        image.src = imageUrl;
+        image.alt = game;
+        hotspotPanel.appendChild(image);
+    }
+
+    // Crear la descripción
+    const desc = document.createElement('p');
+    desc.textContent = description;
+    hotspotPanel.appendChild(desc);
+
+    // Función para actualizar la posición del panel del hotspot
+    function updateHotspotPanelPosition() {
+        const vector = new THREE.Vector3();
+        hotspot.getWorldPosition(vector);
+        vector.project(viewer.camera);
+
+        const widthHalf = container.clientWidth / 2;
+        const heightHalf = container.clientHeight / 2;
+
+        // Coordenadas de pantalla
+        const screenX = (vector.x * widthHalf) + widthHalf;
+        const screenY = (-vector.y * heightHalf) + heightHalf;
+        const offsetTop = 65;
+
+        // Aplicar el desplazamiento hacia arriba
+        hotspotPanel.style.top = `${screenY - offsetTop}px`;
+        hotspotPanel.style.left = `${screenX}px`;
+    }
+
+    // Mostrar el panel al hacer hover sobre el hotspot
+    hotspot.addEventListener('hoverenter', () => {
+        updateHotspotPanelPosition();
+        hotspotPanel.style.display = 'block';
+    });
+
+    // Ocultar el panel al salir del hover
+    hotspot.addEventListener('hoverleave', () => {
+        hotspotPanel.style.display = 'none';
+    });
     
     // Evento de clic para abrir el modal del juego específico
     hotspot.addEventListener('click', () => {
@@ -917,6 +973,8 @@ function createHotspotArcade(position, game, title) {
         openModal(game);
     });
 
+    // Agregar el panel al contenedor
+    document.getElementById('container').appendChild(hotspotPanel);
     return hotspot;
 }
 
@@ -926,14 +984,14 @@ function setArcadeHotspots(sceneURL) {
 
     if (sceneURL === '../Img/cafeteriaPlanta.png') {
         arcadeHotspots = [
-            { position: { x: 3000, y: 1000, z: -5000 }, game: 'SpaceWord' },
-            { position: { x: -2000, y: 500, z: -4000 }, game: 'Memorama' },
-            { position: { x: 1000, y: 0, z: -3000 }, game: 'HangMan' },
-            { position: { x: 500, y: -500, z: -2000 }, game: 'Snake' }
+            { position: { x: 3000, y: 1000, z: -5000 }, game: 'SpaceWord', description: 'Resuelve las palabras ocultas', image: '../Img/AtencionREDESLA.jpg' },
+            { position: { x: -2000, y: 500, z: -4000 }, game: 'Memorama', description: 'Encuentra los pares de cartas', image: '../Img/AtencionREDESLA.jpg' },
+            { position: { x: 1000, y: 0, z: -3000 }, game: 'HangMan', description: 'Acierta la palabra antes de que se termine el tiempo', image: '../Img/AtencionREDESLA.jpg' },
+            { position: { x: 500, y: -500, z: -2000 }, game: 'Snake', description: 'Guía la serpiente para que coma sin chocar', image: '../Img/AtencionREDESLA.jpg' }
         ];
     }
 
-    return arcadeHotspots.map(hotspot => createHotspotArcade(hotspot.position, hotspot.game));
+    return arcadeHotspots.map(hotspot => createHotspotArcade(hotspot.position, hotspot.game, hotspot.description, hotspot.image));
 }
 
 // Funciones dedicadas al modal del Arcade

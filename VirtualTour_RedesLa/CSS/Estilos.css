@@ -31,6 +31,7 @@ body {
   font-size: 1.5em;
 }
 
+/* Panel de conversacion */
 #panel {
   width: 320px;
   height: auto;
@@ -132,4 +133,34 @@ body {
   width: 55px;
   height: 55px;
   border-radius: 100%;
+}
+
+/* Panel de la informacion del juego */
+.game-panel {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  max-width: 200px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.game-panel h3 {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.game-panel img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.game-panel p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
 }
