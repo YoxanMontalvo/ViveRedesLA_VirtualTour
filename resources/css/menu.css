@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+html, body {
+  font-family: 'Press Start 2P', cursive;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.10s ease;
+  position: relative;
+}
+
+@keyframes backgroundAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.btn-arcade {
+  display: inline-block;
+  color: #fff;
+  background-color: rgb(0, 153, 255);
+  border: 2px solid rgb(0, 153, 255);
+  padding: 20px 40px;
+  text-align: center;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  z-index: 10;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: transform 0.3s ease-out;
+}
+
+.btn-arcade:hover {
+  background-color: rgb(0, 116, 194);
+  border-color: rgba(0, 116, 194, 0.7);
+  transform: translate(-50%, -50%) scale(1.7);
+}
+
+#dialog {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 20;
+  pointer-events: none;
+  text-align: center;
+}
+
+#gender-selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+}
+
+.avatar {
+  cursor: pointer;
+  transition: transform 0.3s ease-out;
+  position: relative;
+}
+
+.avatar img {
+  width: 500px;
+  height: auto;
+  border: 3px solid white;
+  border-radius: 50%;
+  margin-left: 100px;
+}
+
+.gender-label {
+  display: none;
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 18px;
+  text-shadow: 0px 0px 2px #000;
+}
+
+.avatar:hover .gender-label {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  #typed {
+    font-size: 12pt !important;
+  }
+}
+
+#typed {
+  color: #fff;
+  text-shadow: 0px 0px 2px #000;
+  font-size: 24pt;
+  display: none;
+}
+
+
+.btn-generoLS {
+  color: #fff;
+  background-color: rgb(0, 153, 255);
+  padding: 20px 40px;
+  text-align: center;
+  cursor: pointer;
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  font-size: 24px;
+  text-transform: uppercase;
+  transition: transform 0.3s ease-out;
+}
+
+.btn-generoLS:hover {
+  background-color: rgb(0, 116, 194);
+  border-color: rgba(0, 116, 194, 0.7);
+  transform: translate(-50%, -50%) scale(1.4);
+}
+
+#content-frame {
+  width: 100%;
+  height: 300px;
+}
