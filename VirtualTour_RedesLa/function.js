@@ -96,7 +96,7 @@ function continueAnimation() {
       setTimeout(function() {
         document.body.style.opacity = 0;
         setTimeout(function() {
-          window.location.href = './HTML/MenuPrincipal.html';
+          window.location.href = './HTML/inicio.html';
         }, 400);
       }, 1800);
     }

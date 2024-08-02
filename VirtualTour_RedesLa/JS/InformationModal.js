@@ -1,5 +1,8 @@
 function closeInfoModalLeft() {
-    $('#infoModalLeft').modal('hide');
+    $('#infoModalLeft').removeClass('show');
+    setTimeout(() => {
+        $('#infoModalLeft').css('display', 'none');
+    }, 500); // Tiempo de la animación
 }
 
 function openInfoModalLeft(title, fileUrl, description, isWebSite=false) {
@@ -19,10 +22,8 @@ function openInfoModalLeft(title, fileUrl, description, isWebSite=false) {
     if (fileUrl.includes('youtube.com/embed/')) {
         container.html(`<iframe width="100%" height="315" src="${fileUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
     } else {
-
-        if(!isWebSite){
+        if (!isWebSite) {
             const fileExtension = fileUrl.split('.').pop().toLowerCase();
-
             switch (fileExtension) {
                 case 'jpg':
                 case 'jpeg':
@@ -43,15 +44,17 @@ function openInfoModalLeft(title, fileUrl, description, isWebSite=false) {
                 default:
                     container.html('<p>Tipo de contenido no soportado.</p>');
             }
-            return
+            return;
         }
-        
+
         container.html(`<iframe src="${fileUrl}" width="100%" height="600px"></iframe>`);
-        
     }
 
     $('#infoModalLeft .modal-title').text(title);
-    $('#infoModalLeft').modal('show');
+    $('#infoModalLeft').css('display', 'block');
+    setTimeout(() => {
+        $('#infoModalLeft').addClass('show');
+    }, 10); // Pequeña demora para asegurar la transición
 }
 
 function openCameraModal() {

@@ -137,19 +137,25 @@ body {
 
 /* Panel de la informacion del juego */
 .game-panel {
-  position: absolute;
-  background-color: white;
-  border: 1px solid #ccc;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: black;
+  color: white;
   border-radius: 5px;
-  padding: 10px;
-  max-width: 200px;
+  padding: 15px;
+  max-width: 500px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .game-panel h3 {
   margin: 0 0 10px;
-  font-size: 16px;
+  font-size: 25px;
+  text-align: center;
 }
 
 .game-panel img {
@@ -161,6 +167,38 @@ body {
 
 .game-panel p {
   margin: 0;
-  font-size: 14px;
-  color: #666;
+  font-size: 20px;
+}
+
+/* Mostrar el panel */
+.game-panel h3,
+.game-panel img,
+.game-panel p {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.game-panel.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animaciones individuales */
+.game-panel.show .title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+.game-panel.show .image {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+
+.game-panel.show .description {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
 }

@@ -1,4 +1,12 @@
 //////////////////////// Todas las funciones fuera de los hotspot //////////////
+// Este sonido se debe de utilizar en todos los paneles y modales del recorrido
+const soundGlobal = new Audio('../Music/sonidos/PanelSound.mp3');
+window.panelGlobalSound = function() {
+    soundGlobal.play();
+};
+// Fin
+
+
 // Reproducir el sonido al abrir el modal
 const InfoHotSound = new Audio('../Music/SoundInfoView.mp3');
 function playSoundInfo() {
@@ -6,15 +14,8 @@ function playSoundInfo() {
 }
 // Fin
 
-// Reproducir el sonido al cambiar de escena
-const SceneHotSound = new Audio('../Music/SoundChangeScene.mp3');
-function playSoundSceneChange() {
-    SceneHotSound.play();
-}
-// Fin
-
 // Musica del elevador
-const elevatorMusic = new Audio('../Music/RelaxSong.mp3');
+const elevatorMusic = new Audio('../Music/music/ambientacionSong.mp3');
 function musicElevator(sceneURL) {
     const scenesWithElevatorMusic = [
         '../Img/Congresos/Elevador.jpg',
@@ -330,7 +331,7 @@ function setLogoutHotspots(sceneURL) {
 
     if(sceneURL === '../Img/Congresos/Lobby.jpg') { // Ejemplo de una escena
         pageHotspots = [
-            { position: { x: -4951.47, y: -667.63, z: 10.11 }, pageURL: '../HTML/MenuPrincipal.html', text: 'Salir del congreso', title: 'Campus de la Institución' },
+            { position: { x: -4951.47, y: -667.63, z: 10.11 }, pageURL: '../HTML/inicio.html', text: 'Salir del congreso', title: 'Campus de la Institución' },
         ];
     }
     
@@ -453,7 +454,7 @@ function createCameraHotspots(scale, position, text, title, fileUrl, description
 
     // Evento de clic para abrir el modal de información y reproducir sonido
     infospot.addEventListener('click', () => {
-        playSoundInfo();
+        window.panelGlobalSound();
 
         // Actualizar el contenido del modal
         openCameraModal(title, fileUrl, description, true);
@@ -538,7 +539,7 @@ function createModalHotspots(scale, position, text, title, fileUrl, description)
 
     // Evento de clic para abrir el modal de información y reproducir sonido
     infospot.addEventListener('click', () => {
-        playSoundInfo();
+        window.panelGlobalSound();
 
         // Actualizar el contenido del modal
         openInfoModalLeft(title, fileUrl, description, true);
@@ -567,6 +568,7 @@ function createHotspotInfo(scale, position, text, title, image, description) {
         document.querySelector('#panel').classList.add('show');
         document.querySelector('#panel h1').innerHTML = title;
         document.querySelector('#panel p').innerHTML = description;
+        window.panelGlobalSound();
         // document.querySelector('#panel img').src = image
     });
   
@@ -576,8 +578,6 @@ function createHotspotInfo(scale, position, text, title, image, description) {
 
     // Evento de clic para abrir el panel de información y reproducir sonido
     infospot.addEventListener('click', () => {
-        playSoundInfo();
-
         // Funcion para mover la camara al hotspot seleccionado
         const targetPosition = new THREE.Vector3(position.x, position.y, position.z);
         viewer.tweenControlCenter(targetPosition, 0);

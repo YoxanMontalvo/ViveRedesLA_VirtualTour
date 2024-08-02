@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Validar la clave de gafete
         if (claveGafete === claveCorrecta) {
             localStorage.removeItem('currentScene');
-            window.location.href = '../HTML/Congreso.html';
+            window.location.href = '../HTML/congreso.html';
         } else {
             $("#login-status").html('<b>La clave de gafete es incorrecta</b>').css('color', '#ff5252');
             $("#claveGafete").trigger('focus');
