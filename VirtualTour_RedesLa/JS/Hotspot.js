@@ -1,4 +1,11 @@
 //////////////////////// Todas las funciones fuera de los hotspot //////////////
+// Este sonido se debe de utilizar en todos los paneles y modales del recorrido
+const soundGlobal = new Audio('../Music/sonidos/PanelSound.mp3');
+window.panelGlobalSound = function() {
+    soundGlobal.play();
+};
+// Fin
+
 // Musica del elevador
 const elevatorMusic = new Audio('../Music/sonidos/RelaxSong.mp3');
 
@@ -560,10 +567,10 @@ function createHotspotCaminar(position, sceneURL, text, title) {
     let walkSoundPath = '../Music/sonidos/walk.mp3';
 
     if (selectedGender === 'femenino') {
-        walkIcon = PANOLENS.DataImage.WalkIcon;
+        walkIcon = PANOLENS.DataImage.WomenShoes;
         walkSoundPath = '../Music/sonidos/WomenWalkingSound.mp3';
     } else if (selectedGender === 'masculino') {
-        walkIcon = PANOLENS.DataImage.Feed;
+        walkIcon = PANOLENS.DataImage.MenShoes;
         walkSoundPath = '../Music/sonidos/MenWalkingSound.mp3';
     }
 
@@ -908,7 +915,6 @@ function createPageHotspotsForScene(sceneURL) {
 
 
 /* ARCADE */
-// Crea el hotspot del arcade con el nombre del juego
 function createHotspotArcade(position, game, description, imageUrl) {
     const hotspot = new PANOLENS.Infospot(350, PANOLENS.DataImage.ArcadeIcon);
     hotspot.position.set(position.x, position.y, position.z);
@@ -917,11 +923,11 @@ function createHotspotArcade(position, game, description, imageUrl) {
     // Crear el panel del hotspot con título, imagen y descripción
     const hotspotPanel = document.createElement('div');
     hotspotPanel.classList.add('game-panel');
-    hotspotPanel.style.display = 'none';
 
     // Crear el título
     const title = document.createElement('h3');
     title.textContent = game;
+    title.classList.add('title');
     hotspotPanel.appendChild(title);
 
     // Crear la imagen
@@ -929,52 +935,36 @@ function createHotspotArcade(position, game, description, imageUrl) {
         const image = document.createElement('img');
         image.src = imageUrl;
         image.alt = game;
+        image.classList.add('image');
         hotspotPanel.appendChild(image);
     }
 
     // Crear la descripción
     const desc = document.createElement('p');
     desc.textContent = description;
+    desc.classList.add('description');
     hotspotPanel.appendChild(desc);
-
-    // Función para actualizar la posición del panel del hotspot
-    function updateHotspotPanelPosition() {
-        const vector = new THREE.Vector3();
-        hotspot.getWorldPosition(vector);
-        vector.project(viewer.camera);
-
-        const widthHalf = container.clientWidth / 2;
-        const heightHalf = container.clientHeight / 2;
-
-        // Coordenadas de pantalla
-        const screenX = (vector.x * widthHalf) + widthHalf;
-        const screenY = (-vector.y * heightHalf) + heightHalf;
-        const offsetTop = 65;
-
-        // Aplicar el desplazamiento hacia arriba
-        hotspotPanel.style.top = `${screenY - offsetTop}px`;
-        hotspotPanel.style.left = `${screenX}px`;
-    }
 
     // Mostrar el panel al hacer hover sobre el hotspot
     hotspot.addEventListener('hoverenter', () => {
-        updateHotspotPanelPosition();
-        hotspotPanel.style.display = 'block';
+        hotspotPanel.classList.add('show');
+        panelGlobalSound();
     });
 
     // Ocultar el panel al salir del hover
     hotspot.addEventListener('hoverleave', () => {
-        hotspotPanel.style.display = 'none';
+        hotspotPanel.classList.remove('show');
     });
-    
+
     // Evento de clic para abrir el modal del juego específico
     hotspot.addEventListener('click', () => {
+        hotspotPanel.classList.remove('show');
         playArcadeSound();
         openModal(game);
     });
 
     // Agregar el panel al contenedor
-    document.getElementById('container').appendChild(hotspotPanel);
+    document.body.appendChild(hotspotPanel);
     return hotspot;
 }
 
@@ -1024,7 +1014,7 @@ function loadGame(game) {
             gameContainer.innerHTML = 'Juego no encontrado';
     }
 }
-// Reproducir el sonido al abrir el modal del arcade
+// Reproducir el sonido al abrir el juego para usarlo
 const ArcadeSound = new Audio('../Music/sonidos/ArcadeSound2.mp3');
 function playArcadeSound() {
     ArcadeSound.play();
