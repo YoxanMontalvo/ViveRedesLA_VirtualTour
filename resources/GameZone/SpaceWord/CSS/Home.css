@@ -1,0 +1,215 @@
+/* Icon Switch Container */
+.icon-switch-container {
+  position: relative;
+  display: inline-block;
+  width: 250px;
+  height: 50px;
+}
+
+/* Hide default checkbox */
+.icon-switch-container input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Create the switch slider */
+.icon-switch-label {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+/* Icon styles */
+.icon-switch-label .yes-icon,
+.icon-switch-label .no-icon {
+  color: white;
+  font-size: 30px;
+  transition: opacity 0.4s;
+}
+
+.icon-switch-label .no-icon {
+  color: red;
+  position: absolute;
+  right: 20px;
+}
+
+.icon-switch-label .yes-icon {
+  color: green;
+  position: absolute;
+  left: 20px;
+  opacity: 0;
+}
+
+/* Checked state */
+input:checked + .icon-switch-label {
+  background-color: #4caf50;
+}
+
+input:checked + .icon-switch-label .yes-icon {
+  opacity: 1;
+}
+
+input:checked + .icon-switch-label .no-icon {
+  opacity: 0;
+}
+
+/* Add focus to the switch */
+input:focus + .icon-switch-label {
+  box-shadow: 0 0 1px #4caf50;
+}
+
+/* Modal styles */
+.modal-form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Espacio entre los botones */
+  margin-top: 20px; /* Espacio arriba de los botones */
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: #fff;
+}
+
+.main-home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  height: 93vh;
+}
+
+.main-card-container {
+  background: #fff1;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 40vw;
+  height: 40vh;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.main-card-container button,
+.main-card-container a {
+  width: 70%;
+  height: 50px;
+  background: transparent;
+  border: 0px solid #412279;
+  border-radius: 5px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: clamp(2vw, 1vw, 1vw);
+}
+
+.main-card-container a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.main-card-container button:hover,
+.main-card-container a:hover {
+  background-color: #412279;
+  transition: 0.5s all ease-in-out;
+  border: 2px solid #673ab7;
+}
+
+.extra-links-container {
+  display: grid;
+  grid-template-areas:
+    "link1 link2"
+    "link3 link3";
+  font-size: clamp(0.75rem, 1vw, 1vw);
+  gap: 10px;
+  width: 40vw;
+  text-align: center;
+}
+
+.extra-links-container a {
+  padding: 10px 0;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.github-link {
+  grid-area: link1;
+  background-color: #333;
+  color: #fff;
+}
+
+.code-video-link {
+  grid-area: link2;
+  background-color: #b73a3a;
+  color: #fff;
+}
+
+.coffee-link {
+  grid-area: link3;
+}
+
+/* Settings modal */
+
+.modal-form {
+  display: flex;
+  align-items: center;
+  margin: 40px;
+}
+
+.modal-form label {
+  font-weight: bold;
+}
+
+.modal-form-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.modal-form-row span {
+  font-weight: bold;
+}
+
+/* Responsive design */
+@media (max-width: 620px) {
+  .extra-links-container {
+    display: grid;
+    grid-template-areas:
+      "link1"
+      "link2"
+      "link3";
+    width: -webkit-fill-available;
+  }
+
+  .main-card-container {
+    width: -webkit-fill-available;
+  }
+
+  #settings-modal {
+    width: -webkit-fill-available;
+  }
+
+  .modal-form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
