@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vive RedesLa</title>
-    <link rel="icon" href="../Documents/Icons/tourVirtualcon.png" type="image/x-icon">
-    <link rel="stylesheet" href="../Lib/CSS/bootstrap.min.css">
-    <link rel="stylesheet" href="../Lib/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="../Lib/CSS/sweetAlert.min.css">
-    <link rel="stylesheet" href="../CSS/Estilos.css">
-    <link rel="stylesheet" href="../CSS/MusicModal.css">
-    <link rel="stylesheet" href="../CSS/Calendario.css">
-    <link rel="stylesheet" href="../CSS/gameBoy.css">
+    <link rel="icon" href="<?= base_url('resources/favicons/tourVirtualcon.png') ?>" type="image/x-icon">
+    <link rel="stylesheet" href="<?= base_url('resources/libs/bootstrap/bootstrap.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('resources/libs/fontawsome/css/all.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('resources/libs/sweetalert/sweetAlert.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('resources/css/inicio.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('resources/css/musicamodal.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('resources/css/calendario.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('resources/css/gameboy.css') ?>">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.7/index.min.css">
     <link href="https://fonts.googleapis.com/css?family=Julius+Sans+One|Press+Start+2P" rel="stylesheet">
@@ -61,7 +61,7 @@
                 <span class="closeModal" title="Cerrar ventana emergente">&times;</span>
                 <div class="music-content">
                     <div class="disc-container">
-                        <img src="../Img/iconos/Disco.png" alt="Disco" class="disc">
+                        <img src="<?= base_url('resources/favicons/icons/Disco.png') ?>" alt="Disco" class="disc">
                     </div>
                     <div class="controls-container">
                         <h3>Ambientación musical</h3>
@@ -72,7 +72,7 @@
                         </div>
                         <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
                         <audio id="musica" loop>
-                            <source src="../Music/music/moonlight.mp3" type="audio/mp3">
+                            <source src="" type="audio/mp3">
                             Tu navegador no soporta la reproducción de audio.
                         </audio>
                     </div>
@@ -200,17 +200,18 @@
     </div>
     <!-- Fin -->
 
-    <script src="../Lib/sweetAlert.min.js"></script>
-    <script src="../Lib/jquery.min.js"></script>
-    <script src="../Lib/popper.min.js"></script>
-    <script src="../Lib/bootstrap.min.js"></script>
-    <script src="../Lib/three.min.js"></script>
-    <script src="../Lib/panolens.min.js"></script>
-    <script src="../JS/Hotspot.js"></script>
-    <script src="../JS/Login.js"></script>
-    <script src="../JS/MusicModal.js"></script>
-    <script src="../JS/Calendario.js"></script>
-    <script src="../JS/Avatar.js"></script>
+    <script src="<?= base_url('resources/libs/sweetalert/sweetAlert.min.js') ?>"></script>
+    <script src="<?= base_url('resources/libs/jquery/jquery.min.js') ?>"></script>
+    <script src="<?= base_url('resources/libs/popper/popper.min.js') ?>"></script>
+    <script src="<?= base_url('resources/libs/bootstrap/bootstrap.min.js') ?>"></script>
+    <script src="<?= base_url('resources/libs/three/three.min.js') ?>"></script>
+    <script src="<?= base_url('resources/libs/panolens/panolens.min.js') ?>"></script>
+
+    <script src="<?= base_url('resources/js/hotspot/inicio.js') ?>"></script>
+    <script src="<?= base_url('resources/js/login/login.js') ?>"></script>
+    <script src="<?= base_url('resources/js/modal/musicmodal.js') ?>"></script>
+    <script src="<?= base_url('resources/js/calendario/calendario.js') ?>"></script>
+    <script src="<?= base_url('resources/js/avatar/avatar.js') ?>"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.7/index.global.min.js"></script>
 </body>

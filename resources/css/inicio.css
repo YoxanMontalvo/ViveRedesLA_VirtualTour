@@ -1,0 +1,204 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+#panorama-container {
+  width: 100%;
+  height: 100%;
+}
+
+#scene-title {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  border-radius: 10px;
+  z-index: 1000;
+  font-size: 1.5em;
+}
+
+/* Panel de conversacion */
+#panel {
+  width: 320px;
+  height: auto;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  display: none; /* Para que solo se muestre en hover */
+}
+
+#panel::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 48%;
+  margin-left: -5px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
+}
+
+#panel.show {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+}
+
+#panel h1 {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#panel p {
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+}
+
+.hotspot-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.95);
+  color: black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  display: none; /* Inicialmente oculto */
+  z-index: 1000;
+}
+.hotspot-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 48%;
+  margin-left: -5px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
+}
+
+#btnLogin {
+  background-color: #000;
+  border-color: transparent;
+  color: #fff;
+}
+
+.close:hover{
+  color: #ff5252;
+}
+
+/* Estilos para el modal */
+.modalArcade {
+  font-family: 'Press Start 2P', cursive; /* Fuente estilo arcade */
+  display: none;
+  position: fixed;
+  color: white;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Avatar */
+#avatar-image {
+  z-index: 1000;
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  border-radius: 100%;
+}
+
+/* Panel de la informacion del juego */
+.game-panel {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  padding: 15px;
+  max-width: 500px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.game-panel h3 {
+  margin: 0 0 10px;
+  font-size: 25px;
+  text-align: center;
+}
+
+.game-panel img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.game-panel p {
+  margin: 0;
+  font-size: 20px;
+}
+
+/* Mostrar el panel */
+.game-panel h3,
+.game-panel img,
+.game-panel p {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.game-panel.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animaciones individuales */
+.game-panel.show .title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+.game-panel.show .image {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+
+.game-panel.show .description {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}

@@ -96,7 +96,7 @@ function continueAnimation() {
       setTimeout(function() {
         document.body.style.opacity = 0;
         setTimeout(function() {
-          window.location.href = baseUrl + 'views/inicio';
+          window.location.href = baseUrl + 'inicio';
         }, 400);
       }, 1800);
     }

@@ -1,0 +1,400 @@
+.classh2{
+    margin-left: 8px;
+    margin-top: 10px;
+    font-size: 15px;
+}
+.classh1{
+    font-size: 15px;
+    margin-left: 7px;
+}
+
+.iclass{
+    font-size: 17px;
+    margin-bottom: 12px;
+}
+
+/* MARGEN DE ARRIBA */
+.ulclass, .liclass {
+margin:0;
+padding:0;
+border:0;
+list-style:none;
+}
+/* FIN */
+
+/* COLOR DEL FONDO */
+#game-and-watch-game-title  {
+padding-top:10px;
+line-height:1.5em;
+}
+/* FIN */
+
+  
+/* LE DA EL TAMAÑO A LA CONSOLA */
+#game-and-watch {
+width:1800px;
+margin-left:auto;
+position:relative;
+z-index:9999;
+margin-right:auto;
+margin-bottom:10px;
+margin-top:10px;
+}
+/* FIN */
+
+/* DISEÑO DE LA CONSOLA EN GENERAL */
+#game-and-watch-case {
+background:#eae8db;
+padding-top:5px;
+height:850px;
+padding-bottom:5px;
+text-transform:uppercase;
+text-align:center;	
+border-radius:5px;
+}
+
+#game-and-watch-case-in {
+margin-left:5px;
+margin-right:5px;
+background: #55bac6; 
+height:840px;
+background: -moz-linear-gradient(top, #55bac6 0%, #53b6bb 100%); 
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#55bac6), color-stop(100%,#53b6bb)); 
+background: -webkit-linear-gradient(top, #55bac6 0%,#53b6bb 100%); 
+background: -o-linear-gradient(top, #55bac6 0%,#53b6bb 100%); 
+background: -ms-linear-gradient(top, #55bac6 0%,#53b6bb 100%); 
+background: linear-gradient(to bottom, #55bac6 0%,#53b6bb 100%); 
+}
+
+#game-and-watch-left {
+float:left;
+margin-right:3px;
+margin-left:3px;
+}
+
+#game-and-watch-screen {
+width:1530px;
+height:790px;
+float:left;
+margin-top:25px;
+border-top:4px solid #222;
+border-left:4px solid #222;
+border-right:4px solid #222;
+border-bottom:4px solid #222;
+background:#444;
+padding: 0px 10px 5px 10px;
+position:relative;
+z-index:999;
+}
+/* FIN */
+
+#game-container{
+    height: 769px;
+}
+
+/* LA PANTALLA Y SU BORDE */
+#game-and-watch-game {
+height:200px;
+margin-bottom:5px;
+}
+/* FIN */
+
+.vertical-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 40px;
+}
+.espacioControl{
+    padding-bottom: 100px;
+    font-size: 17px;
+}
+.espacioButon{
+    padding-top: 20px;
+}
+.arcade-title{
+    font-size: 18px;
+}
+  
+/* LOGO DEL GAME AND WATCH */
+#game-and-watch-badge {
+width:100px;
+height:83px;
+padding:10px 10px 10px 1px;
+color:#222;
+margin-top:25px;
+margin-bottom:60px;
+background:#fff;
+margin-left:auto;	
+margin-right:auto;	
+-webkit-border-radius:6px;
+-moz-border-radius:6px;
+border-radius:6px;
+}
+
+#game-and-watch-leftbutton {
+font-size:.5em;
+}
+/* FIN */
+  
+/* BOTONES ROJOS DEL LADO IZQUIERDO */
+#game-and-watch-character {
+margin-top:-20px;
+padding-bottom:55px;
+width:80px;
+}
+  
+#game-and-watch-leftbutton-horizontal {
+width:98px;
+height:36px;
+background:#eee;
+margin-left:auto;	
+margin-right:auto;
+-webkit-border-radius:20px;
+-moz-border-radius:20px;	
+border-radius:20px;
+-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+-moz-box-shadow:0 1px 2px rgba(0, 0, 0, .9);
+box-shadow:0 1px 2px rgba(0, 0, 0, .9);
+}
+
+#game-and-watch-leftbutton-vertical {
+width:36px;
+height:98px;
+padding-top: 4px;
+background:#eee;
+margin-left:auto;
+margin-top:-69px;
+margin-right:auto;	
+margin-bottom:4px;
+-webkit-border-radius:20px;
+-moz-border-radius:20px;
+border-radius:20px;
+-webkit-box-shadow:0 1px 2px rgba(0, 0, 0, .9);
+-moz-box-shadow:0 1px 2px rgba(0, 0, 0, .9);
+box-shadow:0 1px 2px rgba(0, 0, 0, .9);
+}
+
+#game-and-watch-leftbutton-top a {
+display:block;
+width:30px;
+margin-bottom:12px;
+height: 30px;
+background: red;
+margin-top:-2px;
+background: -moz-linear-gradient(top, #ff3019 0%, #cf0404 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff3019), color-stop(100%,#cf0404)); 
+background: -webkit-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: -o-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: -ms-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: linear-gradient(to bottom, #ff3019 0%,#cf0404 100%);
+margin-left:auto;
+margin-right: auto;
+-webkit-border-radius:40px;
+-moz-border-radius:40px;
+border-radius:40px;
+-webkit-box-shadow:0 1px 2px rgba(0, 0, 0, .9);
+-moz-box-shadow:0 1px 2px rgba(0, 0, 0, .9);
+box-shadow:0 1px 2px rgba(0, 0, 0, .9);
+cursor: -webkit-grab; cursor: -moz-grab;
+}
+
+#game-and-watch-leftbutton-cover {
+width:40px;
+height:35px;
+background: #eee;
+margin-left:-2px;
+margin-top:-10px;
+}
+
+#game-and-watch-leftbutton-bottom a {
+display:block;
+width:30px;
+height: 30px;
+background: red;
+background: -moz-linear-gradient(top, #ff3019 0%, #cf0404 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff3019), color-stop(100%,#cf0404)); 
+background: -webkit-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: -o-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: -ms-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: linear-gradient(to bottom, #ff3019 0%,#cf0404 100%);
+margin-left:auto;
+margin-right: auto;
+margin-top:-1px;
+-webkit-border-radius:40px;
+position:relative;
+z-index:9999;
+-moz-border-radius:40px;
+border-radius:40px;
+-webkit-box-shadow:  0 1px 2px rgba(0, 0, 0, .9);
+-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+cursor: -webkit-grab; cursor: -moz-grab;
+}
+
+#game-and-watch-leftbutton-left a {
+display:block;
+width:30px;
+height: 30px;
+background: red;
+background: -moz-linear-gradient(top, #ff3019 0%, #cf0404 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff3019), color-stop(100%,#cf0404)); 
+background: -webkit-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: -o-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: -ms-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: linear-gradient(to bottom, #ff3019 0%,#cf0404 100%);
+float:left;
+margin-top:-62px;
+margin-left:-28px;
+-webkit-border-radius:40px;
+-moz-border-radius:40px;
+border-radius:40px;
+-webkit-box-shadow:  0 1px 2px rgba(0, 0, 0, .9);
+-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+cursor: -webkit-grab; cursor: -moz-grab;
+position:relative; /*prevents weird box around button */
+}
+
+#game-and-watch-leftbutton-right a {
+display:block;
+width:30px;
+height: 30px;
+background: red;
+background: -moz-linear-gradient(top, #ff3019 0%, #cf0404 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff3019), color-stop(100%,#cf0404)); 
+background: -webkit-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: -o-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: -ms-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: linear-gradient(to bottom, #ff3019 0%,#cf0404 100%);
+float:right;
+margin-top:-62px;
+margin-right:-28px;
+-webkit-box-shadow:  0 1px 2px rgba(0, 0, 0, .9);
+-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+-webkit-border-radius:40px;
+-moz-border-radius:40px;
+border-radius:40px;
+cursor: -webkit-grab; cursor: -moz-grab;
+}
+/* FIN */
+
+/* BOTON DE COLOR ROJO A LADO DERECHO */
+#game-and-watch-rightbutton {
+clear:both;
+width:60px;
+margin-bottom:10px;
+}
+
+#game-and-watch-rightbutton-in {
+width:85px;
+height: 85px;
+border: 5px solid #fff;
+margin-bottom:10px;
+-webkit-box-shadow:  0 1px 2px rgba(0, 0, 0, .9);
+-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+-webkit-border-radius:40px;
+-moz-border-radius:40px;
+border-radius:40px;
+}
+  
+#game-and-watch-rightbutton-in a {
+width:75px;
+display:block;
+height: 75px;
+background: red;
+background: -moz-linear-gradient(top, #ff3019 0%, #cf0404 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff3019), color-stop(100%,#cf0404)); 
+background: -webkit-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: -o-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: -ms-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+background: linear-gradient(to bottom, #ff3019 0%,#cf0404 100%);
+-webkit-box-shadow:  0 1px 2px rgba(0, 0, 0, .9);
+-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+-webkit-border-radius:40px;
+-moz-border-radius:40px;
+border-radius:40px;
+cursor: -webkit-grab; cursor: -moz-grab;
+}
+/* FIN */
+  
+/* MARGENES PARA ALINEAR LOS BOTONES GRISES */
+#game-and-watch-right {
+float:right;
+font-size:.4em;
+}
+
+#game-and-watch-game-start {
+width:30px;
+font-size:8px;
+margin-top:35px;
+margin-right: 75px;
+margin-bottom:300px;
+height:130px;
+float:left;	
+}
+
+/* FIN */
+  
+/* MARGENES BLANCOS DE LOS BOTONES */
+#game-and-watch-start-one, #game-and-watch-start-two, #game-and-watch-start-three {
+width:90px;
+height:30px;
+margin-top:20px;
+margin-left:auto;
+margin-right:auto;
+border-top:1px solid #777;
+border-bottom:1px solid #fff;
+background:#fff;
+margin-bottom:3px;
+position:relative;
+z-index:999;
+-webkit-border-radius:10px;
+-moz-border-radius:10px;
+border-radius:10px;
+-webkit-box-shadow:  0 1px 2px rgba(0, 0, 0, .9);
+-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+}
+/* FIN */
+  
+/* BOTONES DE COLOR GRIS */
+.game-and-watch-start-inner a {
+display:block;
+width:75px;
+height:22px;
+margin-top:4px;
+margin-left:auto;
+margin-right:auto;
+background:#999;
+margin-bottom:5px;
+-webkit-border-radius:5px;
+-moz-border-radius:5px;
+border-radius:5px;
+-webkit-box-shadow: inset 0 -3px 2px rgba(0, 0, 0, .4);
+-moz-box-shadow: inset 0 -3px 2px rgba(0, 0, 0, .4);
+box-shadow: inset 0 -3px 2px rgba(0, 0, 0, .4);
+}
+
+.game-and-watch-start-inner a:active {
+-webkit-box-shadow:inset 0 3px 2px rgba(0, 0, 0, .4);
+-moz-box-shadow:inset 0 3px 2px rgba(0, 0, 0, .4);
+box-shadow: inset 0 3px 2px rgba(0, 0, 0, .4);
+}
+/* FIN */
+
+/* LADO DERECHO MARGENES */
+#game-and-watch-game-settings {
+width:40px;
+height:100px;
+font-size:6px;
+margin-top:35px;
+margin-right:10px;
+float:right;	
+}
+/* FIN */
+
+
+
