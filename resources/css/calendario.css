@@ -58,6 +58,7 @@
 /* Estilo del panel desplegable */
 #calendarioPanel {
     position: fixed;
+    z-index: 1000;
     top: 80px;
     right: 20px;
     width: 500px;

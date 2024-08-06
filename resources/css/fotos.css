@@ -9,6 +9,9 @@ section {
   height: auto;
   padding: 1rem;
 }
+#cameraModal{
+  z-index: 9999;
+}
 
 /* section button{
 

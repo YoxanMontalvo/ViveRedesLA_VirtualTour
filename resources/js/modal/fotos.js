@@ -10,7 +10,7 @@ const canvas = document.querySelector(".canvas");
 const button = document.querySelector(".start-btn");
 const photo = document.querySelector(".photo");
 const frame = new Image();
-frame.src = '../Img/marcos/marco.png'; // asegúrate de que la ruta a tu marco PNG sea correcta
+frame.src =`${base_url}resources/img/marcos/marco.png`// asegúrate de que la ruta a tu marco PNG sea correcta
 
 const widthCamera = 916;
 const heightCamera = 520;
@@ -159,7 +159,7 @@ button.addEventListener("click", () => {
 
 });
 
-const cameraSound = new Audio('../Music/sonidos/camara.mp3');
+const cameraSound = new Audio(`${base_url}resources/sounds/camara.mp3`);
 function playCameraSound() {
   cameraSound.play();
 }
