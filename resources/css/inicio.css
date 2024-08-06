@@ -126,13 +126,16 @@ body {
 
 /* Avatar */
 #avatar-image {
-  z-index: 1000;
+  z-index: 10;
   position: fixed;
   top: 100px;
   right: 20px;
   width: 55px;
   height: 55px;
   border-radius: 100%;
+}
+#avatarImage{
+  z-index: 10;
 }
 
 /* Panel de la informacion del juego */

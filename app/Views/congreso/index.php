@@ -44,7 +44,7 @@
               <span class="closeModal" title="Cerrar ventana emergente">&times;</span>
               <div class="music-content">
                   <div class="disc-container">
-                      <img src="../Img/iconos/Disco.png" alt="Disco" class="disc">
+                      <img src="<?= base_url('resources/favicons/icons/Disco.png') ?>" alt="Disco" class="disc">
                   </div>
                   <div class="controls-container">
                       <h3>Ambientación musical</h3>
@@ -55,7 +55,7 @@
                       </div>
                       <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
                       <audio id="musica" loop>
-                          <source src="../Music/music/moonlight.mp3" type="audio/mp3">
+                          <source src="<?= base_url('resources/music/ambientacionSong.mp3') ?>" type="audio/mp3">
                           Tu navegador no soporta la reproducción de audio.
                       </audio>
                   </div>
@@ -156,6 +156,9 @@
     </div> -->
 
     <!-- Fin del Modal -->
+    <script>
+        var base_url = "<?= base_url() ?>";
+    </script>
     <script src="<?= base_url('resources/libs/sweetalert/sweetAlert.min.js') ?>"></script>
     <script src="<?= base_url('resources/libs/jquery/jquery.min.js') ?>"></script>
     <script src="<?= base_url('resources/libs/popper/popper.min.js') ?>"></script>
@@ -163,9 +166,9 @@
     <script src="<?= base_url('resources/libs/three/three.min.js') ?>"></script>
     <script src="<?= base_url('resources/libs/panolens/panolens.min.js') ?>"></script>
     <script src="<?= base_url('resources/js/hotspot/congreso.js') ?>"></script>
-    <script src="<?= base_url('resources/js/modal/infomodal') ?>"></script>
+    <script src="<?= base_url('resources/js/modal/infomodal.js') ?>"></script>
     <script src="<?= base_url('resources/js/modal/fotos.js') ?>"></script>
-    <script src="<?= base_url('resources/js/modal/musicmodal') ?>"></script>
+    <script src="<?= base_url('resources/js/modal/musicmodal.js') ?>"></script>
     <script src="<?= base_url('resources/js/calendario/calendario.js') ?>"></script>
     <script src="<?= base_url('resources/js/avatar/avatar.js') ?>"></script>
 

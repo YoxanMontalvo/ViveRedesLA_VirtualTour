@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
         floatingButton.classList.toggle('active');
         messagePanel.classList.toggle('active');
         window.panelGlobalSound();
-        console.log(localStorage);
     });
 
     // Mostrar el panel de mensaje al pasar el cursor sobre el botón

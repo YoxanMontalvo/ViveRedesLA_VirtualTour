@@ -1,6 +1,6 @@
 //////////////////////// Todas las funciones fuera de los hotspot //////////////
 // Este sonido se debe de utilizar en todos los paneles y modales del recorrido
-const soundGlobal = new Audio('../Music/sonidos/PanelSound.mp3');
+const soundGlobal = new Audio(`${base_url}resources/sounds/PanelSound.mp3`);
 window.panelGlobalSound = function() {
     soundGlobal.play();
 };
@@ -8,17 +8,17 @@ window.panelGlobalSound = function() {
 
 
 // Reproducir el sonido al abrir el modal
-const InfoHotSound = new Audio('../Music/SoundInfoView.mp3');
+const InfoHotSound = new Audio(`${base_url}resources/sounds/PanelSound.mp3`);
 function playSoundInfo() {
     InfoHotSound.play();
 }
 // Fin
 
 // Musica del elevador
-const elevatorMusic = new Audio('../Music/music/ambientacionSong.mp3');
+const elevatorMusic = new Audio(`${base_url}resources/music/ambientacionSong.mp3`);
 function musicElevator(sceneURL) {
     const scenesWithElevatorMusic = [
-        '../Img/Congresos/Elevador.jpg',
+        `${base_url}resources/img/congreso/Elevador.jpg`
     ];
 
     if (scenesWithElevatorMusic.includes(sceneURL)) {
@@ -38,19 +38,21 @@ function updateSceneTitle(title) {
 }
 // Fin
 
-// Función para guardar la escena y el título actual en localStorage
 function saveCurrentScene(sceneURL, sceneTitle) {
     localStorage.setItem('currentScene', sceneURL);
-    localStorage.setItem('currentSceneTitle', sceneTitle);
+    if (sceneTitle) {
+        localStorage.setItem('currentSceneTitle', sceneTitle);
+    } else {
+        localStorage.setItem('currentSceneTitle', 'Entrada de Vive RedesLA');
+    }
 }
-// Fin
 
 // Función para cargar la escena y el título actual desde localStorage
 function loadCurrentScene() {
     const currentScene = localStorage.getItem('currentScene');
     const currentSceneTitle = localStorage.getItem('currentSceneTitle');
     return {
-        sceneURL: currentScene ? currentScene : '../Img/Congresos/Lobby.jpg',
+        sceneURL: currentScene ? currentScene : `${base_url}resources/img/congreso/Lobby.jpg`,
         sceneTitle: currentSceneTitle ? currentSceneTitle : 'Lobby'
     };
 }
@@ -181,50 +183,50 @@ function setDoorHotspots(sceneURL) {
     let sceneHotspots = [];
 
     // Pagina principal
-    if (sceneURL === '../Img/Congresos/Lobby.jpg') {// Pagina principal con sus hotspot
+    if (sceneURL === `${base_url}resources/img/congreso/Lobby.jpg`) {// Pagina principal con sus hotspot
         sceneHotspots = [
-            { position: { x: 4993.16, y: -140.51, z: -25.19 }, sceneURL: '../Img/Congresos/Elevador.jpg', text: 'Entrar al elevador', title: 'Elevador' },
-            { position: { x: 2200, y: -300, z: -4000 }, sceneURL: '../Img/Congresos/mezzanine.jpg', text: 'Entrar a Mezzanine', title: 'Sala de Mezzanine' },
-            { position: { x: 3000, y: -400, z: 5000 }, sceneURL: '../Img/Congresos/IQuatro.jpg', text: 'Entrar a Zona iQuatro', title: 'Zona iQuatro' },
+            { position: { x: 4993.16, y: -140.51, z: -25.19 }, sceneURL: `${base_url}resources/img/congreso/Elevador.jpg`, text: 'Entrar al elevador', title: 'Elevador' },
+            { position: { x: 2200, y: -300, z: -4000 }, sceneURL: `${base_url}resources/img/congreso/mezzanine.jpg`, text: 'Entrar a Mezzanine', title: 'Sala de Mezzanine' },
+            { position: { x: 3000, y: -400, z: 5000 }, sceneURL: `${base_url}resources/img/congreso/IQuatro.jpg`, text: 'Entrar a Zona iQuatro', title: 'Zona iQuatro' },
         ];
-    }else if (sceneURL === '../Img/Congresos/Elevador.jpg') {// Pagina principal con sus hotspot
+    }else if (sceneURL === `${base_url}resources/img/congreso/Elevador.jpg`) {// Pagina principal con sus hotspot
         sceneHotspots = [
-            { position: { x: 6000, y: 400, z: -4700 }, sceneURL: '../Img/Congresos/Lobby.jpg', text: 'Lobby', title: 'Congreso' },
-            { position: { x: 6000, y: -500, z: -4700 }, sceneURL: '../Img/Congresos/PasilloSalones.jpg', text: 'Pasillo salones', title: 'Pasillo de los salones' },
+            { position: { x: 6000, y: 400, z: -4700 }, sceneURL: `${base_url}resources/img/congreso/Lobby.jpg`, text: 'Lobby', title: 'Congreso' },
+            { position: { x: 6000, y: -500, z: -4700 }, sceneURL: `${base_url}resources/img/congreso/PasilloSalones.jpg`, text: 'Pasillo salones', title: 'Pasillo de los salones' },
             { position: { x: 6000, y: -1400, z: -4700 }, sceneURL: '../Img/Congresos/AuditorioCongreso.jpg', text: 'Auditorio', title: 'Auditorio' },
         ];
-    }else if (sceneURL === '../Img/Congresos/mezzanine.jpg') {// Pagina principal con sus hotspot
+    }else if (sceneURL === `${base_url}resources/img/congreso/mezzanine.jpg`) {// Pagina principal con sus hotspot
         sceneHotspots = [
-            { position: { x: 8000, y: -200, z: -4000 }, sceneURL: '../Img/Congresos/Lago.jpg', text: 'Ir al Lago REDESLA', title: 'Lago' },
-            { position: { x: -4934.34, y: -588.57, z: -515.44 }, sceneURL: '../Img/Congresos/Lobby.jpg', text: 'Volver al lobby del congreso', title: 'Congreso' },
+            { position: { x: 8000, y: -200, z: -4000 }, sceneURL: `${base_url}resources/img/congreso/Lago.jpg`, text: 'Ir al Lago REDESLA', title: 'Lago' },
+            { position: { x: -4934.34, y: -588.57, z: -515.44 }, sceneURL: `${base_url}resources/img/congreso/Lobby.jpg`, text: 'Volver al lobby del congreso', title: 'Congreso' },
         ];
-    }else if (sceneURL === '../Img/Congresos/Lago.jpg') {// Pagina principal con sus hotspot
+    }else if (sceneURL === `${base_url}resources/img/congreso/Lago.jpg`) {// Pagina principal con sus hotspot
         sceneHotspots = [
-            { position: { x: -8000, y: -200, z: -4000 }, sceneURL: '../Img/Congresos/mezzanine.jpg', text: 'Volver al Mezzanine', title: 'Sala de Mezzanine' },
+            { position: { x: -8000, y: -200, z: -4000 }, sceneURL: `${base_url}resources/img/congreso/mezzanine.jpg`, text: 'Volver al Mezzanine', title: 'Sala de Mezzanine' },
         ];
-    }else if (sceneURL === '../Img/Congresos/PasilloSalones.jpg') {
+    }else if (sceneURL === `${base_url}resources/img/congreso/PasilloSalones.jpg`) {
         sceneHotspots = [
-            { position: { x: -9000, y: -200, z: 100 }, sceneURL: '../Img/Congresos/Elevador.jpg', text: 'Volver al elevador', title: 'Elevador' },
-            { position: { x: 24.68, y: -1087.24, z: -4876.47 }, sceneURL: '../Img/Congresos/Salones.jpg', text: 'Ingresar al salon 3', title: 'Salon 3' },
+            { position: { x: -9000, y: -200, z: 100 }, sceneURL: `${base_url}resources/img/congreso/Elevador.jpg`, text: 'Volver al elevador', title: 'Elevador' },
+            { position: { x: 24.68, y: -1087.24, z: -4876.47 }, sceneURL: `${base_url}resources/img/congreso/Salones.jpg`, text: 'Ingresar al salon 3', title: 'Salon 3' },
         ];
-    }else if (sceneURL === '../Img/Congresos/Salones.jpg') {
+    }else if (sceneURL === `${base_url}resources/img/congreso/Salones.jpg`) {
         sceneHotspots = [
-            { position: { x: -4934.28, y: -506.02, z: 580.35 }, sceneURL: '../Img/Congresos/PasilloSalones.jpg', text: 'Volver al pasillo de salones', title: 'Pasillo de los salones' },
+            { position: { x: -4934.28, y: -506.02, z: 580.35 }, sceneURL: `${base_url}resources/img/congreso/PasilloSalones.jpg`, text: 'Volver al pasillo de salones', title: 'Pasillo de los salones' },
         ];
     }else if (sceneURL === '../Img/Congresos/AuditorioCongreso.jpg') {
         sceneHotspots = [
-            { position: { x: -4971.55, y: -273.11, z: 338.14 }, sceneURL: '../Img/Congresos/Elevador.jpg', text: 'Volver al elevador', title: 'Elevador' },
+            { position: { x: -4971.55, y: -273.11, z: 338.14 }, sceneURL: `${base_url}resources/img/congreso/Elevador.jpg`, text: 'Volver al elevador', title: 'Elevador' },
         ];
-    }else if (sceneURL === '../Img/Congresos/IQuatro.jpg') {
+    }else if (sceneURL === `${base_url}resources/img/congreso/IQuatro.jpg`) {
         sceneHotspots = [
-            { position: { x: -2918.37, y: -325.06, z: -4043.23 }, sceneURL: '../Img/Congresos/Lobby.jpg', text: 'Volver al lobby del congreso', title: 'Lobby congreso' },
+            { position: { x: -2918.37, y: -325.06, z: -4043.23 }, sceneURL: `${base_url}resources/img/congreso/Lobby.jpg`, text: 'Volver al lobby del congreso', title: 'Lobby congreso' },
         ];
     }
 
     return sceneHotspots.map(hotspot => createDoorHotspots(hotspot.position, hotspot.sceneURL, hotspot.text, hotspot.title));
 }
 
-const doorHotspotSound = new Audio('../Music/sonidos/door.mp3');
+const doorHotspotSound = new Audio(`${base_url}resources/sounds/door.mp3`);
 function playDoorSoundSceneChange() {
     doorHotspotSound.play();
 }
@@ -236,13 +238,13 @@ function setEscalerasHotspots(sceneURL) {
     let walkHotspots = [];
 
     //Pagina de inicio del recorrido
-    if (sceneURL === '../Img/Congresos/mezzanine.jpg') {// Pagina principal con sus hotspot
+    if (sceneURL === `${base_url}resources/img/congreso/mezzanine.jpg`) {// Pagina principal con sus hotspot
         walkHotspots = [
-            { position: { x: 8000, y: 1500, z: -4000 }, sceneURL: '../Img/Congresos/Escalerascabina.jpg', text: 'Subir escaleras', title: 'Cabina fotografica' },
+            { position: { x: 8000, y: 1500, z: -4000 }, sceneURL: `${base_url}resources/img/congreso/Escalerascabina.jpg`, text: 'Subir escaleras', title: 'Cabina fotografica' },
         ];
-    }else if (sceneURL === '../Img/Congresos/Escalerascabina.jpg') {
+    }else if (sceneURL === `${base_url}resources/img/congreso/Escalerascabina.jpg`) {
         walkHotspots = [
-            { position: { x: -934.97, y: -2788.14, z: 4035.68 }, sceneURL: '../Img/Congresos/mezzanine.jpg', text: 'Bajar escaleras', title: 'Sala de Mezzanine' },
+            { position: { x: -934.97, y: -2788.14, z: 4035.68 }, sceneURL: `${base_url}resources/img/congreso/mezzanine.jpg`, text: 'Bajar escaleras', title: 'Sala de Mezzanine' },
         ];
     }
 
@@ -329,9 +331,9 @@ function createEscalerasHotspots(position, sceneURL, text, title) {
 function setLogoutHotspots(sceneURL) {
     let pageHotspots = [];
 
-    if(sceneURL === '../Img/Congresos/Lobby.jpg') { // Ejemplo de una escena
+    if(sceneURL === `${base_url}resources/img/congreso/Lobby.jpg`) { // Ejemplo de una escena
         pageHotspots = [
-            { position: { x: -4951.47, y: -667.63, z: 10.11 }, pageURL: '../HTML/inicio.html', text: 'Salir del congreso', title: 'Campus de la Institución' },
+            { position: { x: -4951.47, y: -667.63, z: 10.11 }, pageURL: `${base_url}/inicio`, text: 'Salir del congreso', title: 'Campus de la Institución' },
         ];
     }
     
@@ -383,7 +385,7 @@ function createLogoutHotspots(position, pageURL, text, title) {
     pageHotspot.addEventListener('click', () => {
         playDoorSoundSceneChange();
         console.log('Hotspot clickeado, redirigiendo a:', pageURL);
-        saveCurrentScene(panorama.src); // Guardar la escena actual antes de cambiar de página
+        saveCurrentScene(panorama.src);
         localStorage.removeItem('currentScene');
         window.location.href = pageURL; // Redirige a la URL especificada
     });
@@ -401,7 +403,7 @@ function setCameraHotspots(sceneURL) {
     let walkHotspots = [];
 
     //Pagina de inicio del recorrido
-    if (sceneURL === '../Img/Congresos/Escalerascabina.jpg') {
+    if (sceneURL === `${base_url}resources/img/congreso/Escalerascabina.jpg`) {
         walkHotspots = [
             { position: { x: 4966.71, y: -224.58, z: -466.84 }, sceneURL: 'Cabina fotográfica', text: 'Tomarse una foto', title: 'Tomarse una foto' },
         ];
@@ -476,17 +478,17 @@ function createCameraHotspots(scale, position, text, title, fileUrl, description
 function setModalHotspots(sceneURL) {
     let infoHotspots = [];
 
-    if (sceneURL === '../Img/Congresos/Lobby.jpg') {
+    if (sceneURL === `${base_url}resources/img/congreso/Lobby.jpg`) {
         infoHotspots = [
             { position: { x: -3000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', fileUrl: 'https://www.youtube.com/watch?v=62ctHqCjtxg', description: 'El congreso de REDESLA se celebra cada añoS' },
-            { position: { x: -1000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', fileUrl: '../Documents/PDF/AcuseCita.pdf', description: 'El congreso de REDESLA se celebra cada añoS' },
-            { position: { x: -2000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', fileUrl: '../Img/auditorioCongreso.jpg', description: 'El congreso de REDESLA se celebra cada añoS' },
+            { position: { x: -1000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', fileUrl: `${base_url}resources/documents/pdf/AcuseCita.pdf`, description: 'El congreso de REDESLA se celebra cada añoS' },
+            { position: { x: -2000, y: 1000, z: -5000 }, text: 'Breve descripcion de lo que tratara el modal', title: 'Bienvenido al congreso de REDESLA', fileUrl: `${base_url}resources/documents/imgInfo/CursosImage.png`, description: 'El congreso de REDESLA se celebra cada añoS' },
         ];
-    } else if (sceneURL === '../Img/Congresos/Salones.jpg') {
+    } else if (sceneURL === `${base_url}resources/img/congreso/Salones.jpg`) {
         infoHotspots = [
             { position: { x: 4364.25, y: -2425.33, z: 71.92 }, text: 'Ingresar para calificar ponencias', title: 'Calificar ponencias', fileUrl: 'https://redesla.la/redesla/', description: 'Calificar ponencias' },
         ];
-    } else if (sceneURL === '../Img/Congresos/IQuatro.jpg') {
+    } else if (sceneURL === `${base_url}resources/img/congreso/IQuatro.jpg`) {
         infoHotspots = [
             { scale: 150, position: { x: 2283.39, y: -577.71, z: -4398.62 }, text: 'Ver Publicaciones IQuatro Editores', title: 'Publicaciones IQuatro Editores', fileUrl: 'https://publicaciones.iquatroeditores.org/', description: 'Publicaciones IQuatro Editores' },
             { scale: 150, position: { x: 3175.30, y: -371.23, z: -3834.93 }, text: 'Ver Publicaciones IQuatro Editores', title: 'Publicaciones IQuatro Editores', fileUrl: 'https://publicaciones.iquatroeditores.org/', description: 'Publicaciones IQuatro Editores' },
@@ -589,7 +591,7 @@ function createHotspotInfo(scale, position, text, title, image, description) {
 function setInfoHotspots(sceneURL) {
     let infoHotspots = [];
 
-    if (sceneURL === '../Img/Congresos/Lobby.jpg') {
+    if (sceneURL === `${base_url}resources/img/congreso/Lobby.jpg`) {
       infoHotspots = [
         { scale: 150, position: { x: 4762.66, y: 81.52, z: -1505.20 }, text: 'Bienvenido a REDESLA', title: '¡Bienvenidos a nuestras instalaciones del congreso virtual VIVE REDESLA!', description: 'Este recorrido virtual trata de trasmitir la mayor inmersión posible, y así usted puedad vivir las experiencia RedesLA desde la comodidad de su hogar. Al lado izquierdo podrá entrar a la <b>Zona IQuatro</b>, al lado derecho <b>Mezzanine, Lago RedesLA y cabina fotográfica</b> y al centro nuestro elevador para acceder a nuestros diferentes pisos.' },
     ];
@@ -695,7 +697,7 @@ function createHotspotCaminar(position, sceneURL, text, title) {
     return sceneHotspot;
 }
 
-const walkHotspotSound = new Audio('../Music/sonidos/walk.mp3');
+const walkHotspotSound = new Audio(`${base_url}resources/sounds/walk.mp3`);
 function playWalkSoundSceneChange() {
     walkHotspotSound.play();
 }
@@ -706,11 +708,11 @@ function playWalkSoundSceneChange() {
 function setZoomHotspots(sceneURL) {
     let pageHotspots = [];
 
-    if (sceneURL === '../Img/Congresos/mezzanine.jpg') { // Ejemplo de una escena
+    if (sceneURL === `${base_url}resources/img/congreso/mezzanine.jpg`) { // Ejemplo de una escena
         pageHotspots = [
             { position: { x: 4999.36, y: -14.73, z: -1.08 }, pageURL: 'https://redesla.la/redesla/', text: 'Entrar a ZOOM', title: 'Zoom mezzanine' },
         ];
-    } else if (sceneURL === '../Img/Congresos/Salones.jpg') { // Ejemplo de una escena
+    } else if (sceneURL === `${base_url}resources/img/congreso/Salones.jpg`) { // Ejemplo de una escena
         pageHotspots = [
             { position: { x: 4994.15, y: 79.14, z: -52.32 }, pageURL: 'https://redesla.la/redesla/', text: 'Entrar a ZOOM', title: 'Zoom mezzanine' },
         ];
@@ -792,7 +794,7 @@ function createZoomHotspots(position, pageURL, text, title) {
 //////////////////////// Inicialización de los hotspot //////////////
 // Vista del menú principal
 function initializeMainPanorama() {
-    panorama = new PANOLENS.ImagePanorama('../Img/Congresos/Lobby.jpg');
+    panorama = new PANOLENS.ImagePanorama(`${base_url}resources/img/congreso/Lobby.jpg`);
     panorama.addEventListener('load', () => {
         addInitialHotspots();
     });
