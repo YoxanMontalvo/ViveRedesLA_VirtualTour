@@ -5,7 +5,7 @@
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
   <title>Menu principal</title>
 
-  <link rel="icon" href="./Documents/Icons/tourVirtualcon.png" type="image/x-icon">
+  <link rel="icon" href="<?= base_url('resources/favicons/inicioIcon.png') ?>" type="image/x-icon">
   <link rel="stylesheet" href="<?= base_url('resources/libs/fontawsome/css/all.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('resources/css/menu.css') ?>">
   <link rel="stylesheet" href="<?= base_url('resources/libs/sweetalert/sweetAlert.min.css') ?>">
@@ -46,10 +46,10 @@
 
   <script src="<?= base_url('resources/libs/typed/typed.min.js') ?>"></script>
   <script src="<?= base_url('resources/js/menu/menu.js') ?>"></script>
+  <script src="<?= base_url('resources/js/modal/easterEgg.js') ?>"></script>
   <script src="<?= base_url('resources/libs/sweetalert/sweetAlert.min.js') ?>"></script>
   <script>
     var baseUrl = "<?= base_url() ?>";
   </script>
-  <script src="./Lib/easterEgg.js"></script>
 </body>
 </html>

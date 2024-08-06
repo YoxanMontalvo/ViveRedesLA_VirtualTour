@@ -20,10 +20,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Lista de canciones
     var canciones = [
-        "../../music/coffee shop.mp3",
-        "../../music/forward.mp3",
-        "../../music/moonlight.mp3",
-        "../../music/ambientacionSong.mp3"
+        `${base_url}resources/music/coffeeshop.mp3`,
+        `${base_url}resources/music/forward.mp3`,
+        `${base_url}resources/music/moonlight.mp3`,
+        `${base_url}resources/music/ambientacionSong.mp3`
     ];
     var currentSongIndex = 0;
 

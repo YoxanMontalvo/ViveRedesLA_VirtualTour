@@ -1,13 +1,13 @@
 //////////////////////// Todas las funciones fuera de los hotspot //////////////
 // Este sonido se debe de utilizar en todos los paneles y modales del recorrido
-const soundGlobal = new Audio('../Music/sonidos/PanelSound.mp3');
+const soundGlobal = new Audio(`${base_url}resources/sounds/PanelSound.mp3`);
 window.panelGlobalSound = function() {
     soundGlobal.play();
 };
 // Fin
 
 // Musica del elevador
-const elevatorMusic = new Audio('../Music/sonidos/RelaxSong.mp3');
+const elevatorMusic = new Audio(`${base_url}resources/music/ambientacionSong.mp3`);
 
 function musicElevator(sceneURL) {
     const scenesWithElevatorMusic = [
@@ -40,7 +40,7 @@ function loadCurrentScene() {
     const currentScene = localStorage.getItem('currentScene');
     const currentSceneTitle = localStorage.getItem('currentSceneTitle');
     return {
-        sceneURL: currentScene ? currentScene : '../../img/inicio/exterior/EntradaViveRedesla.jpg',
+        sceneURL: currentScene ? currentScene : `${base_url}resources/img/inicio/exterior/EntradaViveRedesla.jpg`,
         sceneTitle: currentSceneTitle ? currentSceneTitle : 'Entrada de Vive RedesLA'
     };
 }
@@ -110,13 +110,13 @@ function setHotspotPuerta(sceneURL) {
     let sceneHotspots = [];
 
     //Pagina de inicio del recorrido
-    if (sceneURL === '../../img/inicio/exterior/EntradaViveRedesla.jpg') {// Pagina principal con sus hotspot
+    if (sceneURL === `${base_url}resources/img/inicio/exterior/EntradaViveRedesla.jpg`) { // Página principal con sus hotspot
         sceneHotspots = [
-            { position: { x: 8000, y: -400, z: 100 }, sceneURL: '../Img/Exterior/CurcePatioCongreso.jpg', text: 'Ingresar a las instalaciones', title: 'Edificios de RedesLA' },
+            { position: { x: 8000, y: -400, z: 100 }, sceneURL: `${base_url}resources/img/inicio/exterior/CurcePatioCongreso.jpg`, text: 'Ingresar a las instalaciones', title: 'Edificios de RedesLA' },
         ];
-    }else if (sceneURL === '../Img/Exterior/CurcePatioCongreso.jpg') {// Pagina principal con sus hotspot
+    } else if (sceneURL === `${base_url}resources/img/inicio/exterior/CurcePatioCongreso.jpg`) { // Página principal con sus hotspot
         sceneHotspots = [
-            { position: { x: -7000, y: 100, z: 100 }, sceneURL: '../../img/inicio/exterior/EntradaViveRedesla.jpg', text: 'Salir de la institución', title: 'Entrada de Vive RedesLA' },
+            { position: { x: -7000, y: 100, z: 100 }, sceneURL: `${base_url}resources/img/inicio/exterior/EntradaViveRedesla.jpg`, text: 'Salir de la institución', title: 'Entrada de Vive RedesLA' },
         ];
     }
 
@@ -533,7 +533,7 @@ function createHotspotPuerta(position, sceneURL, text, title) {
     return sceneHotspot;
 }
 
-const doorHotspotSound = new Audio('../Music/sonidos/door.mp3');
+const doorHotspotSound = new Audio(`${base_url}resources/sounds/door.mp3`);
 function playDoorSoundSceneChange() {
     doorHotspotSound.play();
 }
@@ -545,14 +545,14 @@ function setWalkHotspots(sceneURL) {
     let walkHotspots = [];
 
     //Pagina de inicio del recorrido
-    if (sceneURL === '../Img/Exterior/CurcePatioCongreso.jpg') {// Pagina principal con sus hotspot
+    if (sceneURL === `${base_url}resources/img/inicio/exterior/CurcePatioCongreso.jpg`) {// Pagina principal con sus hotspot
         walkHotspots = [
-            { position: { x: 8000, y: -400, z: 100 }, sceneURL: '../Img/Exterior/PatioCongreso.jpg', text: 'Avanzar al congreso', title: 'Edificio del congreso' },
+            { position: { x: 8000, y: -400, z: 100 }, sceneURL: `${base_url}resources/img/inicio/exterior/PatioCongreso.jpg`, text: 'Avanzar al congreso', title: 'Edificio del congreso' },
             { position: { x: 92.81, y: -67.12, z: 4992.50 }, sceneURL: '../Img/PanoramaInterior.png', text: 'Avanzar a los salones', title: 'Salones de las Redes' },
         ];
-    } else if (sceneURL === '../Img/Exterior/PatioCongreso.jpg') {
+    } else if (sceneURL === `${base_url}resources/img/inicio/exterior/PatioCongreso.jpg`) {
         walkHotspots = [
-            { position: { x: -4984.35, y: -173.67, z: -168.41 }, sceneURL: '../Img/Exterior/CurcePatioCongreso.jpg', text: 'Regresar al cruce', title: 'Edificio del congreso' },
+            { position: { x: -4984.35, y: -173.67, z: -168.41 }, sceneURL: `${base_url}resources/img/inicio/exterior/CurcePatioCongreso.jpg`, text: 'Regresar al cruce', title: 'Edificio del congreso' },
         ];
     }
 
@@ -563,14 +563,14 @@ function createHotspotCaminar(position, sceneURL, text, title) {
     // Obtener el género del localStorage
     const selectedGender = localStorage.getItem('selectedGender');
     let walkIcon = PANOLENS.DataImage.WalkIcon
-    let walkSoundPath = '../Music/sonidos/walk.mp3';
+    let walkSoundPath = `${base_url}resources/sounds/walk.mp3`;
 
     if (selectedGender === 'femenino') {
         walkIcon = PANOLENS.DataImage.WomenShoes;
-        walkSoundPath = '../Music/sonidos/WomenWalkingSound.mp3';
+        walkSoundPath = `${base_url}resources/sounds/WomenWalkingSound.mp3`;
     } else if (selectedGender === 'masculino') {
         walkIcon = PANOLENS.DataImage.MenShoes;
-        walkSoundPath = '../Music/sonidos/MenWalkingSound.mp3';
+        walkSoundPath = `${base_url}resources/sounds/MenWalkingSound.mp3`;
     }
 
     const walkHotspotSound = new Audio(walkSoundPath);
@@ -721,7 +721,7 @@ function setLoginHotspots(sceneURL) {
         loginHotspots = [
             { position: { x: 3000, y: 1000, z: -5000 }}
         ];
-    }else if (sceneURL === '../Img/Exterior/PatioCongreso.jpg') {
+    }else if (sceneURL === `${base_url}resources/img/inicio/exterior/PatioCongreso.jpg`) {
         loginHotspots = [
             { position: { x: 6000, y: 1000, z: -1100 }}
         ];
@@ -731,7 +731,7 @@ function setLoginHotspots(sceneURL) {
 }
 
 // Reproducir el sonido al abrir el modal de inicio de sesion
-const LoginSound = new Audio('../Music/sonidos/SoundLogin.mp3');
+const LoginSound = new Audio(`${base_url}resources/sounds/SoundLogin.mp3`);
 function playLoginSound() {
     LoginSound.play();
 }
@@ -740,7 +740,7 @@ function playLoginSound() {
 
 /* CONVERSACIÓN */
 // Variable para almacenar el sonido
-let typingSound = new Audio('../Music/sonidos/TalkingSound.mp3');
+let typingSound = new Audio(`${base_url}resources/sounds/TalkingSound.mp3`);
 
 // Función para crear un hotspot de conversación
 function createHotspotConversation(position, text, title, image, description) {
@@ -1014,7 +1014,7 @@ function loadGame(game) {
     }
 }
 // Reproducir el sonido al abrir el juego para usarlo
-const ArcadeSound = new Audio('../Music/sonidos/ArcadeSound2.mp3');
+const ArcadeSound = new Audio(`${base_url}resources/sounds/ArcadeSound2.mp3`);
 function playArcadeSound() {
     ArcadeSound.play();
 }
@@ -1024,7 +1024,11 @@ function playArcadeSound() {
 
 //////////////////////// Inicialización de los hotspot y escenas ////////////////////////
 function initializeMainPanorama() {
-    panorama = new PANOLENS.ImagePanorama('../../img/inicio/exterior/EntradaViveRedesla.jpg');
+    // Usa base_url para construir la URL de la imagen de panorama
+    const panoramaURL = `${base_url}resources/img/inicio/exterior/EntradaViveRedesla.jpg`;
+
+    // Crea el panorama con la URL completa
+    panorama = new PANOLENS.ImagePanorama(panoramaURL);
     panorama.addEventListener('load', () => {
         addInitialHotspots();
     });
