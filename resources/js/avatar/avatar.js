@@ -1,8 +1,8 @@
 //Validacion del avatar del genero
 document.addEventListener('DOMContentLoaded', function() {
-    const maleAvatar = '../Img/Gifs/AvatarMasculino.gif';
-    const femaleAvatar = '../Img/Gifs/AvatarFemenino.gif';
-    const noAvatar = '../Img/Gifs/NoImage.png';
+    const maleAvatar = `${base_url}resources/img/gifs/AvatarMasculino.gif`;
+    const femaleAvatar = `${base_url}resources/img/gifs/AvatarFemenino.gif`;
+    const noAvatar = `${base_url}resources/img/gifs/NoImage.png`;
 
     const avatarImage = document.getElementById('avatar-image');
     const selectedGender = localStorage.getItem('selectedGender');

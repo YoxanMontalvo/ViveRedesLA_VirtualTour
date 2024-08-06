@@ -72,7 +72,7 @@
                         </div>
                         <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
                         <audio id="musica" loop>
-                            <source src="" type="audio/mp3">
+                            <source src="<?= base_url('resources/music/ambientacionSong.mp3') ?>" type="audio/mp3">
                             Tu navegador no soporta la reproducción de audio.
                         </audio>
                     </div>
@@ -200,13 +200,15 @@
     </div>
     <!-- Fin -->
 
+    <script>
+        var base_url = "<?= base_url() ?>";
+    </script>
     <script src="<?= base_url('resources/libs/sweetalert/sweetAlert.min.js') ?>"></script>
     <script src="<?= base_url('resources/libs/jquery/jquery.min.js') ?>"></script>
     <script src="<?= base_url('resources/libs/popper/popper.min.js') ?>"></script>
     <script src="<?= base_url('resources/libs/bootstrap/bootstrap.min.js') ?>"></script>
     <script src="<?= base_url('resources/libs/three/three.min.js') ?>"></script>
     <script src="<?= base_url('resources/libs/panolens/panolens.min.js') ?>"></script>
-
     <script src="<?= base_url('resources/js/hotspot/inicio.js') ?>"></script>
     <script src="<?= base_url('resources/js/login/login.js') ?>"></script>
     <script src="<?= base_url('resources/js/modal/musicmodal.js') ?>"></script>
