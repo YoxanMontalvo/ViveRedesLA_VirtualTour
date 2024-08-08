@@ -159,7 +159,7 @@ function createDoorHotspots(position, sceneURL, text, title) {
         newPanorama.addEventListener('load', () => {
             clearCurrentHotspots();
             updateSceneTitle(title);
-            updateInitialHotspots(newPanorama, sceneURL)
+            updateInitialHotspots(newPanorama, sceneURL);
             viewer.setPanorama(newPanorama);
             panorama = newPanorama;
             saveCurrentScene(sceneURL, title); // Guardar la escena actual
@@ -188,6 +188,8 @@ function setDoorHotspots(sceneURL) {
             { position: { x: 4993.16, y: -140.51, z: -25.19 }, sceneURL: `${base_url}resources/img/congreso/Elevador.jpg`, text: 'Entrar al elevador', title: 'Elevador' },
             { position: { x: 2200, y: -300, z: -4000 }, sceneURL: `${base_url}resources/img/congreso/mezzanine.jpg`, text: 'Entrar a Mezzanine', title: 'Sala de Mezzanine' },
             { position: { x: 3000, y: -400, z: 5000 }, sceneURL: `${base_url}resources/img/congreso/IQuatro.jpg`, text: 'Entrar a Zona iQuatro', title: 'Zona iQuatro' },
+
+            { position: { x: -5000, y: -400, z: 5000 }, sceneURL: `${base_url}resources/img/congreso/Arcade.jpg`, text: 'Arcade prueba', title: 'Arcade prueba' },
         ];
     }else if (sceneURL === `${base_url}resources/img/congreso/Elevador.jpg`) {// Pagina principal con sus hotspot
         sceneHotspots = [
@@ -788,6 +790,119 @@ function createZoomHotspots(position, pageURL, text, title) {
 /* FIN */
 
 
+/* ARCADE */
+function createHotspotArcade(position, game, description, imageUrl) {
+    const hotspot = new PANOLENS.Infospot(350, PANOLENS.DataImage.ArcadeIcon);
+    hotspot.position.set(position.x, position.y, position.z);
+    animateHotspot(hotspot);
+
+    // Crear el panel del hotspot con título, imagen y descripción
+    const hotspotPanel = document.createElement('div');
+    hotspotPanel.classList.add('game-panel');
+
+    // Crear el título
+    const title = document.createElement('h3');
+    title.textContent = game;
+    title.classList.add('title');
+    hotspotPanel.appendChild(title);
+
+    // Crear la imagen
+    if (imageUrl) {
+        const image = document.createElement('img');
+        image.src = imageUrl;
+        image.alt = game;
+        image.classList.add('image');
+        hotspotPanel.appendChild(image);
+    }
+
+    // Crear la descripción
+    const desc = document.createElement('p');
+    desc.textContent = description;
+    desc.classList.add('description');
+    hotspotPanel.appendChild(desc);
+
+    // Mostrar el panel al hacer hover sobre el hotspot
+    hotspot.addEventListener('hoverenter', () => {
+        hotspotPanel.classList.add('show');
+        panelGlobalSound();
+    });
+
+    // Ocultar el panel al salir del hover
+    hotspot.addEventListener('hoverleave', () => {
+        hotspotPanel.classList.remove('show');
+    });
+
+    // Evento de clic para abrir el modal del juego específico
+    hotspot.addEventListener('click', () => {
+        hotspotPanel.classList.remove('show');
+        playArcadeSound();
+        openModal(game);
+    });
+
+    // Agregar el panel al contenedor
+    document.body.appendChild(hotspotPanel);
+    return hotspot;
+}
+
+// Configura los hotspots del arcade con sus respectivos juegos
+function setArcadeHotspots(sceneURL) {
+    let arcadeHotspots = [];
+
+    if (sceneURL === `${base_url}resources/img/congreso/Arcade.jpg`) {
+        arcadeHotspots = [
+            { position: { x: 4981.38, y: -351.43, z: -91.83 }, game: 'SpaceWord', description: 'Resuelve las palabras ocultas', image: `${base_url}resources/documents/imgInfo/CursosImage.png`},
+            { position: { x: 4884.93, y: -326.47, z: 994.37 }, game: 'Memorama', description: 'Encuentra los pares de cartas', image: `${base_url}resources/documents/imgInfo/CursosImage.png`},
+            { position: { x: 4808.88, y: -250.31, z: -1307.09 }, game: 'HangMan', description: 'Acierta la palabra antes de que se termine el tiempo', image: `${base_url}resources/documents/imgInfo/CursosImage.png`},
+            { position: { x: 4511.45, y: -243.81, z: 2123.06}, game: 'Snake', description: 'Guía la serpiente para que coma sin chocar', image: `${base_url}resources/documents/imgInfo/CursosImage.png`}
+        ];
+    }
+
+    return arcadeHotspots.map(hotspot => createHotspotArcade(hotspot.position, hotspot.game, hotspot.description, hotspot.image));
+}
+
+// Funciones dedicadas al modal del Arcade
+function openModal(game) {
+    document.getElementById('modalArcade').style.display = 'flex';
+    loadGame(game);
+}
+// Cerrar modal
+function closeModal() {
+    document.getElementById('modalArcade').style.display = 'none';
+    document.getElementById('game-container').innerHTML = '';
+}
+// Función para cargar el juego en el modal
+function loadGame(game) {
+    let gameContainer = document.getElementById('game-container');
+    let gameUrl;
+
+    switch (game) {
+        case 'SpaceWord':
+            gameUrl = `${base_url}game/spaceword`;
+            break;
+        case 'Memorama':
+            gameUrl = `${base_url}game/memoria`;
+            break;
+        case 'HangMan':
+            gameUrl = `${base_url}game/hangman`;
+            break;
+        case 'Snake':
+            gameUrl = `${base_url}game/snake`;
+            break;
+        default:
+            gameContainer.innerHTML = 'Juego no encontrado';
+            return;
+    }
+
+    gameContainer.innerHTML = `<iframe src="${gameUrl}" width="100%" height="100%"></iframe>`;
+}
+// Reproducir el sonido al abrir el juego para usarlo
+const ArcadeSound = new Audio(`${base_url}resources/sounds/ArcadeSound2.mp3`);
+function playArcadeSound() {
+    ArcadeSound.play();
+}
+/* FIN */
+
+
 /* ============================================================================= */
 
 
@@ -840,6 +955,10 @@ function addInitialHotspots() {
 
     const initialZoomHotspots = setZoomHotspots(panorama.src);
     initialZoomHotspots.forEach(hotspot => panorama.add(hotspot));
+
+    // Arcade
+    const initialArcadeHotspots = setArcadeHotspots(panorama.src);
+    initialArcadeHotspots.forEach(hotspot => panorama.add(hotspot));
 }
 
 function updateInitialHotspots(newPanorama, sceneURL) {
@@ -867,6 +986,10 @@ function updateInitialHotspots(newPanorama, sceneURL) {
 
     const initialZoomHotspots = setZoomHotspots(sceneURL);
     initialZoomHotspots.forEach(hotspot => newPanorama.add(hotspot));
+
+    // Arcade
+    const initialArcadeHotspots = setArcadeHotspots(sceneURL);
+    initialArcadeHotspots.forEach(hotspot => newPanorama.add(hotspot));
 
 }
 

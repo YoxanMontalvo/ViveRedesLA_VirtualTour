@@ -13,3 +13,6 @@ $routes->get('/inicio', 'GeneralController::inicio');
 
 // Congreso 
 $routes->get('/congreso', 'GeneralController::congreso');
+
+$routes->get('/game/(:any)', 'GeneralController::initGame/$1');
+

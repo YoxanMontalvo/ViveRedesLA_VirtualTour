@@ -1008,7 +1008,7 @@ function loadGame(game) {
             gameContainer.innerHTML = '<iframe src="../GameZone/HangmanGame/Index.html" width="100%" height="100%"></iframe>';
             break;
         case 'Snake':
-            gameContainer.innerHTML = '<iframe src="../GameZone/Snake/HTML/Index.html" width="100%" height="100%"></iframe>';
+            gameContainer.innerHTML = '<iframe src="../GameZone/SnakeGame/index.html" width="100%" height="100%"></iframe>';
             break;
         default:
             gameContainer.innerHTML = 'Juego no encontrado';

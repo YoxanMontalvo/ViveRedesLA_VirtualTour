@@ -4,8 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
   <title>Menu principal</title>
-
-  <link rel="icon" href="<?= base_url('resources/favicons/inicioIcon.png') ?>" type="image/x-icon">
+  <link rel="icon" href="<?= base_url('resources/favicons/tourVirtualcon.png') ?>" type="image/x-icon">
   <link rel="stylesheet" href="<?= base_url('resources/libs/fontawsome/css/all.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('resources/css/menu.css') ?>">
   <link rel="stylesheet" href="<?= base_url('resources/libs/sweetalert/sweetAlert.min.css') ?>">
