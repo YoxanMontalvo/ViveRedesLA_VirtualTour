@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="<?= base_url('resources/css/musicamodal.css') ?>">
     <link rel="stylesheet" href="<?= base_url('resources/css/calendario.css') ?>">
     <link rel="stylesheet" href="<?= base_url('resources/css/fotos.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('resources/css/gameboy.css') ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.7/index.min.css">
 </head>
 <body>
@@ -92,6 +93,16 @@
         <img id="avatar-image" src="" alt="Avatar">
       </div>
       <!-- Fin -->
+
+      <!-- Modal del arcade -->
+      <div id="modalArcade">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">X</button>
+            <div id="game-container"></div>
+        </div>
+    </div>
+      <!-- Fin -->
+
     </div>
       
     <!-- Panel del hotspot de informacion -->
