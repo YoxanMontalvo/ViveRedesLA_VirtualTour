@@ -54,7 +54,7 @@
                           <button id="play-pause" title="Reproducir / pausar" class="btn"><i class="fas fa-play"></i></button>
                           <button id="next" title="Siguiente" class="btn"><i class="fas fa-forward"></i></button>
                       </div>
-                      <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+                      <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
                       <audio id="musica" loop>
                           <source src="<?= base_url('resources/music/ambientacionSong.mp3') ?>" type="audio/mp3">
                           Tu navegador no soporta la reproducción de audio.
@@ -182,6 +182,7 @@
     <script src="<?= base_url('resources/js/modal/musicmodal.js') ?>"></script>
     <script src="<?= base_url('resources/js/calendario/calendario.js') ?>"></script>
     <script src="<?= base_url('resources/js/avatar/avatar.js') ?>"></script>
+    <script src="<?= base_url('resources/js/configuracion/sonidosglobales.js') ?>"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.7/index.global.min.js"></script>
   </body>

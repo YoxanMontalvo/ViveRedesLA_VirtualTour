@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Obtener los elementos de audio y botones
     var audio = document.getElementById("musica");
     var playPauseBtn = document.getElementById("play-pause");
-    var volumeControl = document.getElementById("volume");
     var prevBtn = document.getElementById("prev");
     var nextBtn = document.getElementById("next");
     var disc = document.querySelector('.disc');
@@ -44,6 +43,38 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Controlador general de audio
+    const sounds = [doorHotspotSound, ArcadeSound, typingSound, LoginSound, elevatorMusic, soundGlobal, walkHotspotSound, defaultWalking, womenWalking, menWalkin];
+
+    // Función para ajustar el volumen de los sonidos
+    function setVolume(volume) {
+        // Convertimos el valor de 0-1 para usarlo en el volumen del audio
+        sounds.forEach(sound => {
+            sound.volume = volume;
+        });
+
+        // Ajustar el volumen de todos los elementos <audio> y <video> en la página
+        const mediaElements = document.querySelectorAll('audio, video');
+        mediaElements.forEach(media => {
+            media.volume = volume;
+        });
+    }
+
+    // Controlador de volumen a través del input
+    document.getElementById('volumeControl').addEventListener('input', function() {
+        setVolume(this.value);
+    });
+
+    // Evento para ajustar el volumen al hacer clic en cualquier parte de la barra
+    document.getElementById('volumeControl').addEventListener('click', function(event) {
+        const rangeWidth = this.clientWidth;
+        const clickX = event.offsetX;
+        const newVolume = clickX / rangeWidth;
+        this.value = newVolume.toFixed(2);
+        setVolume(newVolume);
+    });
+    // Fin
+
     // Manejar el botón de reproducción/pausa
     playPauseBtn.onclick = function() {
         if (audio.paused) {
@@ -65,16 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
             disc.style.animationPlayState = 'paused';
         }
     };
-
-    // Manejar el control de volumen
-    volumeControl.oninput = function() {
-        audio.volume = this.value;
-    }
-
-    // Prevenir la propagación de eventos cuando se arrastra la barra de volumen
-    volumeControl.addEventListener('mousedown', function(event) {
-        event.stopPropagation();
-    });
 
     // Manejar el botón de siguiente
     nextBtn.onclick = function() {

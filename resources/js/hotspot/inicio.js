@@ -1,6 +1,5 @@
 //////////////////////// Todas las funciones fuera de los hotspot //////////////
 // Este sonido se debe de utilizar en todos los paneles y modales del recorrido
-const soundGlobal = new Audio(`${base_url}resources/sounds/PanelSound.mp3`);
 window.panelGlobalSound = function() {
     soundGlobal.play();
 };
@@ -8,7 +7,6 @@ window.panelGlobalSound = function() {
 
 // Musica del elevador
 const elevatorMusic = new Audio(`${base_url}resources/music/ambientacionSong.mp3`);
-
 function musicElevator(sceneURL) {
     const scenesWithElevatorMusic = [
         '../Img/elevadorRelayn.jpeg',
@@ -533,7 +531,6 @@ function createHotspotPuerta(position, sceneURL, text, title) {
     return sceneHotspot;
 }
 
-const doorHotspotSound = new Audio(`${base_url}resources/sounds/door.mp3`);
 function playDoorSoundSceneChange() {
     doorHotspotSound.play();
 }
@@ -563,14 +560,14 @@ function createHotspotCaminar(position, sceneURL, text, title) {
     // Obtener el género del localStorage
     const selectedGender = localStorage.getItem('selectedGender');
     let walkIcon = PANOLENS.DataImage.WalkIcon
-    let walkSoundPath = `${base_url}resources/sounds/walk.mp3`;
+    let walkSoundPath = defaultWalking;
 
     if (selectedGender === 'femenino') {
         walkIcon = PANOLENS.DataImage.WomenShoes;
-        walkSoundPath = `${base_url}resources/sounds/WomenWalkingSound.mp3`;
+        walkSoundPath = womenWalking;
     } else if (selectedGender === 'masculino') {
         walkIcon = PANOLENS.DataImage.MenShoes;
-        walkSoundPath = `${base_url}resources/sounds/MenWalkingSound.mp3`;
+        walkSoundPath = menWalkin;
     }
 
     const walkHotspotSound = new Audio(walkSoundPath);
@@ -731,7 +728,6 @@ function setLoginHotspots(sceneURL) {
 }
 
 // Reproducir el sonido al abrir el modal de inicio de sesion
-const LoginSound = new Audio(`${base_url}resources/sounds/SoundLogin.mp3`);
 function playLoginSound() {
     LoginSound.play();
 }
@@ -739,9 +735,6 @@ function playLoginSound() {
 
 
 /* CONVERSACIÓN */
-// Variable para almacenar el sonido
-let typingSound = new Audio(`${base_url}resources/sounds/TalkingSound.mp3`);
-
 // Función para crear un hotspot de conversación
 function createHotspotConversation(position, text, title, image, description) {
     let infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.Conversation);
@@ -863,7 +856,6 @@ function createPageHotspot(position, pageURL, text, title) {
 
     // Evento de clic para redirigir a la URL de la página
     pageHotspot.addEventListener('click', () => {
-        console.log('Hotspot clickeado, redirigiendo a:', pageURL);
         saveCurrentScene(panorama.src); // Guardar la escena actual antes de cambiar de página
         window.location.href = pageURL; // Redirige a la URL especificada
     });
@@ -1014,7 +1006,6 @@ function loadGame(game) {
     }
 }
 // Reproducir el sonido al abrir el juego para usarlo
-const ArcadeSound = new Audio(`${base_url}resources/sounds/ArcadeSound2.mp3`);
 function playArcadeSound() {
     ArcadeSound.play();
 }
