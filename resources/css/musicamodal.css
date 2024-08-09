@@ -108,12 +108,12 @@
     transform: scale(1.4); 
 }
 
-#volume {
+#volumeControl {
     width: 80%;
     margin-top: 20px;
     transition: transform 0.3s ease-out;
 }
-#volume:hover {
+#volumeControl:hover {
     cursor:pointer;
     transform: scale(1.1); 
 }

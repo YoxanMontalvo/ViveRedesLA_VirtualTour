@@ -6,16 +6,13 @@ window.panelGlobalSound = function() {
 };
 // Fin
 
-
 // Reproducir el sonido al abrir el modal
-const InfoHotSound = new Audio(`${base_url}resources/sounds/PanelSound.mp3`);
 function playSoundInfo() {
     InfoHotSound.play();
 }
 // Fin
 
 // Musica del elevador
-const elevatorMusic = new Audio(`${base_url}resources/music/ambientacionSong.mp3`);
 function musicElevator(sceneURL) {
     const scenesWithElevatorMusic = [
         `${base_url}resources/img/congreso/Elevador.jpg`
@@ -38,6 +35,7 @@ function updateSceneTitle(title) {
 }
 // Fin
 
+// Guardar titulo y escena en el local storage
 function saveCurrentScene(sceneURL, sceneTitle) {
     localStorage.setItem('currentScene', sceneURL);
     if (sceneTitle) {
@@ -46,6 +44,7 @@ function saveCurrentScene(sceneURL, sceneTitle) {
         localStorage.setItem('currentSceneTitle', 'Entrada de Vive RedesLA');
     }
 }
+// Fin
 
 // Función para cargar la escena y el título actual desde localStorage
 function loadCurrentScene() {
@@ -228,7 +227,6 @@ function setDoorHotspots(sceneURL) {
     return sceneHotspots.map(hotspot => createDoorHotspots(hotspot.position, hotspot.sceneURL, hotspot.text, hotspot.title));
 }
 
-const doorHotspotSound = new Audio(`${base_url}resources/sounds/door.mp3`);
 function playDoorSoundSceneChange() {
     doorHotspotSound.play();
 }
@@ -699,7 +697,6 @@ function createHotspotCaminar(position, sceneURL, text, title) {
     return sceneHotspot;
 }
 
-const walkHotspotSound = new Audio(`${base_url}resources/sounds/walk.mp3`);
 function playWalkSoundSceneChange() {
     walkHotspotSound.play();
 }
@@ -895,10 +892,90 @@ function loadGame(game) {
 
     gameContainer.innerHTML = `<iframe src="${gameUrl}" width="100%" height="100%"></iframe>`;
 }
-// Reproducir el sonido al abrir el juego para usarlo
-const ArcadeSound = new Audio(`${base_url}resources/sounds/ArcadeSound2.mp3`);
+
 function playArcadeSound() {
     ArcadeSound.play();
+}
+/* FIN */
+
+
+/* CONVERSACIÓN */
+// Variable para almacenar el sonido
+let typingSound = new Audio(`${base_url}resources/sounds/TalkingSound.mp3`);
+
+// Función para crear un hotspot de conversación
+function createHotspotConversation(position, text, title, image, description) {
+    let infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.Conversation);
+    infospot.position.set(position.x, position.y, position.z);
+    infospot.addHoverElement(document.querySelector('#panel'), 165);
+    animateHotspot(infospot);
+
+    // Mostrar panel
+    infospot.addEventListener('hoverenter', function() {
+        document.querySelector('#panel').classList.add('show');
+        document.querySelector('#panel h1').textContent = title;
+        document.querySelector('#panel p').textContent = '';
+
+        // Iniciar el efecto de máquina de escribir
+        conversacionEfecto(document.querySelector('#panel p'), description, 50);
+    });
+
+    // Cerrar panel
+    infospot.addEventListener('hoverleave', function() {
+        document.querySelector('#panel').classList.remove('show');
+        // Limpiar el texto y el timeout si es necesario
+        if (typingTimeout) {
+            clearTimeout(typingTimeout);
+            document.querySelector('#panel p').textContent = '';
+        }
+        // Detener el sonido de tecleo
+        typingSound.pause();
+        typingSound.currentTime = 0; // Reiniciar el sonido
+    });
+    return infospot;
+}
+
+// Función para establecer los hotspots de conversación
+function setConversationHotspots(sceneURL) {
+    let infoHotspots = [];
+
+    if (sceneURL === '../Img/PanoramaInterior.png') {
+        infoHotspots = [
+            { position: { x: -1000, y: 1000, z: -5000 }, text: 'Bienvenido a REDESLA', title: 'Vive RedesLa', image: '../Icons/CursosImage.png', description: 'Este recorrido virtual trata de trasmitir la mayor inmersión posible, y así usted pueda vivir la experiencia RedesLA desde la comodidad de su hogar' },
+        ];
+    }
+
+    return infoHotspots.map(hotspot => createHotspotConversation(hotspot.position, hotspot.text, hotspot.title, hotspot.image, hotspot.description));
+}
+
+// Efecto de máquina de escribir
+let typingTimeout;
+function conversacionEfecto(element, text, speed, callback) {
+    let i = 0;
+    element.innerHTML = ''; // Limpiar el contenido existente
+
+    // Iniciar el sonido de tecleo
+    typingSound.play();
+    typingSound.loop = true;
+
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            typingTimeout = setTimeout(type, speed);
+        } else {
+            typingSound.pause();
+            typingSound.currentTime = 0;
+            if (callback) {
+                callback();
+            }
+        }
+    }
+
+    if (typingTimeout) {
+        clearTimeout(typingTimeout);
+    }
+    type();
 }
 /* FIN */
 
@@ -959,6 +1036,10 @@ function addInitialHotspots() {
     // Arcade
     const initialArcadeHotspots = setArcadeHotspots(panorama.src);
     initialArcadeHotspots.forEach(hotspot => panorama.add(hotspot));
+
+    // Conversacion
+    const initialConversationHotspots = setConversationHotspots(panorama.src);
+    initialConversationHotspots.forEach(hotspot => panorama.add(hotspot));
 }
 
 function updateInitialHotspots(newPanorama, sceneURL) {
@@ -991,6 +1072,9 @@ function updateInitialHotspots(newPanorama, sceneURL) {
     const initialArcadeHotspots = setArcadeHotspots(sceneURL);
     initialArcadeHotspots.forEach(hotspot => newPanorama.add(hotspot));
 
+    // Conversacion
+    const initialConversationHotspots = setArcadeHotspots(sceneURL);
+    initialConversationHotspots.forEach(hotspot => newPanorama.add(hotspot));
 }
 
 // Vista del menú principal
